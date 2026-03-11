@@ -39,7 +39,7 @@ function App() {
   }, [hasCompletedGoalSetting, updateStreak]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/pynnacle">
       <ScrollToTop />
       <Routes>
         {/* Public Landing Page */}
