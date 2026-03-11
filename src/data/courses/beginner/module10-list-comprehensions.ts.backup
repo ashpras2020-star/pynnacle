@@ -1,0 +1,1734 @@
+// Module 10: List Comprehensions & Advanced Lists
+// 5 lessons covering list comprehensions, nested lists, advanced list operations
+
+import type { Lesson } from '@/types/lesson';
+
+export const module10Lessons: Lesson[] = [
+  // Lesson 10-1: Introduction to List Comprehensions
+  {
+    id: 'lesson-10-1',
+    moduleId: 'module-10',
+    courseId: 'beginner',
+    title: 'Introduction to List Comprehensions',
+    content: {
+      explanation: `Welcome to List Comprehensions! 🚀
+
+List comprehensions are one of Python's most elegant features - a powerful, concise way to create and transform lists. Once you master them, you'll wonder how you ever lived without them! They're the hallmark of "Pythonic" code - the kind of code that makes Python developers smile and say "That's beautiful!"
+
+**Traditional loops vs. List comprehensions - A revelation:**
+
+Let's start with a common task: creating a list of squares. Here's the traditional approach:
+
+\`\`\`python
+# Traditional loop (4 lines, lots of ceremony)
+squares = []  # Create empty list
+for x in range(10):  # Loop through numbers
+    squares.append(x ** 2)  # Calculate and append
+# Result: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\`\`\`
+
+Now watch the magic of list comprehensions:
+
+\`\`\`python
+# List comprehension (1 line, crystal clear intent!)
+squares = [x ** 2 for x in range(10)]
+# Result: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\`\`\`
+
+Same result, but SO much cleaner! The list comprehension reads almost like English: "Create a list of x squared for each x in range 10."
+
+**Understanding the syntax - Breaking it down:**
+
+List comprehensions follow this pattern:
+
+\`\`\`python
+[expression for item in iterable]
+\`\`\`
+
+Let's dissect each component:
+
+**1. Square brackets \`[]\`:** Tell Python "I'm creating a new list"
+**2. Expression** (x ** 2): What to DO with each item - this becomes each element in the new list
+**3. for item in iterable** (for x in range(10)): The loop that provides items to process
+
+Think of it as a blueprint: "For each item, apply this expression, and collect all the results into a new list."
+
+Real example: Double every number
+\`\`\`python
+numbers = [1, 2, 3, 4, 5]
+doubled = [n * 2 for n in numbers]
+# Result: [2, 4, 6, 8, 10]
+
+# Read it as: "Create a list of n * 2 for each n in numbers"
+\`\`\`
+
+**Why list comprehensions are so powerful - Five compelling reasons:**
+
+**1. Incredibly concise - One line does it all**
+
+Compare these equivalent pieces of code:
+
+Traditional (6 lines):
+\`\`\`python
+result = []
+for name in names:
+    uppercase = name.upper()
+    result.append(uppercase)
+\`\`\`
+
+Comprehension (1 line):
+\`\`\`python
+result = [name.upper() for name in names]
+\`\`\`
+
+Less typing, less room for mistakes, clearer intent!
+
+**2. More readable (once you know the pattern)**
+
+List comprehensions eliminate boilerplate code, leaving only the essential logic. After you've seen a few, the pattern becomes instantly recognizable:
+
+\`\`\`python
+lengths = [len(word) for word in words]
+# Instantly clear: "Get the length of each word"
+
+squares = [n ** 2 for n in range(20)]
+# Instantly clear: "Create squares from 0 to 19"
+\`\`\`
+
+**3. Actually faster - Python optimizes them internally**
+
+List comprehensions are implemented in C internally and run faster than equivalent for loops! For large datasets, this difference is noticeable:
+
+\`\`\`python
+# Traditional loop: ~0.5 seconds for 1 million items
+result = []
+for i in range(1000000):
+    result.append(i * 2)
+
+# Comprehension: ~0.3 seconds for same operation
+result = [i * 2 for i in range(1000000)]
+\`\`\`
+
+**4. Pythonic - The preferred professional style**
+
+When Python developers see:
+\`\`\`python
+result = []
+for item in items:
+    result.append(item.upper())
+\`\`\`
+
+They immediately think: "This should be a list comprehension!" Professional Python code uses comprehensions whenever appropriate:
+
+\`\`\`python
+result = [item.upper() for item in items]  # ✅ Pythonic!
+\`\`\`
+
+**5. Functional programming style - Declarative, not imperative**
+
+List comprehensions let you say WHAT you want, not HOW to do it:
+
+Imperative (how): "Create an empty list, then for each item, calculate something and append it"
+Declarative (what): "Give me a list of calculated values from these items"
+
+This functional style is often easier to understand and less error-prone!
+
+**When to use list comprehensions:**
+
+✅ **Creating new lists from existing data**
+\`\`\`python
+prices_with_tax = [price * 1.08 for price in prices]
+\`\`\`
+
+✅ **Transforming every element**
+\`\`\`python
+uppercase_names = [name.upper() for name in names]
+\`\`\`
+
+✅ **Simple mapping operations**
+\`\`\`python
+string_numbers = [str(n) for n in numbers]
+\`\`\`
+
+✅ **Generating sequences based on patterns**
+\`\`\`python
+first_ten_squares = [n ** 2 for n in range(1, 11)]
+\`\`\`
+
+**When NOT to use list comprehensions:**
+
+❌ **Complex logic with multiple operations**
+\`\`\`python
+# Hard to read - use regular loop instead!
+result = [expensive_function(complex_transform(item.method1().method2())) for item in items]
+\`\`\`
+
+❌ **When you need intermediate variables or multiple steps**
+\`\`\`python
+# Too complex for comprehension:
+for item in items:
+    temp1 = process_step1(item)
+    temp2 = process_step2(temp1)
+    if validate(temp2):
+        result.append(temp2)
+\`\`\`
+
+❌ **When the comprehension becomes hard to read**
+
+If it's confusing, use a regular loop! Readability beats conciseness.
+
+**Common patterns you'll use constantly:**
+
+**Pattern 1: Transform every element**
+\`\`\`python
+# Make all strings uppercase
+names = ['alice', 'bob', 'charlie']
+upper = [name.upper() for name in names]
+# ['ALICE', 'BOB', 'CHARLIE']
+\`\`\`
+
+**Pattern 2: Apply a function to each element**
+\`\`\`python
+# Get length of each word
+words = ['python', 'is', 'awesome']
+lengths = [len(word) for word in words]
+# [6, 2, 7]
+\`\`\`
+
+**Pattern 3: Extract a property from each object**
+\`\`\`python
+# Get first character of each string
+first_letters = [word[0] for word in words]
+# ['p', 'i', 'a']
+\`\`\`
+
+**Pattern 4: Generate sequences with math**
+\`\`\`python
+# Celsius to Fahrenheit conversion
+celsius = [0, 10, 20, 30, 40]
+fahrenheit = [c * 9/5 + 32 for c in celsius]
+# [32.0, 50.0, 68.0, 86.0, 104.0]
+\`\`\`
+
+**Pattern 5: Create formatted strings**
+\`\`\`python
+# Create greetings
+names = ['Alice', 'Bob', 'Charlie']
+greetings = [f"Hello, {name}!" for name in names]
+# ['Hello, Alice!', 'Hello, Bob!', 'Hello, Charlie!']
+\`\`\`
+
+**Pattern 6: Iterate over characters in strings**
+\`\`\`python
+# Get each character from a word
+word = "Python"
+chars = [c for c in word]
+# ['P', 'y', 't', 'h', 'o', 'n']
+
+# Uppercase each character
+upper_chars = [c.upper() for c in word]
+# ['P', 'Y', 'T', 'H', 'O', 'N']
+\`\`\`
+
+**Understanding the flow - What actually happens:**
+
+When Python sees a list comprehension, here's the step-by-step process:
+
+\`\`\`python
+squares = [x ** 2 for x in range(5)]
+\`\`\`
+
+1. Creates a new empty list (internally)
+2. Loops through range(5): 0, 1, 2, 3, 4
+3. For each value, evaluates the expression (x ** 2)
+4. Adds the result to the list
+5. Returns the completed list
+
+Result: [0, 1, 4, 9, 16]
+
+**Pro tips for writing great list comprehensions:**
+
+✅ **Keep them short and sweet** - One line, easy to read at a glance
+✅ **Use descriptive variable names** - Even in comprehensions!
+\`\`\`python
+areas = [width * height for width, height in dimensions]  # Clear!
+\`\`\`
+
+✅ **Add parentheses for complex expressions**
+\`\`\`python
+results = [(x + y) * 2 for x, y in pairs]  # Clear grouping
+\`\`\`
+
+✅ **Use comprehensions for list creation, regular loops for other side effects**
+\`\`\`python
+# Good - creating a list:
+doubled = [n * 2 for n in numbers]
+
+# Bad - just printing (use regular loop):
+[print(n) for n in numbers]  # Don't do this!
+\`\`\`
+
+**Common beginner mistakes:**
+
+⚠️ **Using comprehensions when a regular loop is clearer**
+Readability first! If the comprehension is confusing, use a loop.
+
+⚠️ **Trying to do too much in one comprehension**
+Complex transformations deserve regular loops with intermediate variables.
+
+⚠️ **Forgetting the square brackets**
+\`\`\`python
+doubled = n * 2 for n in numbers  # SyntaxError!
+doubled = [n * 2 for n in numbers]  # Correct!
+\`\`\`
+
+⚠️ **Using comprehensions for side effects**
+\`\`\`python
+# Don't use comprehensions just to print or modify things
+[print(x) for x in items]  # Bad - use regular for loop
+
+# Comprehensions are for CREATING LISTS
+numbers = [int(x) for x in string_numbers]  # Good!
+\`\`\`
+
+**Real-world applications:**
+
+Data transformation is everywhere in programming:
+
+**Data cleaning:**
+\`\`\`python
+messy_data = ["  alice  ", " bob", "charlie  "]
+clean = [name.strip() for name in messy_data]
+\`\`\`
+
+**Data preparation:**
+\`\`\`python
+temperatures = [72, 68, 75, 71]
+in_celsius = [(f - 32) * 5/9 for f in temperatures]
+\`\`\`
+
+**Creating UI elements:**
+\`\`\`python
+numbers = range(1, 6)
+buttons = [f"Button {n}" for n in numbers]
+\`\`\`
+
+**Processing API responses:**
+\`\`\`python
+user_data = [user['name'] for user in api_response]
+\`\`\`
+
+List comprehensions are a gateway to more advanced Python programming. They embody the Python philosophy: "There should be one - and preferably only one - obvious way to do it." Once you internalize the pattern, they become second nature, and your code becomes cleaner, faster, and more Pythonic!
+
+Practice using list comprehensions for simple transformations, and soon they'll feel as natural as writing regular for loops. That's when you know you're thinking like a Python programmer!
+`,
+      codeExamples: [
+        {
+          title: 'Basic List Comprehension',
+          code: `# Traditional loop
+squares_loop = []
+for x in range(5):
+    squares_loop.append(x ** 2)
+
+print(squares_loop)  # [0, 1, 4, 9, 16]
+
+# List comprehension (same result, one line)
+squares_comp = [x ** 2 for x in range(5)]
+print(squares_comp)  # [0, 1, 4, 9, 16]
+
+# More examples
+doubles = [x * 2 for x in range(6)]
+print(doubles)  # [0, 2, 4, 6, 8, 10]
+
+cubes = [x ** 3 for x in range(4)]
+print(cubes)  # [0, 1, 8, 27]`,
+          explanation: 'List comprehensions replace simple for loops'
+        },
+        {
+          title: 'String Transformations',
+          code: `names = ['alice', 'bob', 'charlie']
+
+# Convert to uppercase
+upper_names = [name.upper() for name in names]
+print(upper_names)  # ['ALICE', 'BOB', 'CHARLIE']
+
+# Capitalize first letter
+cap_names = [name.capitalize() for name in names]
+print(cap_names)  # ['Alice', 'Bob', 'Charlie']
+
+# Get lengths
+lengths = [len(name) for name in names]
+print(lengths)  # [5, 3, 7]
+
+# Create greetings
+greetings = [f"Hello, {name}!" for name in names]
+print(greetings)
+# ['Hello, alice!', 'Hello, bob!', 'Hello, charlie!']`,
+          explanation: 'Transform strings with list comprehensions'
+        },
+        {
+          title: 'Working with Numbers',
+          code: `numbers = [1, 2, 3, 4, 5]
+
+# Square each number
+squares = [n ** 2 for n in numbers]
+print(squares)  # [1, 4, 9, 16, 25]
+
+# Convert to strings
+str_nums = [str(n) for n in numbers]
+print(str_nums)  # ['1', '2', '3', '4', '5']
+
+# Calculate percentages
+scores = [85, 92, 78, 95]
+percentages = [f"{score}%" for score in scores]
+print(percentages)  # ['85%', '92%', '78%', '95%']
+
+# Apply formula
+celsius = [0, 10, 20, 30, 40]
+fahrenheit = [(c * 9/5) + 32 for c in celsius]
+print(fahrenheit)  # [32.0, 50.0, 68.0, 86.0, 104.0]`,
+          explanation: 'Perform calculations on all elements'
+        },
+        {
+          title: 'Iterating Over Strings',
+          code: `# Get each character
+word = "Python"
+chars = [char for char in word]
+print(chars)  # ['P', 'y', 't', 'h', 'o', 'n']
+
+# Convert to uppercase
+upper_chars = [char.upper() for char in word]
+print(upper_chars)  # ['P', 'Y', 'T', 'H', 'O', 'N']
+
+# Get ASCII codes
+codes = [ord(char) for char in word]
+print(codes)  # [80, 121, 116, 104, 111, 110]
+
+# Create repeated pattern
+pattern = [char * 3 for char in "ABC"]
+print(pattern)  # ['AAA', 'BBB', 'CCC']`,
+          explanation: 'Iterate over strings character by character'
+        },
+        {
+          title: 'Calling Methods',
+          code: `# Strip whitespace from all strings
+messy = ["  hello  ", " world ", "python  "]
+clean = [text.strip() for text in messy]
+print(clean)  # ['hello', 'world', 'python']
+
+# Split strings
+sentences = ["Hello world", "Python programming", "List comprehension"]
+word_lists = [sentence.split() for sentence in sentences]
+print(word_lists)
+# [['Hello', 'world'], ['Python', 'programming'], ['List', 'comprehension']]
+
+# Replace text
+phrases = ["I like cats", "cats are cute", "my cat"]
+dog_phrases = [phrase.replace("cat", "dog") for phrase in phrases]
+print(dog_phrases)
+# ['I like dogs', 'dogs are cute', 'my dog']`,
+          explanation: 'Call methods on each element'
+        }
+      ],
+      concepts: ['list comprehensions', 'syntax', 'transformation', 'iteration', 'pythonic code']
+    },
+    starterCode: `# TODO: Create a list of numbers from 1 to 10
+# TODO: Use a list comprehension to create a new list with each number tripled
+# TODO: Print the result
+
+`,
+    validationTests: [
+      {
+        input: '',
+        expectedOutput: '',
+        description: 'Uses list comprehension to transform data'
+      }
+    ],
+    hints: [
+      'Start with: numbers = list(range(1, 11))',
+      'List comprehension: [n * 3 for n in numbers]',
+      'Or in one line: [n * 3 for n in range(1, 11)]'
+    ],
+    xpReward: 100,
+    activityType: 'game',
+    gameType: 'quiz'
+  },
+
+  // Lesson 10-2: List Comprehensions with Conditions
+  {
+    id: 'lesson-10-2',
+    moduleId: 'module-10',
+    courseId: 'beginner',
+    title: 'List Comprehensions with Conditions',
+    content: {
+      explanation: `List Comprehensions with Conditions - Supercharge Your Lists! ⚡
+
+Now that you understand basic list comprehensions, it's time to unlock their TRUE power - adding conditions! This lets you filter data, transform elements selectively, and build incredibly expressive one-liners that would take many lines of traditional code. Conditional comprehensions are where list comprehensions go from useful to indispensable!
+
+**Two ways to use conditions - Understanding the critical difference:**
+
+There are TWO completely different ways to add conditions to list comprehensions, and confusing them is one of the most common beginner mistakes. Let's clarify them once and for all:
+
+**Way 1: Filtering (if at the END) - "Only include items that match"**
+
+\`\`\`python
+[expression for item in iterable if condition]
+\`\`\`
+
+This FILTERS the list - only items where the condition is True make it into the result. Think of it as a bouncer at a club: "You can only come in if you meet this requirement."
+
+Example - Get only even numbers:
+\`\`\`python
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+evens = [x for x in numbers if x % 2 == 0]
+# Result: [2, 4, 6, 8, 10]
+# Notice: Only 5 items (the even ones)
+\`\`\`
+
+The \`if\` at the end acts as a filter - numbers failing the test are excluded completely!
+
+**Way 2: Conditional expression (if-else at the START) - "Transform items differently based on condition"**
+
+\`\`\`python
+[expr_if_true if condition else expr_if_false for item in iterable]
+\`\`\`
+
+This transforms EVERY item, but differently based on the condition. Think of it as sorting items into categories: "If this, do that; otherwise, do something else."
+
+Example - Label numbers as even or odd:
+\`\`\`python
+numbers = [1, 2, 3, 4, 5]
+labels = ['even' if x % 2 == 0 else 'odd' for x in numbers]
+# Result: ['odd', 'even', 'odd', 'even', 'odd']
+# Notice: Still 5 items, but transformed based on condition
+\`\`\`
+
+The \`if-else\` at the start transforms each item into one of two values!
+
+**The key difference - This is crucial:**
+
+**Filtering (if at end):**
+• Excludes items that don't match
+• Results in FEWER items (or same number if all match)
+• Produces items of the SAME type as original
+• Used when you want to select a subset
+
+**Conditional expression (if-else at start):**
+• Transforms ALL items (nothing excluded)
+• Results in SAME number of items
+• Can produce items of DIFFERENT type
+• Used when you want to process items differently
+
+Visual comparison:
+\`\`\`python
+numbers = [1, 2, 3, 4, 5, 6]
+
+# Filtering - get only large numbers (3 items)
+large = [x for x in numbers if x > 3]
+# [4, 5, 6]
+
+# Conditional expression - label all numbers (6 items)
+labels = ['large' if x > 3 else 'small' for x in numbers]
+# ['small', 'small', 'small', 'large', 'large', 'large']
+\`\`\`
+
+**Filtering examples - Selecting subsets:**
+
+**Filter by numeric conditions:**
+\`\`\`python
+numbers = [-5, -2, 0, 3, 7, -8, 12]
+
+# Only positive numbers
+positives = [n for n in numbers if n > 0]
+# [3, 7, 12]
+
+# Only numbers in a range
+mid_range = [n for n in numbers if 0 <= n <= 10]
+# [0, 3, 7]
+
+# Only negative numbers
+negatives = [n for n in numbers if n < 0]
+# [-5, -2, -8]
+\`\`\`
+
+**Filter strings by properties:**
+\`\`\`python
+words = ['cat', 'elephant', 'dog', 'rhinoceros', 'ant']
+
+# Only long words
+long_words = [word for word in words if len(word) > 3]
+# ['elephant', 'rhinoceros']
+
+# Only words starting with specific letter
+a_words = [word for word in words if word.startswith('a')]
+# ['ant']
+
+# Only words containing specific character
+o_words = [word for word in words if 'o' in word]
+# ['dog', 'rhinoceros']
+\`\`\`
+
+**Filter by type or validity:**
+\`\`\`python
+mixed_data = [1, 'hello', 3.14, None, 'world', 42, '', 0]
+
+# Only numbers (int or float)
+numbers_only = [x for x in mixed_data if isinstance(x, (int, float)) and x is not None]
+# [1, 3.14, 42, 0]
+
+# Only non-empty strings
+strings_only = [x for x in mixed_data if isinstance(x, str) and x]
+# ['hello', 'world']
+
+# Only truthy values (excludes None, 0, '', False)
+truthy_only = [x for x in mixed_data if x]
+# [1, 'hello', 3.14, 'world', 42]
+\`\`\`
+
+**Conditional expressions - Transforming based on conditions:**
+
+**Simple if-else transformations:**
+\`\`\`python
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Label as even/odd
+labels = ['even' if n % 2 == 0 else 'odd' for n in numbers]
+# ['odd', 'even', 'odd', 'even', 'odd', 'even', 'odd', 'even', 'odd', 'even']
+
+# Cap values at maximum
+capped = [n if n <= 5 else 5 for n in numbers]
+# [1, 2, 3, 4, 5, 5, 5, 5, 5, 5]
+
+# Convert negative to zero, keep positive
+non_negative = [n if n >= 0 else 0 for n in [-3, -1, 0, 2, 5]]
+# [0, 0, 0, 2, 5]
+\`\`\`
+
+**Practical transformations:**
+\`\`\`python
+# Pass/fail grading
+scores = [45, 67, 89, 92, 55, 38, 78]
+results = ['Pass' if s >= 60 else 'Fail' for s in scores]
+# ['Fail', 'Pass', 'Pass', 'Pass', 'Fail', 'Fail', 'Pass']
+
+# Apply discount to expensive items
+prices = [10.99, 25.50, 5.00, 100.00, 15.75]
+final_prices = [p * 0.9 if p > 20 else p for p in prices]
+# [10.99, 22.95, 5.0, 90.0, 15.75]
+
+# Pluralize based on count
+counts = [0, 1, 2, 5, 1, 3]
+items = [f"{c} item" if c == 1 else f"{c} items" for c in counts]
+# ['0 items', '1 item', '2 items', '5 items', '1 item', '3 items']
+\`\`\`
+
+**Multiple conditions - Combining filters with and/or:**
+
+**Using AND - Both conditions must be true:**
+\`\`\`python
+numbers = range(1, 31)
+
+# Divisible by BOTH 2 AND 3
+div_both = [n for n in numbers if n % 2 == 0 and n % 3 == 0]
+# [6, 12, 18, 24, 30]
+
+# In range AND even
+filtered = [n for n in numbers if 10 <= n <= 20 and n % 2 == 0]
+# [10, 12, 14, 16, 18, 20]
+\`\`\`
+
+**Using OR - Either condition can be true:**
+\`\`\`python
+# Divisible by 2 OR 3
+div_either = [n for n in range(1, 16) if n % 2 == 0 or n % 3 == 0]
+# [2, 3, 4, 6, 8, 9, 10, 12, 14, 15]
+\`\`\`
+
+**Complex conditions:**
+\`\`\`python
+words = ['Python', 'is', 'awesome', 'and', 'powerful']
+
+# Long words OR words starting with 'a'
+selected = [w for w in words if len(w) > 5 or w.startswith('a')]
+# ['Python', 'awesome', 'and']
+
+# Words that are NOT short AND NOT single letter
+filtered = [w for w in words if len(w) > 2 and len(w) <= 8]
+# ['Python', 'awesome', 'and']
+\`\`\`
+
+**Chained if-elif-else (multiple conditions):**
+
+You can chain multiple conditions for complex transformations:
+
+\`\`\`python
+scores = [55, 72, 68, 91, 45, 88, 76]
+
+# Grade assignment with multiple thresholds
+grades = ['A' if s >= 90
+          else 'B' if s >= 80
+          else 'C' if s >= 70
+          else 'D' if s >= 60
+          else 'F'
+          for s in scores]
+# ['F', 'C', 'D', 'A', 'F', 'B', 'C']
+\`\`\`
+
+This reads as: "If >= 90: A, else if >= 80: B, else if >= 70: C, etc."
+
+**Real-world patterns you'll use constantly:**
+
+**Data validation and cleaning:**
+\`\`\`python
+user_inputs = ['25', '  ', 'abc', '30', '', '42']
+
+# Convert valid numbers, skip invalid
+valid_numbers = [int(x) for x in user_inputs
+                 if x.strip() and x.strip().isdigit()]
+# [25, 30, 42]
+\`\`\`
+
+**Processing emails:**
+\`\`\`python
+emails = ['alice@example.com', 'invalid', 'bob@test.com', 'bad-email']
+
+# Only valid emails (contain @ and .)
+valid = [email for email in emails if '@' in email and '.' in email]
+# ['alice@example.com', 'bob@test.com']
+\`\`\`
+
+**Categorizing data:**
+\`\`\`python
+ages = [12, 25, 17, 45, 8, 35, 19, 60]
+
+# Categorize as child/teen/adult/senior
+categories = ['child' if age < 13
+              else 'teen' if age < 18
+              else 'adult' if age < 60
+              else 'senior'
+              for age in ages]
+# ['child', 'adult', 'teen', 'adult', 'child', 'adult', 'adult', 'senior']
+\`\`\`
+
+**Extracting specific data:**
+\`\`\`python
+users = [
+    {'name': 'Alice', 'active': True, 'score': 85},
+    {'name': 'Bob', 'active': False, 'score': 92},
+    {'name': 'Charlie', 'active': True, 'score': 78}
+]
+
+# Names of active users only
+active_names = [user['name'] for user in users if user['active']]
+# ['Alice', 'Charlie']
+
+# High scores from active users
+high_scores = [user['score'] for user in users
+               if user['active'] and user['score'] >= 80]
+# [85]
+\`\`\`
+
+**Common mistakes to avoid:**
+
+⚠️ **Confusing filter (if) with conditional expression (if-else):**
+\`\`\`python
+# Wrong - SyntaxError (if without else at start)
+bad = ['even' if x % 2 == 0 for x in numbers]
+
+# Correct - Use else or move if to end
+good = ['even' if x % 2 == 0 else 'odd' for x in numbers]
+# or
+good = [x for x in numbers if x % 2 == 0]
+\`\`\`
+
+⚠️ **Too complex conditions hurting readability:**
+\`\`\`python
+# Hard to read - use regular loop instead!
+result = [complex_transform(x) for x in data
+          if condition1(x) and (condition2(x) or condition3(x))
+          and not condition4(x) and x.property > threshold]
+\`\`\`
+
+⚠️ **Forgetting parentheses in complex expressions:**
+\`\`\`python
+# Ambiguous - use parentheses!
+result = [x * 2 + 3 if x > 5 else x - 1 for x in numbers]
+
+# Clear:
+result = [(x * 2 + 3) if x > 5 else (x - 1) for x in numbers]
+\`\`\`
+
+**Best practices:**
+
+✅ Use filtering (if at end) when you want to select a subset
+✅ Use conditional expression (if-else at start) when you want to transform all items
+✅ Keep conditions simple and readable
+✅ Use parentheses to clarify complex expressions
+✅ If the comprehension is too complex, use a regular for loop
+✅ Add comments for non-obvious filtering logic
+
+Conditional list comprehensions are incredibly powerful for data processing, filtering, and transformation. They're a fundamental tool for writing clean, efficient Python code. Practice both filtering and conditional expressions until you can recognize which one you need at a glance!
+`,
+      codeExamples: [
+        {
+          title: 'Filtering with if',
+          code: `numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Get only even numbers
+evens = [n for n in numbers if n % 2 == 0]
+print(evens)  # [2, 4, 6, 8, 10]
+
+# Get only odd numbers
+odds = [n for n in numbers if n % 2 != 0]
+print(odds)  # [1, 3, 5, 7, 9]
+
+# Get numbers greater than 5
+big = [n for n in numbers if n > 5]
+print(big)  # [6, 7, 8, 9, 10]
+
+# Get numbers in range
+mid_range = [n for n in numbers if 3 <= n <= 7]
+print(mid_range)  # [3, 4, 5, 6, 7]`,
+          explanation: 'if at end filters out items'
+        },
+        {
+          title: 'Filtering Strings',
+          code: `words = ['cat', 'elephant', 'dog', 'hippopotamus', 'ant']
+
+# Words longer than 3 characters
+long_words = [word for word in words if len(word) > 3]
+print(long_words)  # ['elephant', 'hippopotamus']
+
+# Words starting with specific letter
+a_words = [word for word in words if word.startswith('a')]
+print(a_words)  # ['ant']
+
+# Words containing 'o'
+o_words = [word for word in words if 'o' in word]
+print(o_words)  # ['dog', 'hippopotamus']
+
+names = ['Alice', 'bob', 'Charlie', 'david']
+# Capitalized names only
+cap_names = [name for name in names if name[0].isupper()]
+print(cap_names)  # ['Alice', 'Charlie']`,
+          explanation: 'Filter strings based on conditions'
+        },
+        {
+          title: 'Conditional Expressions (if-else)',
+          code: `numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Label as even or odd
+labels = ['even' if n % 2 == 0 else 'odd' for n in numbers]
+print(labels)
+# ['odd', 'even', 'odd', 'even', 'odd', 'even', 'odd', 'even', 'odd', 'even']
+
+# Cap values at 5
+capped = [n if n <= 5 else 5 for n in numbers]
+print(capped)  # [1, 2, 3, 4, 5, 5, 5, 5, 5, 5]
+
+# Absolute values
+nums = [-5, -2, 0, 3, -8, 7]
+abs_nums = [n if n >= 0 else -n for n in nums]
+print(abs_nums)  # [5, 2, 0, 3, 8, 7]
+
+# Replace negative with zero
+fixed = [n if n > 0 else 0 for n in nums]
+print(fixed)  # [0, 0, 0, 3, 0, 7]`,
+          explanation: 'if-else transforms items conditionally'
+        },
+        {
+          title: 'Multiple Conditions',
+          code: `numbers = range(1, 31)
+
+# Divisible by both 2 and 3
+div_both = [n for n in numbers if n % 2 == 0 and n % 3 == 0]
+print(div_both)  # [6, 12, 18, 24, 30]
+
+# Divisible by 2 or 3
+div_either = [n for n in numbers if n % 2 == 0 or n % 3 == 0]
+print(div_either)  # [2, 3, 4, 6, 8, 9, 10, 12, 14, 15, 18, 20, 21, 24, 26, 27, 30]
+
+# In specific range and even
+filtered = [n for n in numbers if 10 <= n <= 20 and n % 2 == 0]
+print(filtered)  # [10, 12, 14, 16, 18, 20]
+
+scores = [45, 67, 89, 92, 55, 38, 78]
+# Passing scores (>= 60) that are also above 70
+good_scores = [s for s in scores if s >= 60 and s >= 70]
+print(good_scores)  # [67, 89, 92, 78]`,
+          explanation: 'Combine multiple conditions with and/or'
+        },
+        {
+          title: 'Practical Examples',
+          code: `# Filter and transform emails
+emails = ['alice@example.com', 'invalid', 'bob@test.com', 'bad-email']
+valid_emails = [email.lower() for email in emails if '@' in email and '.' in email]
+print(valid_emails)  # ['alice@example.com', 'bob@test.com']
+
+# Process prices with discount
+prices = [10.99, 25.50, 5.00, 100.00, 15.75]
+# Apply 10% discount to items over $20
+discounted = [p * 0.9 if p > 20 else p for p in prices]
+print(discounted)  # [10.99, 22.95, 5.0, 90.0, 15.75]
+
+# Extract numbers from mixed list
+mixed = [1, 'hello', 3.14, 'world', 42, None, 7]
+nums_only = [x for x in mixed if isinstance(x, (int, float))]
+print(nums_only)  # [1, 3.14, 42, 7]
+
+# Grade categories
+scores = [55, 72, 68, 91, 45, 88, 76]
+grades = ['A' if s >= 90 else 'B' if s >= 80 else 'C' if s >= 70 else 'D' if s >= 60 else 'F'
+          for s in scores]
+print(grades)  # ['F', 'C', 'D', 'A', 'F', 'B', 'C']`,
+          explanation: 'Real-world filtering and transformation'
+        }
+      ],
+      concepts: ['conditional comprehensions', 'filtering', 'if conditions', 'if-else expressions', 'multiple conditions']
+    },
+    starterCode: `# TODO: Create a list of numbers from 1 to 20
+# TODO: Use a list comprehension to get only numbers divisible by 3
+# TODO: Print the result
+
+`,
+    validationTests: [
+      {
+        input: '',
+        expectedOutput: '',
+        description: 'Uses list comprehension with if condition to filter'
+      }
+    ],
+    hints: [
+      'Numbers 1-20: range(1, 21)',
+      'Divisible by 3: n % 3 == 0',
+      'Syntax: [n for n in range(1, 21) if n % 3 == 0]'
+    ],
+    xpReward: 100,
+    activityType: 'game',
+    gameType: 'quiz'
+  },
+
+  // Lesson 10-3: Nested Lists and 2D Data
+  {
+    id: 'lesson-10-3',
+    moduleId: 'module-10',
+    courseId: 'beginner',
+    title: 'Nested Lists and 2D Data',
+    content: {
+      explanation: `
+# Nested Lists and 2D Data
+
+A nested list is a list that contains other lists as elements. This structure is useful for representing tables, grids, and matrices.
+
+## Creating Nested Lists
+
+\`\`\`python
+# Simple 2D list (list of lists)
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+\`\`\`
+
+## Accessing Elements
+
+**Outer list:** \`matrix[row]\`
+**Inner element:** \`matrix[row][column]\`
+
+\`\`\`python
+matrix[0]      # [1, 2, 3] - first row
+matrix[0][0]   # 1 - first row, first column
+matrix[1][2]   # 6 - second row, third column
+\`\`\`
+
+## Common Use Cases
+
+**Tables/Spreadsheets:**
+\`\`\`python
+students = [
+    ['Alice', 85, 'A'],
+    ['Bob', 92, 'A'],
+    ['Charlie', 78, 'B']
+]
+\`\`\`
+
+**Game Boards:**
+\`\`\`python
+tic_tac_toe = [
+    ['X', 'O', 'X'],
+    ['O', 'X', 'O'],
+    ['O', 'X', 'X']
+]
+\`\`\`
+
+**Coordinates:**
+\`\`\`python
+points = [[0, 0], [1, 2], [3, 4]]
+\`\`\`
+
+## Nested List Comprehensions
+
+Create nested lists with comprehensions:
+\`\`\`python
+# Create 3x3 matrix of zeros
+matrix = [[0 for _ in range(3)] for _ in range(3)]
+\`\`\`
+
+**Syntax:** Outer loop comes last, inner loop comes first
+
+## Flattening Nested Lists
+
+Convert nested list to single list:
+\`\`\`python
+nested = [[1, 2], [3, 4], [5, 6]]
+flat = [item for sublist in nested for item in sublist]
+# [1, 2, 3, 4, 5, 6]
+\`\`\`
+
+## Iterating Over Nested Lists
+
+\`\`\`python
+for row in matrix:
+    for element in row:
+        print(element)
+\`\`\`
+`,
+      codeExamples: [
+        {
+          title: 'Creating and Accessing Nested Lists',
+          code: `# Create 2D list (matrix)
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print(matrix)  # Entire matrix
+
+# Access rows
+print(matrix[0])  # [1, 2, 3]
+print(matrix[1])  # [4, 5, 6]
+
+# Access individual elements
+print(matrix[0][0])  # 1 (row 0, col 0)
+print(matrix[1][2])  # 6 (row 1, col 2)
+print(matrix[2][1])  # 8 (row 2, col 1)
+
+# Modify elements
+matrix[0][0] = 10
+print(matrix[0])  # [10, 2, 3]`,
+          explanation: 'Access nested lists with double indexing [row][col]'
+        },
+        {
+          title: 'Practical Example: Student Data',
+          code: `# Student records [name, math_score, english_score]
+students = [
+    ['Alice', 85, 90],
+    ['Bob', 92, 88],
+    ['Charlie', 78, 85],
+    ['Diana', 95, 92]
+]
+
+# Access student data
+print(f"First student: {students[0][0]}")  # Alice
+print(f"Bob's math score: {students[1][1]}")  # 92
+
+# Iterate through all students
+for student in students:
+    name = student[0]
+    math = student[1]
+    english = student[2]
+    average = (math + english) / 2
+    print(f"{name}: Math={math}, English={english}, Avg={average}")
+
+# Get all names
+names = [student[0] for student in students]
+print(names)  # ['Alice', 'Bob', 'Charlie', 'Diana']`,
+          explanation: 'Store and process tabular data with nested lists'
+        },
+        {
+          title: 'Creating Matrix with Comprehension',
+          code: `# Create 3x3 matrix of zeros
+zeros = [[0 for _ in range(3)] for _ in range(3)]
+print(zeros)
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+# Create 4x4 identity matrix
+identity = [[1 if i == j else 0 for j in range(4)] for i in range(4)]
+print(identity)
+# [[1, 0, 0, 0],
+#  [0, 1, 0, 0],
+#  [0, 0, 1, 0],
+#  [0, 0, 0, 1]]
+
+# Create multiplication table
+mult_table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
+for row in mult_table:
+    print(row)
+# [1, 2, 3, 4, 5]
+# [2, 4, 6, 8, 10]
+# [3, 6, 9, 12, 15]
+# [4, 8, 12, 16, 20]
+# [5, 10, 15, 20, 25]`,
+          explanation: 'Generate matrices using nested comprehensions'
+        },
+        {
+          title: 'Flattening Nested Lists',
+          code: `# Nested list
+nested = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
+
+# Flatten to single list
+flat = [item for sublist in nested for item in sublist]
+print(flat)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# How it works:
+# for sublist in nested:     # [1,2,3], then [4,5], then [6,7,8,9]
+#     for item in sublist:   # each number in sublist
+#         add to new list
+
+# Practical example: flatten scores
+all_scores = [
+    [85, 90, 88],  # Alice's scores
+    [92, 89, 95],  # Bob's scores
+    [78, 82, 80]   # Charlie's scores
+]
+
+all_flat = [score for student in all_scores for score in student]
+print(f"All scores: {all_flat}")
+print(f"Class average: {sum(all_flat) / len(all_flat)}")`,
+          explanation: 'Flatten nested lists into single list'
+        },
+        {
+          title: 'Iterating Over 2D Lists',
+          code: `grid = [
+    ['A', 'B', 'C'],
+    ['D', 'E', 'F'],
+    ['G', 'H', 'I']
+]
+
+# Method 1: Nested for loops
+print("Method 1:")
+for row in grid:
+    for cell in row:
+        print(cell, end=' ')
+    print()  # New line after each row
+
+# Method 2: With indices
+print("\\nMethod 2:")
+for i in range(len(grid)):
+    for j in range(len(grid[i])):
+        print(f"grid[{i}][{j}] = {grid[i][j]}")
+
+# Method 3: With enumerate
+print("\\nMethod 3:")
+for row_idx, row in enumerate(grid):
+    for col_idx, value in enumerate(row):
+        print(f"Position ({row_idx},{col_idx}): {value}")`,
+          explanation: 'Different ways to iterate over 2D structures'
+        }
+      ],
+      concepts: ['nested lists', '2D lists', 'matrices', 'double indexing', 'nested comprehensions', 'flattening']
+    },
+    starterCode: `# TODO: Create a 3x3 nested list representing a tic-tac-toe board
+# TODO: Use nested list comprehension to create it with all cells as "-"
+# TODO: Print the board
+# TODO: Access and change the center cell to "X"
+# TODO: Print the board again
+
+`,
+    validationTests: [
+      {
+        input: '',
+        expectedOutput: '',
+        description: 'Creates and manipulates nested lists'
+      }
+    ],
+    hints: [
+      'Create board: [["-" for _ in range(3)] for _ in range(3)]',
+      'Center cell is board[1][1]',
+      'Change with: board[1][1] = "X"',
+      'Print each row with: for row in board: print(row)'
+    ],
+    xpReward: 125,
+    activityType: 'game',
+    gameType: 'quiz'
+  },
+
+  // Lesson 10-4: Advanced List Methods and Operations
+  {
+    id: 'lesson-10-4',
+    moduleId: 'module-10',
+    courseId: 'beginner',
+    title: 'Advanced List Methods and Operations',
+    content: {
+      explanation: `
+# Advanced List Methods and Operations
+
+Beyond the basics, Python lists have powerful methods for sorting, searching, and manipulating data.
+
+## Sorting Lists
+
+**sort()** - Sorts list in place (modifies original)
+\`\`\`python
+numbers.sort()  # Ascending
+numbers.sort(reverse=True)  # Descending
+\`\`\`
+
+**sorted()** - Returns new sorted list (keeps original)
+\`\`\`python
+sorted_nums = sorted(numbers)
+\`\`\`
+
+**Key parameter** - Custom sorting:
+\`\`\`python
+words.sort(key=len)  # Sort by length
+words.sort(key=str.lower)  # Case-insensitive
+\`\`\`
+
+## Reversing Lists
+
+**reverse()** - Reverses in place
+\`\`\`python
+numbers.reverse()
+\`\`\`
+
+**Slicing** - Returns reversed copy
+\`\`\`python
+reversed_list = numbers[::-1]
+\`\`\`
+
+## List Copying
+
+**Shallow copy:**
+\`\`\`python
+copy1 = original.copy()
+copy2 = original[:]
+copy3 = list(original)
+\`\`\`
+
+## Advanced Methods
+
+**count()** - Count occurrences
+\`\`\`python
+numbers.count(5)  # How many times 5 appears
+\`\`\`
+
+**index()** - Find position
+\`\`\`python
+numbers.index(10)  # Index of first 10
+\`\`\`
+
+**clear()** - Remove all items
+\`\`\`python
+numbers.clear()  # Empty list
+\`\`\`
+
+## List Concatenation
+
+**+ operator:**
+\`\`\`python
+combined = list1 + list2
+\`\`\`
+
+**extend():**
+\`\`\`python
+list1.extend(list2)  # Adds all items from list2
+\`\`\`
+
+## List Multiplication
+
+\`\`\`python
+zeros = [0] * 10  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+pattern = [1, 2] * 3  # [1, 2, 1, 2, 1, 2]
+\`\`\`
+
+## Best Practices
+
+1. Use \`sorted()\` when you need to keep original
+2. Use \`.sort()\` when you want to modify original
+3. Use list comprehensions for transformations
+4. Be careful with list copying (shallow vs deep)
+5. Consider using \`key\` parameter for custom sorting
+`,
+      codeExamples: [
+        {
+          title: 'Sorting Lists',
+          code: `numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5]
+
+# sort() - modifies original
+numbers.sort()
+print(numbers)  # [1, 1, 2, 3, 4, 5, 5, 6, 9]
+
+# Descending order
+numbers.sort(reverse=True)
+print(numbers)  # [9, 6, 5, 5, 4, 3, 2, 1, 1]
+
+# sorted() - returns new list
+original = [3, 1, 4, 1, 5]
+sorted_nums = sorted(original)
+print(f"Original: {original}")  # [3, 1, 4, 1, 5]
+print(f"Sorted: {sorted_nums}")  # [1, 1, 3, 4, 5]
+
+# Sort strings
+words = ['banana', 'Apple', 'cherry', 'date']
+words.sort()  # Case-sensitive
+print(words)  # ['Apple', 'banana', 'cherry', 'date']
+
+words.sort(key=str.lower)  # Case-insensitive
+print(words)  # ['Apple', 'banana', 'cherry', 'date']`,
+          explanation: 'Different ways to sort lists'
+        },
+        {
+          title: 'Custom Sorting with key',
+          code: `# Sort by length
+words = ['python', 'is', 'awesome', 'programming']
+words.sort(key=len)
+print(words)  # ['is', 'python', 'awesome', 'programming']
+
+# Sort by last character
+words.sort(key=lambda x: x[-1])
+print(words)  # ['awesome', 'is', 'programming', 'python']
+
+# Sort students by score
+students = [
+    ['Alice', 85],
+    ['Bob', 92],
+    ['Charlie', 78],
+    ['Diana', 95]
+]
+
+# Sort by score (second element)
+students.sort(key=lambda student: student[1])
+for student in students:
+    print(f"{student[0]}: {student[1]}")
+# Charlie: 78, Alice: 85, Bob: 92, Diana: 95
+
+# Sort by score descending
+students.sort(key=lambda student: student[1], reverse=True)
+for student in students:
+    print(f"{student[0]}: {student[1]}")
+# Diana: 95, Bob: 92, Alice: 85, Charlie: 78`,
+          explanation: 'Use key parameter for custom sorting logic'
+        },
+        {
+          title: 'Reversing Lists',
+          code: `numbers = [1, 2, 3, 4, 5]
+
+# reverse() - modifies original
+numbers.reverse()
+print(numbers)  # [5, 4, 3, 2, 1]
+
+# Slicing [::-1] - creates copy
+original = [1, 2, 3, 4, 5]
+reversed_copy = original[::-1]
+print(f"Original: {original}")  # [1, 2, 3, 4, 5]
+print(f"Reversed: {reversed_copy}")  # [5, 4, 3, 2, 1]
+
+# reversed() - returns iterator
+original = [1, 2, 3, 4, 5]
+rev_iter = reversed(original)
+rev_list = list(rev_iter)
+print(rev_list)  # [5, 4, 3, 2, 1]`,
+          explanation: 'Different methods to reverse lists'
+        },
+        {
+          title: 'count() and index()',
+          code: `numbers = [1, 2, 3, 2, 4, 2, 5, 2]
+
+# Count occurrences
+count_2 = numbers.count(2)
+print(f"2 appears {count_2} times")  # 4 times
+
+# Find index of first occurrence
+index_2 = numbers.index(2)
+print(f"First 2 is at index {index_2}")  # 1
+
+# index() with start position
+index_2_after_2 = numbers.index(2, 2)  # Start search at index 2
+print(f"Next 2 is at index {index_2_after_2}")  # 3
+
+# Find all indices
+all_indices = [i for i, x in enumerate(numbers) if x == 2]
+print(f"All positions of 2: {all_indices}")  # [1, 3, 5, 7]
+
+# Check if item exists before using index
+value = 10
+if value in numbers:
+    print(f"Index: {numbers.index(value)}")
+else:
+    print(f"{value} not in list")`,
+          explanation: 'Search and count with count() and index()'
+        },
+        {
+          title: 'List Copying and Concatenation',
+          code: `# Shallow copy methods
+original = [1, 2, 3, 4, 5]
+
+copy1 = original.copy()
+copy2 = original[:]
+copy3 = list(original)
+
+# All are independent copies
+copy1.append(6)
+print(f"Original: {original}")  # [1, 2, 3, 4, 5]
+print(f"Copy1: {copy1}")        # [1, 2, 3, 4, 5, 6]
+
+# Concatenation with +
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+combined = list1 + list2
+print(combined)  # [1, 2, 3, 4, 5, 6]
+
+# extend() - modifies original
+list1.extend(list2)
+print(list1)  # [1, 2, 3, 4, 5, 6]
+
+# List multiplication
+zeros = [0] * 5
+print(zeros)  # [0, 0, 0, 0, 0]
+
+pattern = [1, 2, 3] * 2
+print(pattern)  # [1, 2, 3, 1, 2, 3]`,
+          explanation: 'Copy, concatenate, and multiply lists'
+        },
+        {
+          title: 'Practical Example: Data Processing',
+          code: `# Process and analyze test scores
+scores = [85, 92, 78, 90, 88, 76, 95, 89, 84, 91]
+
+# Sort for analysis
+sorted_scores = sorted(scores)
+print(f"Sorted: {sorted_scores}")
+
+# Find highest and lowest
+highest = max(scores)
+lowest = min(scores)
+print(f"Highest: {highest}, Lowest: {lowest}")
+
+# Count perfect scores
+perfect = scores.count(100)
+print(f"Perfect scores: {perfect}")
+
+# Remove outliers (below 75)
+filtered = [s for s in scores if s >= 75]
+print(f"Filtered: {filtered}")
+
+# Calculate statistics
+average = sum(scores) / len(scores)
+print(f"Average: {average:.2f}")
+
+# Find median
+sorted_scores = sorted(scores)
+n = len(sorted_scores)
+median = sorted_scores[n//2] if n % 2 == 1 else (sorted_scores[n//2-1] + sorted_scores[n//2]) / 2
+print(f"Median: {median}")
+
+# Group by grade
+a_grades = [s for s in scores if s >= 90]
+b_grades = [s for s in scores if 80 <= s < 90]
+c_grades = [s for s in scores if 70 <= s < 80]
+
+print(f"A grades: {len(a_grades)}")
+print(f"B grades: {len(b_grades)}")
+print(f"C grades: {len(c_grades)}")`,
+          explanation: 'Combine methods for real data analysis'
+        }
+      ],
+      concepts: ['sort()', 'sorted()', 'reverse()', 'count()', 'index()', 'key parameter', 'list copying', 'concatenation']
+    },
+    starterCode: `# TODO: Create a list of names in random order
+# TODO: Sort the list alphabetically (case-insensitive)
+# TODO: Print the sorted list
+# TODO: Count how many names start with a specific letter
+# TODO: Find the index of a specific name
+
+`,
+    validationTests: [
+      {
+        input: '',
+        expectedOutput: '',
+        description: 'Uses sorting and list methods effectively'
+      }
+    ],
+    hints: [
+      'Create names = ["Charlie", "alice", "Bob", "diana"]',
+      'Sort with names.sort(key=str.lower)',
+      'Count with: sum(1 for name in names if name.lower().startswith("a"))',
+      'Find with: names.index("alice")'
+    ],
+    xpReward: 125,
+    activityType: 'game',
+    gameType: 'quiz'
+  },
+
+  // Lesson 10-5: enumerate, zip, and Advanced Iteration
+  {
+    id: 'lesson-10-5',
+    moduleId: 'module-10',
+    courseId: 'beginner',
+    title: 'enumerate, zip, and Advanced Iteration',
+    content: {
+      explanation: `
+# enumerate, zip, and Advanced Iteration
+
+Python provides powerful tools for iterating over lists in sophisticated ways.
+
+## enumerate()
+
+Adds a counter to an iterable, returning (index, value) pairs:
+\`\`\`python
+for index, value in enumerate(my_list):
+    print(f"Index {index}: {value}")
+\`\`\`
+
+**Start parameter:**
+\`\`\`python
+for i, value in enumerate(my_list, start=1):
+    print(f"#{i}: {value}")  # Numbering starts at 1
+\`\`\`
+
+## zip()
+
+Combines multiple iterables element-by-element:
+\`\`\`python
+names = ['Alice', 'Bob', 'Charlie']
+scores = [85, 92, 78]
+
+for name, score in zip(names, scores):
+    print(f"{name}: {score}")
+\`\`\`
+
+**Creates tuples:**
+\`\`\`python
+list(zip(names, scores))
+# [('Alice', 85), ('Bob', 92), ('Charlie', 78)]
+\`\`\`
+
+## Why Use These?
+
+**enumerate() benefits:**
+- Track position while iterating
+- Avoid manual counter variables
+- More Pythonic than range(len())
+- Get both index and value
+
+**zip() benefits:**
+- Combine related data
+- Parallel iteration
+- Create dictionaries from two lists
+- Process multiple lists together
+
+## Common Patterns
+
+**Create dictionary:**
+\`\`\`python
+keys = ['name', 'age', 'city']
+values = ['Alice', 25, 'Boston']
+user = dict(zip(keys, values))
+\`\`\`
+
+**Unzip (transpose):**
+\`\`\`python
+pairs = [(1, 'a'), (2, 'b'), (3, 'c')]
+numbers, letters = zip(*pairs)
+\`\`\`
+
+**Enumerate with conditions:**
+\`\`\`python
+for i, value in enumerate(my_list):
+    if i % 2 == 0:  # Process even indices
+        print(value)
+\`\`\`
+
+## Length Differences
+
+\`zip()\` stops at the shortest iterable:
+\`\`\`python
+list(zip([1, 2, 3], ['a', 'b']))
+# [(1, 'a'), (2, 'b')]  # 3 is ignored
+\`\`\`
+
+Use \`itertools.zip_longest()\` to handle different lengths.
+`,
+      codeExamples: [
+        {
+          title: 'Using enumerate()',
+          code: `fruits = ['apple', 'banana', 'cherry', 'date']
+
+# Traditional way (less Pythonic)
+for i in range(len(fruits)):
+    print(f"Index {i}: {fruits[i]}")
+
+# Pythonic way with enumerate
+print("\\nWith enumerate:")
+for index, fruit in enumerate(fruits):
+    print(f"Index {index}: {fruit}")
+
+# Start numbering at 1
+print("\\nStarting at 1:")
+for num, fruit in enumerate(fruits, start=1):
+    print(f"#{num}: {fruit}")
+
+# Use in list comprehension
+indexed = [(i, fruit) for i, fruit in enumerate(fruits)]
+print(f"\\nIndexed list: {indexed}")
+# [(0, 'apple'), (1, 'banana'), (2, 'cherry'), (3, 'date')]`,
+          explanation: 'enumerate() provides index and value together'
+        },
+        {
+          title: 'Using zip()',
+          code: `names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+cities = ['Boston', 'NYC', 'LA']
+
+# Combine three lists
+for name, age, city in zip(names, ages, cities):
+    print(f"{name} is {age} years old and lives in {city}")
+
+# Create list of tuples
+combined = list(zip(names, ages, cities))
+print(f"\\nCombined: {combined}")
+# [('Alice', 25, 'Boston'), ('Bob', 30, 'NYC'), ('Charlie', 35, 'LA')]
+
+# Create dictionary from two lists
+user_dict = dict(zip(['name', 'age', 'city'], ['Alice', 25, 'Boston']))
+print(f"\\nDictionary: {user_dict}")
+# {'name': 'Alice', 'age': 25, 'city': 'Boston'}`,
+          explanation: 'zip() combines multiple lists element-by-element'
+        },
+        {
+          title: 'enumerate() with Conditions',
+          code: `scores = [85, 92, 78, 88, 95, 76, 89]
+
+# Process only specific positions
+print("Scores at even indices:")
+for i, score in enumerate(scores):
+    if i % 2 == 0:
+        print(f"Position {i}: {score}")
+
+# Find positions of high scores
+print("\\nHigh scores (>= 90):")
+for i, score in enumerate(scores):
+    if score >= 90:
+        print(f"Position {i}: {score}")
+
+# Update values based on position
+modified = [score + 5 if i % 2 == 0 else score
+            for i, score in enumerate(scores)]
+print(f"\\nModified: {modified}")`,
+          explanation: 'Combine enumerate with conditional logic'
+        },
+        {
+          title: 'Parallel List Processing',
+          code: `# Process multiple related lists
+products = ['Laptop', 'Mouse', 'Keyboard', 'Monitor']
+prices = [999.99, 29.99, 79.99, 299.99]
+quantities = [5, 20, 15, 8]
+
+print("Inventory Report:")
+print("-" * 50)
+
+for product, price, qty in zip(products, prices, quantities):
+    total_value = price * qty
+    print(f"{product:12} \${price:7.2f} x {qty:2} = \${total_value:8.2f}")
+
+# Calculate total inventory value
+total = sum(p * q for p, q in zip(prices, quantities))
+print("-" * 50)
+print(f"{'Total Value:':27} \${total:8.2f}")
+
+# Find product with highest value
+max_index = max(enumerate(zip(prices, quantities)),
+                key=lambda x: x[1][0] * x[1][1])[0]
+print(f"\\nHighest value item: {products[max_index]}")`,
+          explanation: 'Process related data from multiple lists together'
+        },
+        {
+          title: 'Unzipping with zip(*)',
+          code: `# List of coordinate pairs
+points = [(1, 2), (3, 4), (5, 6), (7, 8)]
+
+# Unzip into separate lists
+x_coords, y_coords = zip(*points)
+
+print(f"X coordinates: {list(x_coords)}")  # [1, 3, 5, 7]
+print(f"Y coordinates: {list(y_coords)}")  # [2, 4, 6, 8]
+
+# Practical example: student data
+students = [
+    ('Alice', 85, 'A'),
+    ('Bob', 92, 'A'),
+    ('Charlie', 78, 'B')
+]
+
+names, scores, grades = zip(*students)
+
+print(f"\\nNames: {list(names)}")
+print(f"Scores: {list(scores)}")
+print(f"Grades: {list(grades)}")
+
+print(f"\\nAverage score: {sum(scores) / len(scores):.2f}")`,
+          explanation: 'Unzip separates combined data back into lists'
+        },
+        {
+          title: 'Practical Example: Data Alignment',
+          code: `# Align and process data from multiple sources
+usernames = ['alice', 'bob', 'charlie', 'diana']
+emails = ['alice@email.com', 'bob@email.com', 'charlie@email.com']
+scores = [85, 92, 78, 88]
+
+# Note: emails list is shorter (only 3 items)
+
+# Safe iteration (stops at shortest)
+print("Safe iteration with zip:")
+for i, (user, email, score) in enumerate(zip(usernames, emails, scores), 1):
+    print(f"{i}. {user:10} {email:20} Score: {score}")
+# Diana is not printed (emails is shorter)
+
+# Create user database
+print("\\nCreating user database:")
+users = []
+for username, email, score in zip(usernames, emails, scores):
+    user = {
+        'username': username,
+        'email': email,
+        'score': score
+    }
+    users.append(user)
+
+for user in users:
+    print(user)
+
+# Find user with highest score
+best_user_idx = scores.index(max(scores))
+print(f"\\nHighest score: {usernames[best_user_idx]} with {scores[best_user_idx]}")`,
+          explanation: 'Handle real-world data alignment scenarios'
+        }
+      ],
+      concepts: ['enumerate()', 'zip()', 'parallel iteration', 'unzipping', 'list alignment', 'advanced iteration']
+    },
+    starterCode: `# TODO: Create two lists: student names and their test scores
+# TODO: Use zip() to iterate through both lists together
+# TODO: For each student, print their name and score
+# TODO: Use enumerate() to number each student (starting at 1)
+
+`,
+    validationTests: [
+      {
+        input: '',
+        expectedOutput: '',
+        description: 'Uses both enumerate() and zip() for iteration'
+      }
+    ],
+    hints: [
+      'Create names = ["Alice", "Bob", "Charlie"]',
+      'Create scores = [85, 92, 78]',
+      'Use: for i, (name, score) in enumerate(zip(names, scores), 1):',
+      'Print: print(f"#{i}: {name} - {score}")'
+    ],
+    xpReward: 150,
+    activityType: 'game',
+    gameType: 'quiz'
+  }
+];

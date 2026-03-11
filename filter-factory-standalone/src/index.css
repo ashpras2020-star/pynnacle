@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 50%, #fce7f3 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+code, .mono {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', 'Monaco', monospace;
+}
+
+/* ── Conveyor belt ─────────────────────── */
+.ff-conveyor {
+  background: repeating-linear-gradient(
+    -45deg,
+    #c4b5fd,
+    #c4b5fd 10px,
+    #a78bfa 10px,
+    #a78bfa 20px
+  );
+  animation: ff-conveyor-move 1s linear infinite;
+  border-radius: 8px;
+}
+
+@keyframes ff-conveyor-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 28px 0; }
+}
+
+/* ── Panel ────────────────────────────── */
+.ff-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(167, 139, 250, 0.3);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+}
+
+/* ── Code input ────────────────────────── */
+.ff-code-input {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  tab-size: 4;
+  resize: none;
+  line-height: 1.7;
+}
+
+.ff-code-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.4);
+  border-color: #8b5cf6;
+}
+
+.ff-code-input::placeholder {
+  color: #a1a1aa;
+}
+
+/* ── Scrollbar ─────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+
+/* ── Keyframes ─────────────────────────── */
+@keyframes ff-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes ff-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ff-slide-up {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes ff-bounce-in {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ff-flash-green {
+  0% { background-color: rgba(34, 197, 94, 0.25); }
+  100% { background-color: transparent; }
+}
+
+@keyframes ff-flash-red {
+  0% { background-color: rgba(239, 68, 68, 0.25); }
+  100% { background-color: transparent; }
+}
+
+@keyframes ff-count-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ff-stamp {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1) rotate(-12deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(-12deg); opacity: 0.7; }
+}
+
+@keyframes ff-gear-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ff-machine-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(139, 92, 246, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
+}
+
+@keyframes ff-item-enter {
+  0% { transform: scale(0) translateY(10px); opacity: 0; }
+  60% { transform: scale(1.1) translateY(0); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes ff-item-exit {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(60px); opacity: 0; }
+}
+
+@keyframes ff-processing {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(139, 92, 246, 0.3); }
+  50% { transform: scale(1.03); box-shadow: 0 0 24px rgba(139, 92, 246, 0.6); }
+}
+
+@keyframes ff-steam {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-20px) scale(1.5); opacity: 0; }
+}
+
+@keyframes ff-border-pulse {
+  0%, 100% { border-color: #c4b5fd; }
+  50% { border-color: #8b5cf6; }
+}
+
+@keyframes ff-sparkle {
+  0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+}
+
+/* ── Animation classes ─────────────────── */
+.animate-ff-pulse { animation: ff-pulse 1s ease-in-out infinite; }
+.animate-ff-fade-in { animation: ff-fade-in 0.5s ease-out forwards; }
+.animate-ff-slide-up { animation: ff-slide-up 0.4s ease-out forwards; }
+.animate-ff-bounce-in { animation: ff-bounce-in 0.6s ease-out forwards; }
+.animate-ff-flash-green { animation: ff-flash-green 0.8s ease-out forwards; }
+.animate-ff-flash-red { animation: ff-flash-red 0.8s ease-out forwards; }
+.animate-ff-count-pop { animation: ff-count-pop 0.4s ease-out forwards; }
+.animate-ff-stamp { animation: ff-stamp 0.6s ease-out forwards; }
+.animate-ff-gear-spin { animation: ff-gear-spin 2s linear infinite; }
+.animate-ff-machine-pulse { animation: ff-machine-pulse 2s ease-in-out infinite; }
+.animate-ff-item-enter { animation: ff-item-enter 0.4s ease-out forwards; }
+.animate-ff-item-exit { animation: ff-item-exit 0.5s ease-in forwards; }
+.animate-ff-processing { animation: ff-processing 0.8s ease-in-out infinite; }
+.animate-ff-steam { animation: ff-steam 1s ease-out forwards; }
+.animate-ff-border-pulse { animation: ff-border-pulse 1.5s ease-in-out infinite; }
+.animate-ff-sparkle { animation: ff-sparkle 0.8s ease-in-out forwards; }
+
+/* ── Dropdown select ──────────────────── */
+.ff-slot-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%238b5cf6' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}

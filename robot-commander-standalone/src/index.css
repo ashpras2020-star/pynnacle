@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #dce8f0;
+  color: #1e3a5f;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+code, .mono {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', 'Monaco', monospace;
+}
+
+/* ── Blueprint grid background ─────────── */
+.rc-blueprint-bg {
+  background-color: #dce8f0;
+  background-image:
+    linear-gradient(rgba(30, 58, 95, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 58, 95, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(30, 58, 95, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 58, 95, 0.04) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+
+/* ── Blueprint title style ─────────────── */
+.rc-blueprint-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Keyframes ───────────────────────────── */
+@keyframes rc-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes rc-border-pulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(30, 58, 95, 0.1); }
+  50% { box-shadow: 0 2px 16px rgba(37, 99, 235, 0.2); }
+}
+
+@keyframes rc-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rc-slide-up {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes rc-bounce-in {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes rc-flash-correct {
+  0% { background-color: rgba(34, 197, 94, 0.2); }
+  100% { background-color: transparent; }
+}
+
+@keyframes rc-flash-red {
+  0% { background-color: rgba(239, 68, 68, 0.2); }
+  100% { background-color: transparent; }
+}
+
+@keyframes rc-stamp {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1) rotate(-12deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(-12deg); opacity: 0.7; }
+}
+
+@keyframes rc-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes rc-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes rc-count-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes rc-test-run {
+  0%, 100% { border-color: rgba(37, 99, 235, 0.3); }
+  50% { border-color: rgba(37, 99, 235, 1); }
+}
+
+@keyframes rc-gear-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Animation classes ───────────────────── */
+.animate-rc-pulse { animation: rc-pulse 1s ease-in-out infinite; }
+.animate-rc-border-pulse { animation: rc-border-pulse 2s ease-in-out infinite; }
+.animate-rc-fade-in { animation: rc-fade-in 0.5s ease-out forwards; }
+.animate-rc-slide-up { animation: rc-slide-up 0.4s ease-out forwards; }
+.animate-rc-bounce-in { animation: rc-bounce-in 0.6s ease-out forwards; }
+.animate-rc-flash-correct { animation: rc-flash-correct 0.8s ease-out forwards; }
+.animate-rc-flash-red { animation: rc-flash-red 0.8s ease-out forwards; }
+.animate-rc-stamp { animation: rc-stamp 0.6s ease-out forwards; }
+.animate-rc-float { animation: rc-float 3s ease-in-out infinite; }
+.animate-rc-count-pop { animation: rc-count-pop 0.4s ease-out forwards; }
+.animate-rc-test-run { animation: rc-test-run 0.6s ease-in-out infinite; }
+.animate-rc-gear-spin { animation: rc-gear-spin 4s linear infinite; }
+
+/* ── Blueprint panel ───────────────────── */
+.rc-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid #b0c4d8;
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
+}
+
+/* ── Dimension line styling ────────────── */
+.rc-dimension-line {
+  border-top: 1px dashed #8faabe;
+  position: relative;
+}
+
+.rc-dimension-line::before,
+.rc-dimension-line::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 8px;
+  background: #8faabe;
+}
+
+.rc-dimension-line::before { left: 0; }
+.rc-dimension-line::after { right: 0; }
+
+/* ── Code textarea ───────────────────────── */
+.rc-code-input {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  tab-size: 4;
+  resize: none;
+  line-height: 1.7;
+}
+
+.rc-code-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+  border-color: #2563eb;
+}
+
+.rc-code-input::placeholder {
+  color: #9cb3c9;
+}
+
+/* ── Scrollbar (blueprint tones) ─────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #dce8f0; }
+::-webkit-scrollbar-thumb { background: #8faabe; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2563eb; }

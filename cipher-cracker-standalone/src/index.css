@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #030712;
+  color: #d1d5db;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+/* ── Matrix Rain ─────────────────────────────────────────── */
+@keyframes cc-rain {
+  0% { transform: translateY(-100vh); opacity: 0; }
+  5% { opacity: 1; }
+  85% { opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.cc-animate-rain {
+  animation: cc-rain 5s linear infinite;
+}
+
+/* ── Pulse ────────────────────────────────────────────────── */
+@keyframes cc-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.cc-animate-pulse {
+  animation: cc-pulse 1s ease-in-out infinite;
+}
+
+/* ── Glow pulse on cards ─────────────────────────────────── */
+@keyframes cc-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.1), inset 0 0 15px rgba(34, 197, 94, 0.02); }
+  50% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.2), inset 0 0 30px rgba(34, 197, 94, 0.04); }
+}
+
+.cc-glow {
+  animation: cc-glow 3s ease-in-out infinite;
+}
+
+/* ── Typing cursor blink ─────────────────────────────────── */
+@keyframes cc-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cc-cursor::after {
+  content: '█';
+  animation: cc-blink 1s step-end infinite;
+  color: #22c55e;
+  margin-left: 2px;
+}
+
+/* ── Screen flash on correct ─────────────────────────────── */
+@keyframes cc-flash-green {
+  0% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+
+.cc-flash-green {
+  animation: cc-flash-green 0.5s ease-out forwards;
+}
+
+/* ── Screen flash on wrong ───────────────────────────────── */
+@keyframes cc-flash-red {
+  0% { opacity: 0.25; }
+  100% { opacity: 0; }
+}
+
+.cc-flash-red {
+  animation: cc-flash-red 0.5s ease-out forwards;
+}
+
+/* ── Slide in from bottom ────────────────────────────────── */
+@keyframes cc-slide-up {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.cc-slide-up {
+  animation: cc-slide-up 0.4s ease-out forwards;
+}
+
+/* ── Fade in ─────────────────────────────────────────────── */
+@keyframes cc-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.cc-fade-in {
+  animation: cc-fade-in 0.6s ease-out forwards;
+}
+
+/* ── Stamp slam ──────────────────────────────────────────── */
+@keyframes cc-stamp {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1) rotate(-12deg); opacity: 0.9; }
+  80% { transform: scale(1.05) rotate(-12deg); }
+  100% { transform: scale(1) rotate(-12deg); opacity: 0.7; }
+}
+
+.cc-stamp {
+  animation: cc-stamp 0.6s ease-out forwards;
+}
+
+/* ── Timer bar shrink ────────────────────────────────────── */
+.cc-timer-bar {
+  transition: width 1s linear;
+}
+
+/* ── Glitch text ─────────────────────────────────────────── */
+@keyframes cc-glitch {
+  0%, 100% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
+  25% { text-shadow: -2px 0 #ff0000, 2px 0 #00ff00; }
+  50% { text-shadow: 2px 2px #ff0000, -2px -2px #00ff00; }
+  75% { text-shadow: -2px 2px #ff0000, 2px -2px #00ff00; }
+}
+
+.cc-glitch {
+  animation: cc-glitch 0.3s ease-in-out;
+}
+
+/* ── Corner brackets decoration ──────────────────────────── */
+.cc-corners {
+  position: relative;
+}
+
+.cc-corners::before,
+.cc-corners::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(34, 197, 94, 0.4);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.cc-corners::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.cc-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ── Scrollbar styling ───────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #166534;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+/* ── Input focus glow ────────────────────────────────────── */
+input:focus {
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3), 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+/* ── Spin animation for loading/radar ────────────────────── */
+@keyframes cc-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cc-spin {
+  animation: cc-spin 3s linear infinite;
+}
+
+/* ── Count up animation ──────────────────────────────────── */
+@keyframes cc-count-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.cc-count-pop {
+  animation: cc-count-pop 0.4s ease-out forwards;
+}

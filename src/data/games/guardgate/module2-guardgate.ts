@@ -1,0 +1,108 @@
+import type { GuardGateGame } from '../../../types/game';
+
+export const module5GuardGateGame: GuardGateGame = {
+  id: 'guardgate-module5',
+  moduleId: 'module-5',
+  title: 'Guard Gate: Control Flow',
+  description: 'Write if-statements to sort values into Gate A or Gate B. Use the variable "value" — it automatically holds each number being checked.',
+  baseXP: 100,
+  bonusXP: 50,
+  rounds: [
+    // Round 1: Simple comparison
+    {
+      id: 'round-1',
+      title: 'Big Numbers Only',
+      description: 'Send all numbers greater than or equal to 10 to Gate A. The rest go to Gate B.',
+      hint: 'Try: value >= 10',
+      exampleAnswer: 'value >= 10',
+      difficulty: 'easy',
+      concepts: ['if', 'else', 'comparison'],
+      values: [
+        { display: '15', numericValue: 15, correctGate: 'A' },
+        { display: '3', numericValue: 3, correctGate: 'B' },
+        { display: '10', numericValue: 10, correctGate: 'A' },
+        { display: '7', numericValue: 7, correctGate: 'B' },
+        { display: '25', numericValue: 25, correctGate: 'A' },
+        { display: '1', numericValue: 1, correctGate: 'B' },
+      ],
+    },
+    // Round 2: Even/odd with modulo
+    {
+      id: 'round-2',
+      title: 'Even Steven',
+      description: 'Send all even numbers to Gate A. Odd numbers go to Gate B.',
+      hint: 'Use the modulo operator: value % 2 == 0',
+      exampleAnswer: 'value % 2 == 0',
+      difficulty: 'easy',
+      concepts: ['if', 'else', 'modulo'],
+      values: [
+        { display: '4', numericValue: 4, correctGate: 'A' },
+        { display: '7', numericValue: 7, correctGate: 'B' },
+        { display: '12', numericValue: 12, correctGate: 'A' },
+        { display: '3', numericValue: 3, correctGate: 'B' },
+        { display: '0', numericValue: 0, correctGate: 'A' },
+        { display: '99', numericValue: 99, correctGate: 'B' },
+      ],
+    },
+    // Round 3: Range check
+    {
+      id: 'round-3',
+      title: 'In the Zone',
+      description: 'Send numbers between 10 and 50 (inclusive) to Gate A. Everything else goes to Gate B.',
+      hint: 'You need two conditions: value >= 10 and value <= 50',
+      exampleAnswer: 'value >= 10 and value <= 50',
+      difficulty: 'medium',
+      concepts: ['if', 'else', 'and', 'range'],
+      values: [
+        { display: '25', numericValue: 25, correctGate: 'A' },
+        { display: '5', numericValue: 5, correctGate: 'B' },
+        { display: '10', numericValue: 10, correctGate: 'A' },
+        { display: '50', numericValue: 50, correctGate: 'A' },
+        { display: '75', numericValue: 75, correctGate: 'B' },
+        { display: '3', numericValue: 3, correctGate: 'B' },
+        { display: '33', numericValue: 33, correctGate: 'A' },
+        { display: '100', numericValue: 100, correctGate: 'B' },
+      ],
+    },
+    // Round 4: Combined conditions with or
+    {
+      id: 'round-4',
+      title: 'Special Numbers',
+      description: 'Send numbers that are either less than 5 OR greater than 95 to Gate A. The rest go to Gate B.',
+      hint: 'Use "or" to combine two conditions: value < 5 or value > 95',
+      exampleAnswer: 'value < 5 or value > 95',
+      difficulty: 'medium',
+      concepts: ['if', 'else', 'or', 'combined conditions'],
+      values: [
+        { display: '3', numericValue: 3, correctGate: 'A' },
+        { display: '50', numericValue: 50, correctGate: 'B' },
+        { display: '99', numericValue: 99, correctGate: 'A' },
+        { display: '1', numericValue: 1, correctGate: 'A' },
+        { display: '30', numericValue: 30, correctGate: 'B' },
+        { display: '96', numericValue: 96, correctGate: 'A' },
+        { display: '5', numericValue: 5, correctGate: 'B' },
+        { display: '95', numericValue: 95, correctGate: 'B' },
+      ],
+    },
+    // Round 5: Divisibility + combined
+    {
+      id: 'round-5',
+      title: 'Divisible & Positive',
+      description: 'Send numbers that are divisible by 3 AND greater than 0 to Gate A. Everything else goes to Gate B.',
+      hint: 'Combine modulo with comparison: value % 3 == 0 and value > 0',
+      exampleAnswer: 'value % 3 == 0 and value > 0',
+      difficulty: 'hard',
+      concepts: ['if', 'else', 'and', 'modulo', 'combined conditions'],
+      values: [
+        { display: '9', numericValue: 9, correctGate: 'A' },
+        { display: '7', numericValue: 7, correctGate: 'B' },
+        { display: '0', numericValue: 0, correctGate: 'B' },
+        { display: '12', numericValue: 12, correctGate: 'A' },
+        { display: '-3', numericValue: -3, correctGate: 'B' },
+        { display: '15', numericValue: 15, correctGate: 'A' },
+        { display: '4', numericValue: 4, correctGate: 'B' },
+        { display: '30', numericValue: 30, correctGate: 'A' },
+      ],
+    },
+  ],
+};
