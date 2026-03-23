@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gap22.github.io/pynnacle/sitemap.xml
