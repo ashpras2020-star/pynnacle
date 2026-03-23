@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gap22.github.io/pynnacle/sitemap.xml
+Sitemap: https://ashpras2020-star.github.io/pynnacle/sitemap.xml
