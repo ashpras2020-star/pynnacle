@@ -101,6 +101,11 @@ export const useProgressStore = create<ProgressState>()(
         // Update streak after completing a lesson (streak requires lesson completion)
         get().updateStreak();
 
+        // Refresh challenge progress (xp_race, lesson_count)
+        import('@store/useChallengeStore').then(({ useChallengeStore }) => {
+          useChallengeStore.getState().refreshProgress();
+        }).catch(() => {});
+
         // Sync to cloud and post activity after completing lesson
         const { syncToCloud, totalXP: prevXP } = get();
         import('@store/useUserStore').then(({ useUserStore }) => {
@@ -130,6 +135,11 @@ export const useProgressStore = create<ProgressState>()(
         set((state) => ({
           totalXP: state.totalXP + amount,
         }));
+
+        // Refresh challenge progress (xp_race)
+        import('@store/useChallengeStore').then(({ useChallengeStore }) => {
+          useChallengeStore.getState().refreshProgress();
+        }).catch(() => {});
 
         // Sync to cloud after adding XP
         const { syncToCloud } = get();
@@ -235,6 +245,11 @@ export const useProgressStore = create<ProgressState>()(
         // Check for streak milestone
         const newStreak = get().currentStreak;
         if (newStreak > prevStreak) {
+          // Refresh challenge progress (streak type)
+          import('@store/useChallengeStore').then(({ useChallengeStore }) => {
+            useChallengeStore.getState().refreshProgress();
+          }).catch(() => {});
+
           import('@services/activityService').then(({ activityService }) => {
             if (activityService.isStreakMilestone(newStreak)) {
               import('@store/useUserStore').then(({ useUserStore }) => {
@@ -463,6 +478,11 @@ export const useProgressStore = create<ProgressState>()(
             completedAssessments: [...state.completedAssessments, completion],
           };
         });
+
+        // Refresh challenge progress (module_completion)
+        import('@store/useChallengeStore').then(({ useChallengeStore }) => {
+          useChallengeStore.getState().refreshProgress();
+        }).catch(() => {});
 
         // Sync to cloud and post activity after completing assessment
         const { syncToCloud } = get();

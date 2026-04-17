@@ -50,11 +50,20 @@ export const useChallengeStore = create<ChallengeState>()((set, get) => ({
     const available = useProgressStore.getState().getAvailableXP();
     if (params.wager > available) throw new Error('Not enough XP for wager');
 
+    // Capture creator's current value so start baseline is accurate when opponent accepts
+    const progressState = useProgressStore.getState();
+    const creatorStartValue = challengeService.getCurrentValue(
+      params.type,
+      progressState,
+      params.targetModuleId
+    );
+
     const challengeId = await challengeService.createChallenge({
       ...params,
       creatorId: user.uid,
       creatorName: user.name || 'Unknown',
       creatorPhoto: user.picture || null,
+      creatorStartValue,
     });
 
     // Deduct wager
@@ -82,17 +91,16 @@ export const useChallengeStore = create<ChallengeState>()((set, get) => ({
     const progressState = useProgressStore.getState();
     const startValues: Record<string, number> = {};
     for (const pid of challenge.participants) {
-      // For the current user, use local progress; for opponent, use 0 (will be updated via their client)
       if (pid === user.uid) {
+        // Acceptor: capture current value now
         startValues[pid] = challengeService.getCurrentValue(
           challenge.type,
           progressState,
           challenge.targetModuleId
         );
       } else {
-        // The creator's start value is captured from their current value at accept time
-        // We use their progress field which was set to 0; they'll update on their end
-        startValues[pid] = challenge.progress[pid]?.currentValue || 0;
+        // Creator: use the startValue they stored when creating the challenge
+        startValues[pid] = challenge.progress[pid]?.startValue ?? challenge.progress[pid]?.currentValue ?? 0;
       }
     }
 

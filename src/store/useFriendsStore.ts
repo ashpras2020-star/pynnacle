@@ -224,6 +224,10 @@ export const useFriendsStore = create<FriendsState>()((set, get) => ({
         totalXP: state.totalXP + totalGifted,
       }));
 
+      // Refresh challenge progress so gifted XP counts toward xp_race challenges
+      const { useChallengeStore } = await import('@store/useChallengeStore');
+      useChallengeStore.getState().refreshProgress();
+
       // Mark all gifts as processed
       for (const gift of gifts) {
         await activityService.markGiftProcessed(userId, gift.id).catch(() => {});

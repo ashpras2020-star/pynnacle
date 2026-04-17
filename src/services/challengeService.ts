@@ -29,7 +29,9 @@ class ChallengeService {
     opponentId: string;
     opponentName: string;
     opponentPhoto: string | null;
+    creatorStartValue?: number;
   }): Promise<string> {
+    const creatorBase = params.creatorStartValue ?? 0;
     const challengeData = {
       createdBy: params.creatorId,
       participants: [params.creatorId, params.opponentId],
@@ -47,7 +49,7 @@ class ChallengeService {
       ...(params.targetModuleId && { targetModuleId: params.targetModuleId }),
       wager: params.wager,
       progress: {
-        [params.creatorId]: { startValue: 0, currentValue: 0 },
+        [params.creatorId]: { startValue: creatorBase, currentValue: creatorBase },
         [params.opponentId]: { startValue: 0, currentValue: 0 },
       },
       winner: null,
