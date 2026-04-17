@@ -206,15 +206,15 @@ class ActivityService {
   /**
    * Get unprocessed gift XP items from the user's own feed
    */
-  async getUnprocessedGifts(userId: string): Promise<{ id: string; amount: number }[]> {
+  async getUnprocessedGifts(userId: string): Promise<{ id: string; amount: number; fromName: string }[]> {
     const feedRef = collection(db, 'activities', userId, 'feed');
     const q = query(feedRef, where('type', '==', 'xp_gift_received'));
     const snapshot = await getDocs(q);
-    const gifts: { id: string; amount: number }[] = [];
+    const gifts: { id: string; amount: number; fromName: string }[] = [];
     for (const d of snapshot.docs) {
       const data = d.data();
       if (data.data?.processed === false && data.data?.giftAmount > 0) {
-        gifts.push({ id: d.id, amount: data.data.giftAmount });
+        gifts.push({ id: d.id, amount: data.data.giftAmount, fromName: data.data?.fromUserName || 'A friend' });
       }
     }
     return gifts;

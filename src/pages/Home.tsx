@@ -8,6 +8,7 @@ import { IDEContainer } from '@components/ide/IDEContainer';
 import { ChatbotButton } from '@components/chatbot/ChatbotButton';
 import { Users, Snowflake, Lightbulb, Zap, SkipForward, Moon, Sun } from 'lucide-react';
 import { useFriendsStore } from '@store/useFriendsStore';
+import { useChallengeStore } from '@store/useChallengeStore';
 import { useThemeStore } from '@store/useThemeStore';
 import { PynnacleLogo } from '@components/ui/PynnacleLogo';
 
@@ -26,7 +27,11 @@ export function Home() {
   const { user, isAuthenticated, signInWithGoogle, signOut, isLoading } = useUserStore();
   const incomingRequestCount = useFriendsStore((s) => s.incomingRequests.length);
   const quizInviteCount = useFriendsStore((s) => s.quizInvites.length);
-  const friendsNotificationCount = incomingRequestCount + quizInviteCount;
+  const pendingGiftCount = useFriendsStore((s) => s.pendingGiftNotifications.length);
+  const pendingChallengeCount = useChallengeStore((s) =>
+    s.challenges.filter((c) => c.status === 'pending' && c.createdBy !== user?.uid).length
+  );
+  const friendsNotificationCount = incomingRequestCount + quizInviteCount + pendingChallengeCount + pendingGiftCount;
   const { darkMode, toggleDarkMode } = useThemeStore();
   const availableXP = getAvailableXP();
   const [showResetConfirm, setShowResetConfirm] = useState(false);

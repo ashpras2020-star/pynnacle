@@ -6,6 +6,7 @@ import { useUserStore } from '@store/useUserStore';
 import { PynnacleLogo } from '@components/ui/PynnacleLogo';
 import { useThemeStore } from '@store/useThemeStore';
 import { useFriendsStore } from '@store/useFriendsStore';
+import { useChallengeStore } from '@store/useChallengeStore';
 import { Users, Moon, Sun } from 'lucide-react';
 
 // Google Sign-In types
@@ -27,7 +28,13 @@ export function LandingPage() {
   const navigate = useNavigate();
   const { user, isAuthenticated, signOut, signInWithGoogle, isLoading } = useUserStore();
   const { darkMode, toggleDarkMode } = useThemeStore();
-  const friendsNotificationCount = useFriendsStore((s) => s.incomingRequests.length + s.quizInvites.length);
+  const incomingRequestCount = useFriendsStore((s) => s.incomingRequests.length);
+  const quizInviteCount = useFriendsStore((s) => s.quizInvites.length);
+  const pendingGiftCount = useFriendsStore((s) => s.pendingGiftNotifications.length);
+  const pendingChallengeCount = useChallengeStore((s) =>
+    s.challenges.filter((c) => c.status === 'pending' && c.createdBy !== user?.uid).length
+  );
+  const friendsNotificationCount = incomingRequestCount + quizInviteCount + pendingChallengeCount + pendingGiftCount;
 
   // Handle logout
   const handleLogout = async () => {

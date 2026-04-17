@@ -21,6 +21,12 @@ interface QuizInviteItem {
   maxModule: number;
 }
 
+interface GiftNotification {
+  id: string;
+  amount: number;
+  fromName: string;
+}
+
 interface FriendsState {
   friends: FriendProfile[];
   incomingRequests: FriendRequest[];
@@ -29,6 +35,7 @@ interface FriendsState {
   activityFeed: ActivityFeedItem[];
   feedLoading: boolean;
   quizInvites: QuizInviteItem[];
+  pendingGiftNotifications: GiftNotification[];
 
   // Actions
   sendRequest: (email: string) => Promise<void>;
@@ -39,6 +46,7 @@ interface FriendsState {
   clearActivityFeed: () => Promise<void>;
   giftXP: (friendId: string, amount: number) => Promise<void>;
   processIncomingGifts: (userId: string) => Promise<void>;
+  clearGiftNotification: (id: string) => void;
   loadQuizInvites: () => Promise<void>;
 
   // Listeners
@@ -69,6 +77,7 @@ export const useFriendsStore = create<FriendsState>()((set, get) => ({
   activityFeed: [],
   feedLoading: false,
   quizInvites: [],
+  pendingGiftNotifications: [],
 
   sendRequest: async (email: string) => {
     const { useUserStore } = await import('@store/useUserStore');
@@ -185,10 +194,27 @@ export const useFriendsStore = create<FriendsState>()((set, get) => ({
     }
   },
 
+  clearGiftNotification: (id: string) => {
+    set((state) => ({
+      pendingGiftNotifications: state.pendingGiftNotifications.filter((g) => g.id !== id),
+    }));
+  },
+
   processIncomingGifts: async (userId: string) => {
     try {
       const gifts = await activityService.getUnprocessedGifts(userId);
       if (gifts.length === 0) return;
+
+      // Queue gift notifications so the toast can show them
+      set((state) => {
+        const existingIds = new Set(state.pendingGiftNotifications.map((g) => g.id));
+        const newNotifs = gifts
+          .filter((g) => !existingIds.has(g.id))
+          .map((g) => ({ id: g.id, amount: g.amount, fromName: g.fromName }));
+        return newNotifs.length > 0
+          ? { pendingGiftNotifications: [...state.pendingGiftNotifications, ...newNotifs] }
+          : {};
+      });
 
       const totalGifted = gifts.reduce((sum, g) => sum + g.amount, 0);
 
@@ -323,7 +349,7 @@ export const useFriendsStore = create<FriendsState>()((set, get) => ({
       useChallengeStore.getState().stopListening();
     }).catch(() => {});
 
-    set({ friends: [], incomingRequests: [], sentRequests: [], activityFeed: [], quizInvites: [] });
+    set({ friends: [], incomingRequests: [], sentRequests: [], activityFeed: [], quizInvites: [], pendingGiftNotifications: [] });
   },
 
   startPresenceUpdater: (userId: string) => {
