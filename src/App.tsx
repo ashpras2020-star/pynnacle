@@ -35,6 +35,7 @@ import { ScrollToTop } from '@components/common/ScrollToTop';
 import { QuizInviteToast } from '@components/liveQuiz/QuizInviteToast';
 import { BadgeEarnedToast } from '@components/ui/BadgeEarnedToast';
 import { StreakAnimation } from '@components/ui/StreakAnimation';
+import { ChallengeResultAnimation } from '@components/ui/ChallengeResultAnimation';
 import { FriendsNotificationToast } from '@components/friends/FriendsNotificationToast';
 
 // Game/quiz routes that already have their own dark styling — skip dark-mode filter on these.
@@ -77,6 +78,7 @@ function App() {
       <FriendsNotificationToast />
       <BadgeEarnedToast />
       <StreakAnimation />
+      <ChallengeResultAnimation />
       <Routes>
         {/* Public Landing Page */}
         <Route path="/" element={<LandingPage />} />

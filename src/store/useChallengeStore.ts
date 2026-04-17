@@ -11,9 +11,30 @@ import { db } from '@config/firebase';
 import { challengeService } from '@services/challengeService';
 import type { Challenge, ChallengeType } from '@types/challenge';
 
+export interface ChallengeResult {
+  challengeId: string;
+  won: boolean;
+  xpToAward: number;   // 0 for loser
+  opponentName: string;
+  wager: number;
+  type: ChallengeType;
+}
+
+const CLAIMED_KEY = 'pynnacle_claimed_challenges';
+function getClaimedIds(): Set<string> {
+  try { return new Set(JSON.parse(localStorage.getItem(CLAIMED_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function markClaimed(challengeId: string) {
+  const ids = getClaimedIds();
+  ids.add(challengeId);
+  try { localStorage.setItem(CLAIMED_KEY, JSON.stringify([...ids])); } catch {}
+}
+
 interface ChallengeState {
   challenges: Challenge[];
   isLoading: boolean;
+  challengeResultData: ChallengeResult | null;
 
   // Actions
   createChallenge: (params: {
@@ -29,6 +50,8 @@ interface ChallengeState {
   declineChallenge: (challengeId: string) => Promise<void>;
   cancelChallenge: (challengeId: string) => Promise<void>;
   refreshProgress: () => Promise<void>;
+  claimChallengeReward: () => Promise<void>;
+  dismissChallengeResult: () => void;
 
   // Listeners
   startListening: (userId: string) => void;
@@ -36,10 +59,14 @@ interface ChallengeState {
 }
 
 let unsubChallenges: (() => void) | null = null;
+// Track previous challenge states to detect active→completed transitions for loser
+const prevChallengeMap: Record<string, { status: string; winner: string | null }> = {};
+let listeningUserId: string | null = null;
 
 export const useChallengeStore = create<ChallengeState>()((set, get) => ({
   challenges: [],
   isLoading: false,
+  challengeResultData: null,
 
   createChallenge: async (params) => {
     const { useUserStore } = await import('@store/useUserStore');
@@ -145,6 +172,7 @@ export const useChallengeStore = create<ChallengeState>()((set, get) => ({
 
     const progressState = useProgressStore.getState();
     const activeChallenges = get().challenges.filter((c) => c.status === 'active');
+    const claimedIds = getClaimedIds();
 
     for (const challenge of activeChallenges) {
       const currentValue = challengeService.getCurrentValue(
@@ -165,27 +193,60 @@ export const useChallengeStore = create<ChallengeState>()((set, get) => ({
           },
         };
         const result = await challengeService.checkCompletion(updated);
-        if (result.completed && result.winner) {
-          // Winner gets 2x wager (their refund + opponent's wager)
-          if (result.winner === user.uid) {
-            useProgressStore.setState((state) => ({
-              spentXP: Math.max(0, state.spentXP - challenge.wager * 2),
-            }));
-            useProgressStore.getState().syncToCloud(user.uid).catch(() => {});
-          }
+        if (result.completed && result.winner === user.uid && !claimedIds.has(challenge.id)) {
+          const opponentId = challenge.participants.find((p) => p !== user.uid) || '';
+          const opponentName = challenge.participantNames[opponentId] || 'Your opponent';
+          // Show win animation — XP awarded when user clicks "Claim"
+          set({
+            challengeResultData: {
+              challengeId: challenge.id,
+              won: true,
+              xpToAward: challenge.wager * 2,
+              opponentName,
+              wager: challenge.wager,
+              type: challenge.type,
+            },
+          });
         }
       }
     }
   },
 
+  claimChallengeReward: async () => {
+    const result = get().challengeResultData;
+    if (!result || !result.won || result.xpToAward <= 0) {
+      set({ challengeResultData: null });
+      return;
+    }
+    markClaimed(result.challengeId);
+    const { useProgressStore } = await import('@store/useProgressStore');
+    const { useUserStore } = await import('@store/useUserStore');
+    // Reduce spentXP by 2x wager (refund creator + transfer opponent's wager)
+    useProgressStore.setState((state) => ({
+      spentXP: Math.max(0, state.spentXP - result.xpToAward),
+    }));
+    const userId = useUserStore.getState().user?.uid;
+    if (userId) {
+      useProgressStore.getState().syncToCloud(userId).catch(() => {});
+    }
+    set({ challengeResultData: null });
+  },
+
+  dismissChallengeResult: () => {
+    set({ challengeResultData: null });
+  },
+
   startListening: (userId: string) => {
     get().stopListening();
+    listeningUserId = userId;
     set({ isLoading: true });
 
     const q = query(
       collection(db, 'challenges'),
       where('participants', 'array-contains', userId)
     );
+
+    let firstSnapshot = true;
 
     unsubChallenges = onSnapshot(q, (snapshot) => {
       const challenges = snapshot.docs.map((d) => ({
@@ -199,6 +260,66 @@ export const useChallengeStore = create<ChallengeState>()((set, get) => ({
         return (order[a.status] ?? 4) - (order[b.status] ?? 4);
       });
 
+      const claimedIds = getClaimedIds();
+
+      if (firstSnapshot) {
+        firstSnapshot = false;
+        // Seed prevChallengeMap — don't fire animations for existing state
+        for (const c of challenges) {
+          prevChallengeMap[c.id] = { status: c.status, winner: c.winner };
+        }
+        // Re-trigger unclaimed win animation if a completed+won challenge wasn't claimed yet
+        if (!get().challengeResultData) {
+          for (const c of challenges) {
+            if (c.status === 'completed' && c.winner === userId && !claimedIds.has(c.id)) {
+              const opponentId = c.participants.find((p) => p !== userId) || '';
+              set({
+                challengeResultData: {
+                  challengeId: c.id,
+                  won: true,
+                  xpToAward: c.wager * 2,
+                  opponentName: c.participantNames[opponentId] || 'Your opponent',
+                  wager: c.wager,
+                  type: c.type,
+                },
+              });
+              break; // Show one at a time
+            }
+          }
+        }
+      } else {
+        // Detect transitions for loser: active → completed by someone else
+        if (!get().challengeResultData) {
+          for (const c of challenges) {
+            const prev = prevChallengeMap[c.id];
+            if (
+              prev &&
+              prev.status === 'active' &&
+              c.status === 'completed' &&
+              c.winner &&
+              c.winner !== userId
+            ) {
+              const opponentId = c.winner;
+              set({
+                challengeResultData: {
+                  challengeId: c.id,
+                  won: false,
+                  xpToAward: 0,
+                  opponentName: c.participantNames[opponentId] || 'Your opponent',
+                  wager: c.wager,
+                  type: c.type,
+                },
+              });
+              break;
+            }
+          }
+        }
+        // Update prevChallengeMap
+        for (const c of challenges) {
+          prevChallengeMap[c.id] = { status: c.status, winner: c.winner };
+        }
+      }
+
       set({ challenges, isLoading: false });
     }, (error) => {
       console.warn('Challenges listener failed:', error);
@@ -209,6 +330,8 @@ export const useChallengeStore = create<ChallengeState>()((set, get) => ({
   stopListening: () => {
     unsubChallenges?.();
     unsubChallenges = null;
+    listeningUserId = null;
+    for (const key in prevChallengeMap) delete prevChallengeMap[key];
     set({ challenges: [] });
   },
 }));
