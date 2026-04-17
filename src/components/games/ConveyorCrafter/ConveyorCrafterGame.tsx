@@ -234,7 +234,7 @@ function StationMap({
     <div className="max-w-lg w-full animate-cc-fade-in">
       <div className="text-center mb-8">
         <div className="text-6xl mb-3">🏭</div>
-        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-2">
+        <h1 className="text-4xl font-extrabold text-violet-600 mb-2">
           Conveyor Crafter
         </h1>
         <p className="text-slate-400 text-sm mb-4">Pick a station and craft list comprehensions!</p>
@@ -280,7 +280,7 @@ function StationMap({
         <div className="text-center mt-4">
           <button
             onClick={onComplete}
-            className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-emerald-200 text-sm"
+            className="px-8 py-3 text-white font-bold rounded-xl transition-all shadow-lg text-sm" style={{background:'linear-gradient(to right,#10b981,#14b8a6)'}}
           >
             All stations complete! View results
           </button>
@@ -392,7 +392,7 @@ function StationScreen({
             <button onClick={handleRetry} className="px-5 py-2 bg-white border-2 border-violet-300 text-violet-600 font-bold rounded-xl text-sm hover:border-violet-500 transition-all">
               Retry for more stars
             </button>
-            <button onClick={onBack} className="px-5 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-bold rounded-xl text-sm hover:from-violet-600 hover:to-purple-700 transition-all shadow-md">
+            <button onClick={onBack} className="px-5 py-2 text-white font-bold rounded-xl text-sm transition-all shadow-md" style={{background:'linear-gradient(to right,#7c3aed,#9333ea)'}}>
               Back to Map
             </button>
           </div>
@@ -448,7 +448,7 @@ function StationScreen({
 
           <div className="text-center mb-4">
             <button onClick={handleCraft} disabled={!preview}
-              className="px-8 py-3 bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 disabled:from-slate-300 disabled:to-slate-300 disabled:text-slate-400 text-white font-bold rounded-xl transition-all text-sm shadow-md disabled:shadow-none">
+              className="px-8 py-3 text-white font-bold rounded-xl transition-all text-sm shadow-md disabled:shadow-none disabled:opacity-50 disabled:text-slate-400" style={!preview ? {background:'#cbd5e1',color:'#94a3b8'} : {background:'linear-gradient(to right,#7c3aed,#9333ea)'}}>
               Craft!
             </button>
           </div>

@@ -1,7 +1,7 @@
 // Progress Store - Tracks lesson completions, XP, streaks with optional cloud sync
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { LessonCompletion } from '@types';
 
 interface ShopItem {
@@ -28,6 +28,8 @@ interface ProgressState {
   purchasedItems: ShopItem[];  // Items purchased from shop
   activeXPBoost: boolean;  // Whether XP boost is currently active
   streakFreezeActive: boolean;  // Whether a streak freeze was auto-used
+  streakAnimationData: { prev: number; next: number } | null;  // Non-null triggers animation
+  clearStreakAnimation: () => void;
 
   // Actions
   addCompletedLesson: (completion: LessonCompletion) => void;
@@ -69,6 +71,9 @@ export const useProgressStore = create<ProgressState>()(
       purchasedItems: [],  // No items purchased initially
       activeXPBoost: false,  // No active boost initially
       streakFreezeActive: false,  // No active streak freeze
+      streakAnimationData: null,
+
+      clearStreakAnimation: () => set({ streakAnimationData: null }),
 
       addCompletedLesson: async (completion) => {
         set((state) => {
@@ -93,14 +98,32 @@ export const useProgressStore = create<ProgressState>()(
           };
         });
 
-        // Sync to cloud after completing lesson
-        const { syncToCloud } = get();
+        // Update streak after completing a lesson (streak requires lesson completion)
+        get().updateStreak();
+
+        // Sync to cloud and post activity after completing lesson
+        const { syncToCloud, totalXP: prevXP } = get();
         import('@store/useUserStore').then(({ useUserStore }) => {
           const userId = useUserStore.getState().user?.uid;
           if (userId) {
             syncToCloud(userId).catch(err => console.warn('Progress sync failed:', err));
+
+            // Post lesson completed activity
+            import('@services/activityService').then(({ activityService }) => {
+              activityService.postActivity(userId, 'lesson_completed', {
+                lessonId: completion.lessonId,
+                xpEarned: completion.xpEarned,
+              });
+
+              // Check for XP milestone
+              const newXP = get().totalXP;
+              const milestone = activityService.getXPMilestone(prevXP, newXP);
+              if (milestone) {
+                activityService.postActivity(userId, 'xp_milestone', { totalXP: milestone });
+              }
+            }).catch(() => {});
           }
-        });
+        }).catch(() => {});
       },
 
       addXP: (amount) => {
@@ -115,7 +138,7 @@ export const useProgressStore = create<ProgressState>()(
           if (userId) {
             syncToCloud(userId).catch(err => console.warn('Progress sync failed:', err));
           }
-        });
+        }).catch(() => {});
       },
 
       // Unlock a lesson by spending XP
@@ -136,7 +159,7 @@ export const useProgressStore = create<ProgressState>()(
             if (userId) {
               syncToCloud(userId).catch(err => console.warn('Unlock sync failed:', err));
             }
-          });
+          }).catch(() => {});
 
           return true;
         }
@@ -156,14 +179,16 @@ export const useProgressStore = create<ProgressState>()(
         return availableXP >= cost;
       },
 
-      updateStreak: () =>
+      updateStreak: () => {
+        const prevStreak = get().currentStreak;
+
         set((state) => {
           const today = new Date().toDateString();
           const lastActive = state.lastActiveDate
             ? new Date(state.lastActiveDate).toDateString()
             : null;
 
-          // If already active today, no change
+          // If already active today, no streak change (but don't fire animation again)
           if (lastActive === today) {
             return state;
           }
@@ -200,8 +225,30 @@ export const useProgressStore = create<ProgressState>()(
             lastActiveDate: new Date().toISOString(),
             purchasedItems: updatedItems,
             streakFreezeActive: freezeUsed,
+            // Trigger animation when streak increases (first lesson of the day)
+            streakAnimationData: newStreak > state.currentStreak
+              ? { prev: state.currentStreak, next: newStreak }
+              : null,
           };
-        }),
+        });
+
+        // Check for streak milestone
+        const newStreak = get().currentStreak;
+        if (newStreak > prevStreak) {
+          import('@services/activityService').then(({ activityService }) => {
+            if (activityService.isStreakMilestone(newStreak)) {
+              import('@store/useUserStore').then(({ useUserStore }) => {
+                const userId = useUserStore.getState().user?.uid;
+                if (userId) {
+                  activityService.postActivity(userId, 'streak_milestone', {
+                    streakCount: newStreak,
+                  });
+                }
+              }).catch(() => {});
+            }
+          }).catch(() => {});
+        }
+      },
 
       // Purchase an item from the shop
       purchaseItem: (itemId: string, cost: number) => {
@@ -236,7 +283,7 @@ export const useProgressStore = create<ProgressState>()(
             if (userId) {
               syncToCloud(userId).catch(err => console.warn('Purchase sync failed:', err));
             }
-          });
+          }).catch(() => {});
 
           return true;
         }
@@ -264,7 +311,7 @@ export const useProgressStore = create<ProgressState>()(
             if (userId) {
               syncToCloud(userId).catch(err => console.warn('Item usage sync failed:', err));
             }
-          });
+          }).catch(() => {});
 
           return true;
         }
@@ -303,7 +350,7 @@ export const useProgressStore = create<ProgressState>()(
             if (userId) {
               syncToCloud(userId).catch(err => console.warn('XP boost activation sync failed:', err));
             }
-          });
+          }).catch(() => {});
 
           return true;
         }
@@ -332,7 +379,7 @@ export const useProgressStore = create<ProgressState>()(
             if (userId) {
               syncToCloud(userId).catch(err => console.warn('Skip token usage sync failed:', err));
             }
-          });
+          }).catch(() => {});
 
           // Don't mark lesson as completed - user still needs to complete the quiz/game
           // The game completion handler will mark it as complete with proper XP
@@ -369,8 +416,8 @@ export const useProgressStore = create<ProgressState>()(
       },
 
       // Check if a lesson is unlocked (purchased with XP)
-      isLessonUnlocked: (_lessonId: string) => {
-        return true; // TODO: revert — was: get().unlockedLessons.includes(lessonId);
+      isLessonUnlocked: (lessonId: string) => {
+        return get().unlockedLessons.includes(lessonId);
       },
 
       // Check if all lessons in a module are completed
@@ -417,14 +464,25 @@ export const useProgressStore = create<ProgressState>()(
           };
         });
 
-        // Sync to cloud after completing assessment
+        // Sync to cloud and post activity after completing assessment
         const { syncToCloud } = get();
         import('@store/useUserStore').then(({ useUserStore }) => {
           const userId = useUserStore.getState().user?.uid;
           if (userId) {
             syncToCloud(userId).catch(err => console.warn('Assessment sync failed:', err));
+
+            // Post assessment passed activity (only if passed)
+            if (completion.passed) {
+              import('@services/activityService').then(({ activityService }) => {
+                activityService.postActivity(userId, 'assessment_passed', {
+                  moduleId: completion.moduleId,
+                  score: completion.score,
+                  percentage: completion.percentage,
+                });
+              }).catch(() => {});
+            }
           }
-        });
+        }).catch(() => {});
       },
 
       // Check if assessment was passed (80% or higher)
@@ -481,6 +539,19 @@ export const useProgressStore = create<ProgressState>()(
     }),
     {
       name: 'python-learning-progress',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        completedLessons: state.completedLessons,
+        completedAssessments: state.completedAssessments,
+        totalXP: state.totalXP,
+        spentXP: state.spentXP,
+        currentStreak: state.currentStreak,
+        lastActiveDate: state.lastActiveDate,
+        unlockedLessons: state.unlockedLessons,
+        purchasedItems: state.purchasedItems,
+        activeXPBoost: state.activeXPBoost,
+        streakFreezeActive: state.streakFreezeActive,
+      }),
     }
   )
 );

@@ -351,6 +351,176 @@ export const module7Assessment: Assessment = {
       explanation: 'Function expects 2 arguments but only 1 provided',
       points: 5,
       concepts: ['arguments', 'TypeError', 'function calls']
+    },
+
+    // Question 21 - Keyword arguments
+    {
+      id: 'q21',
+      type: 'multiple-choice',
+      question: 'What prints?\n\ndef describe(name, age):\n    return f"{name} is {age}"\n\nprint(describe(age=30, name="Eve"))',
+      options: [
+        '30 is Eve',
+        'Eve is 30',
+        'Error',
+        'name is age'
+      ],
+      correctAnswer: 1,
+      explanation: 'Keyword arguments can be passed in any order. name="Eve" and age=30 are matched by name, not position.',
+      points: 5,
+      concepts: ['keyword arguments', 'named parameters', 'argument order']
+    },
+
+    // Question 22 - Nested function calls with return
+    {
+      id: 'q22',
+      type: 'multiple-choice',
+      question: 'What is the output?\n\ndef square(n):\n    return n * n\n\ndef sum_of_squares(a, b):\n    return square(a) + square(b)\n\nprint(sum_of_squares(3, 4))',
+      options: [
+        '7',
+        '12',
+        '25',
+        '49'
+      ],
+      correctAnswer: 2,
+      explanation: 'square(3)=9, square(4)=16, 9+16=25. Functions can call other functions and use their return values.',
+      points: 5,
+      concepts: ['function composition', 'nested calls', 'return values']
+    },
+
+    // Question 23 - Default parameter with mutable gotcha
+    {
+      id: 'q23',
+      type: 'multiple-choice',
+      question: 'What prints after both calls?\n\ndef add_item(item, lst=[]):\n    lst.append(item)\n    return lst\n\nprint(add_item("a"))\nprint(add_item("b"))',
+      options: [
+        "[\'a\']\n[\'b\']",
+        "[\'a\']\n[\'a\', \'b\']",
+        "Error",
+        "[\'a\', \'b\']\n[\'a\', \'b\']"
+      ],
+      correctAnswer: 1,
+      explanation: 'Mutable default arguments are shared across calls. The same list object is reused, so "b" is appended to the list that already contains "a".',
+      points: 5,
+      concepts: ['mutable defaults', 'common pitfalls', 'lists as parameters']
+    },
+
+    // Question 24 - Scope: accessing global inside function
+    {
+      id: 'q24',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nname = "Alice"\n\ndef greet():\n    return f"Hello {name}"\n\nprint(greet())',
+      options: [
+        'Hello Alice',
+        'NameError',
+        'Hello name',
+        'None'
+      ],
+      correctAnswer: 0,
+      explanation: 'Functions can read global variables. The function accesses the global "name" variable without needing the global keyword (which is only needed for reassignment).',
+      points: 5,
+      concepts: ['scope', 'global variables', 'reading vs writing']
+    },
+
+    // Question 25 - *args usage
+    {
+      id: 'q25',
+      type: 'multiple-choice',
+      question: 'What prints?\n\ndef total(*args):\n    return sum(args)\n\nprint(total(1, 2, 3, 4))',
+      options: [
+        'Error',
+        '(1, 2, 3, 4)',
+        '10',
+        '4'
+      ],
+      correctAnswer: 2,
+      explanation: '*args collects all positional arguments into a tuple. sum((1,2,3,4)) = 10.',
+      points: 5,
+      concepts: ['*args', 'variable arguments', 'tuple packing']
+    },
+
+    // Question 26 - Recursive function
+    {
+      id: 'q26',
+      type: 'multiple-choice',
+      question: 'What does this print?\n\ndef factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(4))',
+      options: [
+        '4',
+        '10',
+        '24',
+        '16'
+      ],
+      correctAnswer: 2,
+      explanation: 'factorial(4) = 4 * 3 * 2 * 1 = 24. The function calls itself with decreasing values until reaching the base case.',
+      points: 5,
+      concepts: ['recursion', 'base case', 'function self-call']
+    },
+
+    // Question 27 - Lambda function
+    {
+      id: 'q27',
+      type: 'multiple-choice',
+      question: 'What is the output?\n\ndouble = lambda x: x * 2\nprint(double(7))',
+      options: [
+        'x * 2',
+        '7',
+        '14',
+        'Error'
+      ],
+      correctAnswer: 2,
+      explanation: 'Lambda creates an anonymous function. double(7) evaluates 7 * 2 = 14.',
+      points: 5,
+      concepts: ['lambda', 'anonymous functions', 'expressions']
+    },
+
+    // Question 28 - Function as argument
+    {
+      id: 'q28',
+      type: 'multiple-choice',
+      question: 'What prints?\n\ndef apply(func, value):\n    return func(value)\n\ndef negate(x):\n    return -x\n\nprint(apply(negate, 5))',
+      options: [
+        '5',
+        '-5',
+        'Error',
+        'None'
+      ],
+      correctAnswer: 1,
+      explanation: 'Functions can be passed as arguments. apply() calls negate(5), which returns -5.',
+      points: 5,
+      concepts: ['higher-order functions', 'functions as arguments', 'callbacks']
+    },
+
+    // Question 29 - Docstring access
+    {
+      id: 'q29',
+      type: 'multiple-choice',
+      question: 'What does this print?\n\ndef add(a, b):\n    """Add two numbers."""\n    return a + b\n\nprint(add.__doc__)',
+      options: [
+        'None',
+        'add',
+        'Add two numbers.',
+        'Error'
+      ],
+      correctAnswer: 2,
+      explanation: 'The __doc__ attribute stores the function\'s docstring. Triple-quoted strings at the start of a function are docstrings.',
+      points: 5,
+      concepts: ['docstrings', '__doc__', 'documentation']
+    },
+
+    // Question 30 - Unpacking return values
+    {
+      id: 'q30',
+      type: 'multiple-choice',
+      question: 'What prints?\n\ndef min_max(numbers):\n    return min(numbers), max(numbers)\n\nlo, hi = min_max([4, 1, 7, 2])\nprint(hi - lo)',
+      options: [
+        '3',
+        '5',
+        '6',
+        '8'
+      ],
+      correctAnswer: 2,
+      explanation: 'min_max returns (1, 7). lo=1, hi=7, so hi - lo = 6. Tuple unpacking assigns each return value to a separate variable.',
+      points: 5,
+      concepts: ['tuple unpacking', 'multiple returns', 'min max']
     }
   ]
 };

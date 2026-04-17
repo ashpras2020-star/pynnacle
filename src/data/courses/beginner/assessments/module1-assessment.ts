@@ -331,6 +331,156 @@ export const module1Assessment: Assessment = {
       explanation: '10 divided by 3 is 3 remainder 1, so 10 % 3 = 1',
       points: 5,
       concepts: ['operators', 'modulus']
+    },
+
+    {
+      id: 'q21',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print(f"The answer is {5 + 3}")',
+      options: [
+        'The answer is {5 + 3}',
+        'The answer is 8',
+        'The answer is 53',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'F-strings evaluate expressions inside curly braces, so {5 + 3} becomes 8.',
+      points: 5,
+    },
+
+    {
+      id: 'q22',
+      type: 'multiple-choice' as const,
+      question: 'What happens when you run: print("Age: " + 25)',
+      options: [
+        'Prints "Age: 25"',
+        'Prints "Age: "25',
+        'TypeError occurs',
+        'Prints "Age: twenty-five"'
+      ],
+      correctAnswer: 2,
+      explanation: 'You cannot concatenate a string and an integer with +. You must convert the int to a string first using str(25).',
+      points: 5,
+    },
+
+    {
+      id: 'q23',
+      type: 'multiple-choice' as const,
+      question: 'What is the value of x after: x = 10; x += 3; x *= 2',
+      options: [
+        '16',
+        '26',
+        '23',
+        '36'
+      ],
+      correctAnswer: 1,
+      explanation: 'x starts at 10, += 3 makes it 13, then *= 2 makes it 26.',
+      points: 5,
+    },
+
+    {
+      id: 'q24',
+      type: 'multiple-choice' as const,
+      question: 'Which of the following is a valid multi-line string in Python?',
+      options: [
+        '"Hello\nWorld"',
+        '"""Hello\nWorld"""',
+        'Both A and B',
+        'Neither A nor B'
+      ],
+      correctAnswer: 2,
+      explanation: 'Both work: escape character \\n creates a newline in a regular string, and triple quotes allow actual newlines in the string.',
+      points: 5,
+    },
+
+    {
+      id: 'q25',
+      type: 'multiple-choice' as const,
+      question: 'What does type(True) return?',
+      options: [
+        '<class \'str\'>',
+        '<class \'int\'>',
+        '<class \'bool\'>',
+        '<class \'true\'>'
+      ],
+      correctAnswer: 2,
+      explanation: 'True and False are boolean values, so type() returns <class \'bool\'>.',
+      points: 5,
+    },
+
+    {
+      id: 'q26',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: name = "Alice"; print(f"Hello, {name}! You have {3 * 5} messages.")',
+      options: [
+        'Hello, Alice! You have 3 * 5 messages.',
+        'Hello, {name}! You have {3 * 5} messages.',
+        'Hello, Alice! You have 15 messages.',
+        'Error'
+      ],
+      correctAnswer: 2,
+      explanation: 'F-strings replace {name} with the variable value and evaluate {3 * 5} as 15.',
+      points: 5,
+    },
+
+    {
+      id: 'q27',
+      type: 'multiple-choice' as const,
+      question: 'What will this code print? a = 5; b = 2; print(a == b, a != b)',
+      options: [
+        'True True',
+        'False False',
+        'False True',
+        'True False'
+      ],
+      correctAnswer: 2,
+      explanation: '5 == 2 is False (not equal), and 5 != 2 is True (they are different).',
+      points: 5,
+    },
+
+    {
+      id: 'q28',
+      type: 'multiple-choice' as const,
+      question: 'What is the result of: print(bool(0), bool(""), bool(42))',
+      options: [
+        'False False True',
+        'True True True',
+        'False False False',
+        'True False True'
+      ],
+      correctAnswer: 0,
+      explanation: '0 and empty strings are falsy in Python (convert to False), while non-zero numbers are truthy (convert to True).',
+      points: 5,
+    },
+
+    {
+      id: 'q29',
+      type: 'multiple-choice' as const,
+      question: 'What does print("Hello", "World", sep="-") output?',
+      options: [
+        'Hello World',
+        'Hello-World',
+        'Hello - World',
+        'HelloWorld'
+      ],
+      correctAnswer: 1,
+      explanation: 'The sep parameter changes the separator between print arguments from the default space to "-".',
+      points: 5,
+    },
+
+    {
+      id: 'q30',
+      type: 'multiple-choice' as const,
+      question: 'Given: age = input("Age: ") and the user types 25, what is the result of age + 10?',
+      options: [
+        '35',
+        '"2510"',
+        'TypeError occurs',
+        '"35"'
+      ],
+      correctAnswer: 2,
+      explanation: 'input() returns a string "25", and you cannot add a string and an integer. You need int(age) + 10 to get 35.',
+      points: 5,
     }
   ]
 };

@@ -399,9 +399,9 @@ String methods are fundamental to text processing. Whether you're building a web
         'Remember strings are immutable - save the result!',
         'Result should be "Alice Johnson"'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     gameType: 'quiz',
   },
 
@@ -806,9 +806,9 @@ String concatenation, joining, and splitting are fundamental skills for text pro
         'Capitalize: cleaned.capitalize()',
         'Replace: cleaned.replace("world", "python")'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     gameType: 'quiz',
   },
 
@@ -1192,9 +1192,9 @@ F-strings make string formatting elegant and intuitive. They're powerful enough 
         'Embed variables: {product}, {price}',
         'Can calculate inside: {price * quantity}'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     gameType: 'quiz',
   },
 
@@ -1597,9 +1597,9 @@ Advanced string formatting is what separates amateur-looking output from profess
         'Percentage format: {rate:.1%}',
         'The .2f means 2 decimal places'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     gameType: 'quiz',
   },
 
@@ -2067,7 +2067,7 @@ These practical string operations are the bread and butter of text processing. W
         'Find position: sentence.find("brown")',
         'Count: sentence.count("the")'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 200,
     gameType: 'quiz',

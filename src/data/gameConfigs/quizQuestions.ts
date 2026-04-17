@@ -70,6 +70,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 0,
       explanation: 'Each print() creates a new line'
     },
+    {
+      question: 'What does print("3" + "4") display?',
+      options: ['7', '34', '"3" + "4"', 'Error'],
+      correctIndex: 1,
+      explanation: 'Adding two strings concatenates them: "3" + "4" = "34"'
+    },
+    {
+      question: 'What is the output of print("Hello", "World")?',
+      options: ['HelloWorld', 'Hello World', 'Hello, World', 'Error'],
+      correctIndex: 1,
+      explanation: 'Commas in print() add a space between items'
+    },
+    {
+      question: 'Which will cause an error?',
+      options: ['print("test")', 'print(100)', 'print(Hello)', 'print()'],
+      correctIndex: 2,
+      explanation: 'Hello without quotes is treated as an undefined variable, causing an error'
+    },
+    {
+      question: 'What does print() with no arguments do?',
+      options: ['Causes an error', 'Prints the word "None"', 'Prints a blank line', 'Does nothing'],
+      correctIndex: 2,
+      explanation: 'print() with no arguments outputs an empty line'
+    },
+    {
+      question: 'What is the output of print("5 + 3")?',
+      options: ['8', '5 + 3', 'Error', '"5 + 3"'],
+      correctIndex: 1,
+      explanation: 'Text inside quotes is printed literally, not calculated'
+    },
+    {
+      question: 'What is the output of print(5 + 3)?',
+      options: ['5 + 3', '"8"', '8', 'Error'],
+      correctIndex: 2,
+      explanation: 'Without quotes, Python evaluates the expression: 5 + 3 = 8'
+    },
+    {
+      question: 'How many lines of output does print("X\\nY") produce?',
+      options: ['1', '2', '3', 'Error'],
+      correctIndex: 1,
+      explanation: '\\n is a newline character, so X and Y appear on separate lines'
+    },
+    {
+      question: 'What does print("Ha" * 3) display?',
+      options: ['Ha 3', 'Ha * 3', 'HaHaHa', 'Error'],
+      correctIndex: 2,
+      explanation: 'Multiplying a string repeats it: "Ha" * 3 = "HaHaHa"'
+    },
+    {
+      question: 'Which statement prints a tab between words?',
+      options: ['print("A  B")', 'print("A\\tB")', 'print("A" tab "B")', 'print("A", tab, "B")'],
+      correctIndex: 1,
+      explanation: '\\t is the tab character used inside strings'
+    },
+    {
+      question: 'What happens if you forget the closing parenthesis: print("Hi"',
+      options: ['It still works', 'Prints Hi without formatting', 'SyntaxError', 'Prints nothing'],
+      correctIndex: 2,
+      explanation: 'Missing parenthesis causes a SyntaxError in Python'
+    },
   ],
 
   'lesson-1-2': [
@@ -132,6 +192,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['String variable', 'Integer variable', 'Float variable', 'Error'],
       correctIndex: 0,
       explanation: 'Quotes make it a string, not a number'
+    },
+    {
+      question: 'What does type(3.0) return?',
+      options: ['<class \'int\'>', '<class \'float\'>', '<class \'str\'>', '<class \'number\'>'],
+      correctIndex: 1,
+      explanation: '3.0 has a decimal point so it is a float'
+    },
+    {
+      question: 'What happens when you run: x = 10 then x = 20?',
+      options: ['Error: variable already exists', 'x holds both values', 'x is now 20', 'x is still 10'],
+      correctIndex: 2,
+      explanation: 'Reassigning a variable replaces the old value with the new one'
+    },
+    {
+      question: 'Which variable name is invalid?',
+      options: ['_score', 'my_var', 'class', 'data1'],
+      correctIndex: 2,
+      explanation: '"class" is a reserved keyword in Python and cannot be used as a variable name'
+    },
+    {
+      question: 'What is the type of False?',
+      options: ['str', 'int', 'bool', 'NoneType'],
+      correctIndex: 2,
+      explanation: 'False is a boolean value of type bool'
+    },
+    {
+      question: 'What does type("123") return?',
+      options: ['<class \'int\'>', '<class \'float\'>', '<class \'str\'>', '<class \'number\'>'],
+      correctIndex: 2,
+      explanation: 'Anything inside quotes is a string, even if it looks like a number'
+    },
+    {
+      question: 'After a = 5 and b = a, what is b?',
+      options: ['undefined', '0', '5', 'Error'],
+      correctIndex: 2,
+      explanation: 'b gets a copy of the value stored in a, which is 5'
+    },
+    {
+      question: 'Which naming convention is recommended in Python?',
+      options: ['camelCase', 'snake_case', 'PascalCase', 'ALLCAPS'],
+      correctIndex: 1,
+      explanation: 'Python convention uses snake_case for variable names (e.g., my_variable)'
+    },
+    {
+      question: 'What does type(True) return?',
+      options: ['<class \'str\'>', '<class \'int\'>', '<class \'bool\'>', '<class \'true\'>'],
+      correctIndex: 2,
+      explanation: 'True is a boolean, so type() returns <class \'bool\'>'
+    },
+    {
+      question: 'What is the result of: x = 7.0; print(type(x))?',
+      options: ['<class \'int\'>', '<class \'float\'>', '<class \'str\'>', '7.0'],
+      correctIndex: 1,
+      explanation: '7.0 is a float because it has a decimal point'
+    },
+    {
+      question: 'Can a variable change type in Python?',
+      options: ['No, types are fixed', 'Only with a special function', 'Yes, Python is dynamically typed', 'Only strings can change'],
+      correctIndex: 2,
+      explanation: 'Python is dynamically typed: x = 5 then x = "hello" is valid'
     },
   ],
 
@@ -196,6 +316,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Use - operator for subtraction: 10 - 3 = 7'
     },
+    {
+      question: 'What is the result of 17 // 5?',
+      options: ['3.4', '3', '4', '2'],
+      correctIndex: 1,
+      explanation: 'Integer division (//) drops the decimal: 17 // 5 = 3'
+    },
+    {
+      question: 'What is the result of 10 % 3?',
+      options: ['3', '0', '1', '3.33'],
+      correctIndex: 2,
+      explanation: '10 divided by 3 is 3 remainder 1, so 10 % 3 = 1'
+    },
+    {
+      question: 'What is 3 ** 0?',
+      options: ['0', '3', '1', 'Error'],
+      correctIndex: 2,
+      explanation: 'Any number raised to the power of 0 equals 1'
+    },
+    {
+      question: 'What is the result of 7 / 2?',
+      options: ['3', '3.5', '4', '3.0'],
+      correctIndex: 1,
+      explanation: 'Regular division always returns a float: 7 / 2 = 3.5'
+    },
+    {
+      question: 'What is the result of (10 + 2) * 3?',
+      options: ['16', '36', '32', '42'],
+      correctIndex: 1,
+      explanation: 'Parentheses first: (10 + 2) = 12, then 12 * 3 = 36'
+    },
+    {
+      question: 'What does -7 % 3 return in Python?',
+      options: ['-1', '2', '1', '-2'],
+      correctIndex: 1,
+      explanation: 'In Python, modulus result takes the sign of the divisor: -7 % 3 = 2'
+    },
+    {
+      question: 'What is 2 ** 4?',
+      options: ['8', '6', '16', '24'],
+      correctIndex: 2,
+      explanation: '2 ** 4 means 2 * 2 * 2 * 2 = 16'
+    },
+    {
+      question: 'What is the result of 5 + 10 // 3?',
+      options: ['5', '8', '5.0', '3'],
+      correctIndex: 1,
+      explanation: '// happens before +: 10 // 3 = 3, then 5 + 3 = 8'
+    },
+    {
+      question: 'What operator would you use to check if a number is even?',
+      options: ['/', '//', '%', '**'],
+      correctIndex: 2,
+      explanation: 'Use % (modulus): if number % 2 == 0, it is even'
+    },
+    {
+      question: 'What is the result of 9 // 2 * 2?',
+      options: ['9', '8', '4', '9.0'],
+      correctIndex: 1,
+      explanation: 'Left to right: 9 // 2 = 4, then 4 * 2 = 8'
+    },
   ],
 
   'lesson-1-4': [
@@ -259,6 +439,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'Outdated comments are worse than no comments'
     },
+    {
+      question: 'What is the output of: # print("Hello")',
+      options: ['Hello', 'Nothing, it is a comment', '# print("Hello")', 'Error'],
+      correctIndex: 1,
+      explanation: 'The # makes the entire line a comment, so nothing is executed or printed'
+    },
+    {
+      question: 'Which is a valid docstring?',
+      options: ['# This is a docstring', '// This is a docstring', '"""This is a docstring"""', '/* This is a docstring */'],
+      correctIndex: 2,
+      explanation: 'Docstrings use triple quotes (""" or \'\'\')'
+    },
+    {
+      question: 'Where should a docstring be placed in a function?',
+      options: ['Before the function definition', 'At the end of the function', 'Right after the def line', 'Anywhere in the function'],
+      correctIndex: 2,
+      explanation: 'Docstrings go immediately after the def line as the first statement'
+    },
+    {
+      question: 'What is the purpose of commenting out code?',
+      options: ['To delete it permanently', 'To temporarily disable it for testing', 'To make it run faster', 'To convert it to a string'],
+      correctIndex: 1,
+      explanation: 'Commenting out code lets you disable it without deleting, useful for debugging'
+    },
+    {
+      question: 'Which comment is better practice?',
+      options: ['# x = x + 1, adds 1 to x', '# Increment retry counter after failed attempt', '# This is a line of code', '# Variable operation'],
+      correctIndex: 1,
+      explanation: 'Good comments explain WHY, not WHAT: the intent behind the code'
+    },
+    {
+      question: 'Can a comment span multiple lines using # on each line?',
+      options: ['No, use /* */ instead', 'Yes, each line starts with #', 'Only up to 3 lines', 'No, only triple quotes work'],
+      correctIndex: 1,
+      explanation: 'You can use # at the start of each line for multi-line comments'
+    },
+    {
+      question: 'What happens if you put # in the middle of a string: print("Cost is #100")?',
+      options: ['Everything after # is a comment', 'Error', 'Prints: Cost is #100', 'Prints: Cost is'],
+      correctIndex: 2,
+      explanation: '# inside a string is treated as a regular character, not a comment'
+    },
+    {
+      question: 'Which is the correct inline comment style?',
+      options: ['x = 5 // set x to 5', 'x = 5  # set x to 5', 'x = 5 /* set x to 5 */', 'x = 5 -- set x to 5'],
+      correctIndex: 1,
+      explanation: 'Inline comments use # with two spaces before it by convention'
+    },
+    {
+      question: 'What is a TODO comment?',
+      options: ['A comment that runs later', 'A note marking work to be done', 'A type of docstring', 'A syntax error'],
+      correctIndex: 1,
+      explanation: '# TODO: comments mark tasks that need to be completed later'
+    },
+    {
+      question: 'Which triple-quote style is valid for docstrings?',
+      options: ['Only """', 'Only \'\'\'', 'Both """ and \'\'\'', 'Neither, use #'],
+      correctIndex: 2,
+      explanation: 'Both triple double quotes and triple single quotes work for docstrings'
+    },
   ],
 
   'lesson-1-5': [
@@ -321,6 +561,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['"Hi " + name', 'Both equal', 'f"Hi {name}"', 'Neither'],
       correctIndex: 2,
       explanation: 'F-strings are cleaner and more flexible'
+    },
+    {
+      question: 'What does float(input()) do?',
+      options: ['Gets input as an integer', 'Gets input as a decimal number', 'Causes an error', 'Gets input as a string'],
+      correctIndex: 1,
+      explanation: 'float() converts the string from input() into a decimal number'
+    },
+    {
+      question: 'What is the output of: name = "Alice"; print(f"Hello, {name}!")?',
+      options: ['Hello, {name}!', 'Hello, Alice!', 'f"Hello, Alice!"', 'Error'],
+      correctIndex: 1,
+      explanation: 'The f-string replaces {name} with the value of the variable: Alice'
+    },
+    {
+      question: 'What happens if the user types "abc" and you run int(input())?',
+      options: ['Returns 0', 'Returns "abc"', 'ValueError', 'Returns None'],
+      correctIndex: 2,
+      explanation: 'int() cannot convert non-numeric text, so it raises a ValueError'
+    },
+    {
+      question: 'What does f"{10 * 3}" evaluate to?',
+      options: ['"10 * 3"', '"30"', '30', '{10 * 3}'],
+      correctIndex: 2,
+      explanation: 'F-strings evaluate the expression inside {}, producing the string "30" which displays as 30'
+    },
+    {
+      question: 'What is the output of: x = 5; print(f"x = {x}")?',
+      options: ['x = {x}', 'x = 5', '5 = 5', 'Error'],
+      correctIndex: 1,
+      explanation: 'The literal "x = " is kept, and {x} is replaced with 5'
+    },
+    {
+      question: 'How do you display a literal curly brace in an f-string?',
+      options: ['Use \\{', 'Use {{', 'Not possible', 'Use {brace}'],
+      correctIndex: 1,
+      explanation: 'Double the braces to display them literally: f"{{" prints {'
+    },
+    {
+      question: 'What is the result of: age = input("Age: "); print(age + 1)?',
+      options: ['The age plus 1', 'TypeError', 'The age with 1 appended', 'Nothing'],
+      correctIndex: 1,
+      explanation: 'input() returns a string; you cannot add a string and an integer without converting first'
+    },
+    {
+      question: 'Which correctly gets a number from the user and doubles it?',
+      options: ['x = input() * 2', 'x = int(input()) * 2', 'x = input(int) * 2', 'x = double(input())'],
+      correctIndex: 1,
+      explanation: 'First convert to int with int(input()), then multiply by 2'
+    },
+    {
+      question: 'What does f"{"Python"}" produce?',
+      options: ['Python', 'Error', '{"Python"}', 'f"Python"'],
+      correctIndex: 0,
+      explanation: 'The expression inside {} is the string "Python", which evaluates to Python'
+    },
+    {
+      question: 'What is the output of: print(f"{5 > 3}")?',
+      options: ['5 > 3', 'True', 'False', 'Error'],
+      correctIndex: 1,
+      explanation: 'F-strings evaluate expressions: 5 > 3 is True, so it prints True'
     },
   ],
 
@@ -386,6 +686,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'False condition means code block doesn\'t run'
     },
+    {
+      question: 'What does this print?\nx = 10\nif x > 5:\n    print("big")',
+      options: ['nothing', 'big', 'error', '10'],
+      correctIndex: 1,
+      explanation: '10 > 5 is True, so "big" is printed'
+    },
+    {
+      question: 'Which operator checks if two values are NOT equal?',
+      options: ['<>', '!=', '!==', 'not='],
+      correctIndex: 1,
+      explanation: '!= is the not-equal comparison operator in Python'
+    },
+    {
+      question: 'What is wrong with: if x = 5:',
+      options: ['Missing parentheses', 'Uses = instead of ==', 'Missing indentation', 'Nothing is wrong'],
+      correctIndex: 1,
+      explanation: '= is assignment, == is comparison; conditions need =='
+    },
+    {
+      question: 'What does "not True" evaluate to?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'The "not" keyword flips True to False and vice versa'
+    },
+    {
+      question: 'What prints?\nage = 15\nif age >= 18:\n    print("adult")\nprint("done")',
+      options: ['adult done', 'adult', 'done', 'nothing'],
+      correctIndex: 2,
+      explanation: '15 >= 18 is False so "adult" is skipped, but "done" is outside the if block'
+    },
+    {
+      question: 'Which is a valid if statement?',
+      options: ['if (x > 5) {', 'if x > 5:', 'if x > 5 then', 'IF x > 5:'],
+      correctIndex: 1,
+      explanation: 'Python uses lowercase if with a colon and no braces'
+    },
+    {
+      question: 'What does this evaluate to?\nx = 3\nx > 1 and x < 10',
+      options: ['True', 'False', '3', 'Error'],
+      correctIndex: 0,
+      explanation: '3 > 1 is True and 3 < 10 is True; True and True gives True'
+    },
+    {
+      question: 'How many spaces is standard Python indentation?',
+      options: ['1', '2', '4', '8'],
+      correctIndex: 2,
+      explanation: 'PEP 8 recommends 4 spaces for indentation'
+    },
+    {
+      question: 'What does <= mean?',
+      options: ['Less than', 'Greater than or equal', 'Less than or equal', 'Not equal'],
+      correctIndex: 2,
+      explanation: '<= checks if the left value is less than or equal to the right'
+    },
+    {
+      question: 'What prints?\nx = 5\nif x > 2 or x > 10:\n    print("yes")',
+      options: ['nothing', 'yes', 'error', 'no'],
+      correctIndex: 1,
+      explanation: '5 > 2 is True; with "or" only one condition needs to be True'
+    },
   ],
 
   'lesson-5-2': [
@@ -448,6 +808,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Error occurs', 'else block runs', 'First block runs', 'Nothing runs'],
       correctIndex: 1,
       explanation: 'else catches all False cases'
+    },
+    {
+      question: 'What prints?\nx = 85\nif x >= 90:\n    print("A")\nelif x >= 80:\n    print("B")\nelse:\n    print("C")',
+      options: ['A', 'B', 'C', 'A and B'],
+      correctIndex: 1,
+      explanation: '85 >= 90 is False, but 85 >= 80 is True so "B" prints'
+    },
+    {
+      question: 'What happens if you write elif without a preceding if?',
+      options: ['It works fine', 'SyntaxError', 'It acts like if', 'It is ignored'],
+      correctIndex: 1,
+      explanation: 'elif must come after an if statement or another elif'
+    },
+    {
+      question: 'What prints?\ntemp = 30\nif temp > 35:\n    print("hot")\nelif temp > 25:\n    print("warm")\nelif temp > 15:\n    print("cool")',
+      options: ['hot', 'warm', 'cool', 'warm and cool'],
+      correctIndex: 1,
+      explanation: 'Only the first True branch runs; 30 > 25 is True so "warm" prints'
+    },
+    {
+      question: 'Can you put an if statement inside another if statement?',
+      options: ['No, not allowed', 'Only with elif', 'Yes, this is called nesting', 'Only in functions'],
+      correctIndex: 2,
+      explanation: 'Nested ifs are if statements inside other if blocks'
+    },
+    {
+      question: 'What prints?\nx = 5\nif x > 0:\n    if x > 10:\n        print("big")\n    else:\n        print("small")',
+      options: ['big', 'small', 'nothing', 'error'],
+      correctIndex: 1,
+      explanation: 'x > 0 is True, then x > 10 is False, so inner else runs'
+    },
+    {
+      question: 'How many elif branches can follow a single if?',
+      options: ['Only 1', 'Up to 5', 'Up to 10', 'As many as needed'],
+      correctIndex: 3,
+      explanation: 'There is no limit on the number of elif branches'
+    },
+    {
+      question: 'What prints?\ncolor = "blue"\nif color == "red":\n    print(1)\nelif color == "blue":\n    print(2)\nelse:\n    print(3)',
+      options: ['1', '2', '3', '1 and 2'],
+      correctIndex: 1,
+      explanation: 'color is "blue" which matches the elif condition'
+    },
+    {
+      question: 'Is else required after elif?',
+      options: ['Yes, always', 'No, it is optional', 'Only with multiple elif', 'Only if there is one elif'],
+      correctIndex: 1,
+      explanation: 'else is always optional; you can end with elif'
+    },
+    {
+      question: 'What prints?\nscore = 100\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelif score == 100:\n    print("perfect")',
+      options: ['A', 'B', 'perfect', 'A and perfect'],
+      correctIndex: 0,
+      explanation: 'The first True condition (score >= 90) runs and the rest are skipped'
+    },
+    {
+      question: 'What is the output?\nx = 0\nif x:\n    print("truthy")\nelse:\n    print("falsy")',
+      options: ['truthy', 'falsy', 'error', '0'],
+      correctIndex: 1,
+      explanation: '0 is a falsy value in Python, so the else branch runs'
     },
   ],
 
@@ -512,6 +932,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 3,
       explanation: 'Indentation shows what code repeats'
     },
+    {
+      question: 'What does this print?\nx = 3\nwhile x > 0:\n    print(x)\n    x -= 1',
+      options: ['3 2 1', '3 2 1 0', '2 1 0', '1 2 3'],
+      correctIndex: 0,
+      explanation: 'x starts at 3, prints then decrements; stops when x becomes 0'
+    },
+    {
+      question: 'What does break do inside a while loop?',
+      options: ['Pauses the loop', 'Skips one iteration', 'Exits the loop immediately', 'Restarts the loop'],
+      correctIndex: 2,
+      explanation: 'break immediately terminates the loop'
+    },
+    {
+      question: 'How many times does this loop run?\ncount = 0\nwhile count < 3:\n    count += 1',
+      options: ['0', '2', '3', '4'],
+      correctIndex: 2,
+      explanation: 'count goes 0->1, 1->2, 2->3; at 3 the condition is False (3 runs)'
+    },
+    {
+      question: 'What causes this to be an infinite loop?\nwhile True:\n    print("hello")',
+      options: ['print statement', 'The condition is always True', 'Missing colon', 'Missing variable'],
+      correctIndex: 1,
+      explanation: 'True never becomes False, so the loop never stops'
+    },
+    {
+      question: 'What is the value of total after this code?\ntotal = 0\ni = 1\nwhile i <= 4:\n    total += i\n    i += 1',
+      options: ['4', '10', '6', '15'],
+      correctIndex: 1,
+      explanation: 'total = 1 + 2 + 3 + 4 = 10'
+    },
+    {
+      question: 'What is a counter variable used for in while loops?',
+      options: ['To store the result', 'To track how many times the loop runs', 'To name the loop', 'To pause execution'],
+      correctIndex: 1,
+      explanation: 'A counter tracks iterations and helps the loop eventually stop'
+    },
+    {
+      question: 'What does x -= 1 do?',
+      options: ['Sets x to -1', 'Subtracts 1 from x', 'Checks if x is 1', 'Multiplies x by -1'],
+      correctIndex: 1,
+      explanation: 'x -= 1 is shorthand for x = x - 1'
+    },
+    {
+      question: 'What prints?\nnum = 1\nwhile num < 5:\n    if num == 3:\n        break\n    print(num)\n    num += 1',
+      options: ['1 2 3', '1 2', '1 2 3 4', '3'],
+      correctIndex: 1,
+      explanation: 'When num reaches 3, break exits the loop before printing'
+    },
+    {
+      question: 'Which of these creates a valid while loop that runs exactly once?',
+      options: ['while False:', 'while 0:', 'x = 1\nwhile x > 0:\n    x -= 1', 'while "":'],
+      correctIndex: 2,
+      explanation: 'x starts at 1 (True), runs once, then x becomes 0 (False)'
+    },
+    {
+      question: 'What is wrong with this code?\nwhile x < 10:\n    print(x)',
+      options: ['Missing colon', 'x is never changed so it may loop forever', 'print is wrong', 'Nothing is wrong'],
+      correctIndex: 1,
+      explanation: 'Without changing x, the condition never becomes False (infinite loop)'
+    },
   ],
 
   'lesson-5-4': [
@@ -575,6 +1055,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'for with range() is cleaner for counting'
     },
+    {
+      question: 'What does range(2, 8) produce?',
+      options: ['2, 3, 4, 5, 6, 7, 8', '2, 3, 4, 5, 6, 7', '3, 4, 5, 6, 7', '2, 4, 6, 8'],
+      correctIndex: 1,
+      explanation: 'range(2, 8) starts at 2 and stops before 8'
+    },
+    {
+      question: 'What does this print?\nfor letter in "hi":\n    print(letter)',
+      options: ['hi', 'h i', 'h\\ni', '"h" then "i" on separate lines'],
+      correctIndex: 3,
+      explanation: 'The loop iterates character by character, printing each on its own line'
+    },
+    {
+      question: 'What does enumerate() do?',
+      options: ['Counts list items', 'Gives index and value together', 'Sorts the list', 'Reverses the list'],
+      correctIndex: 1,
+      explanation: 'enumerate() returns pairs of (index, value) for each item'
+    },
+    {
+      question: 'What does this print?\nfor i in range(3):\n    for j in range(2):\n        print(i, j)',
+      options: ['3 pairs', '5 pairs', '6 pairs', '2 pairs'],
+      correctIndex: 2,
+      explanation: 'Nested loops: 3 outer iterations x 2 inner iterations = 6 pairs'
+    },
+    {
+      question: 'What does range(5, 0, -1) produce?',
+      options: ['5, 4, 3, 2, 1', '5, 4, 3, 2, 1, 0', '0, 1, 2, 3, 4, 5', '4, 3, 2, 1, 0'],
+      correctIndex: 0,
+      explanation: 'Starts at 5, counts down by 1, stops before 0'
+    },
+    {
+      question: 'How do you iterate over a list with its index?\nfruits = ["a", "b", "c"]',
+      options: ['for i in fruits:', 'for i, f in enumerate(fruits):', 'for i in range(fruits):', 'for i, f in fruits:'],
+      correctIndex: 1,
+      explanation: 'enumerate() provides both the index and the value'
+    },
+    {
+      question: 'What is the loop variable in: for num in [10, 20, 30]:',
+      options: ['for', 'in', 'num', 'the list'],
+      correctIndex: 2,
+      explanation: 'num is the variable that takes each value from the list'
+    },
+    {
+      question: 'How many times does this run?\nfor i in range(0):\n    print(i)',
+      options: ['0 times', '1 time', 'Infinite', 'Error'],
+      correctIndex: 0,
+      explanation: 'range(0) produces an empty sequence, so the loop body never runs'
+    },
+    {
+      question: 'What does this print?\nwords = ["hi", "bye"]\nfor w in words:\n    print(len(w))',
+      options: ['hi bye', '2 3', '2 2', '1 2'],
+      correctIndex: 1,
+      explanation: 'len("hi") is 2 and len("bye") is 3'
+    },
+    {
+      question: 'What does range(1, 10, 3) produce?',
+      options: ['1, 3, 6, 9', '1, 4, 7', '1, 4, 7, 10', '3, 6, 9'],
+      correctIndex: 1,
+      explanation: 'Starts at 1, steps by 3: 1, 4, 7 (10 is excluded)'
+    },
   ],
 
   'lesson-5-5': [
@@ -637,6 +1177,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Yes', 'Sometimes', 'No', 'Always'],
       correctIndex: 2,
       explanation: 'break and continue work independently'
+    },
+    {
+      question: 'What does this print?\nfor i in range(5):\n    if i == 2:\n        continue\n    print(i)',
+      options: ['0 1 2 3 4', '0 1 3 4', '2', '0 1'],
+      correctIndex: 1,
+      explanation: 'continue skips the rest of the iteration when i is 2, so 2 is not printed'
+    },
+    {
+      question: 'What does this print?\nfor i in range(5):\n    if i == 3:\n        break\n    print(i)',
+      options: ['0 1 2 3', '0 1 2', '3 4', '0 1 2 3 4'],
+      correctIndex: 1,
+      explanation: 'break exits the loop when i is 3, before printing 3'
+    },
+    {
+      question: 'What does for/else do in Python?',
+      options: ['else runs if loop had an error', 'else always runs after the loop', 'else runs only if break was NOT used', 'else runs only if break was used'],
+      correctIndex: 2,
+      explanation: 'The else block after a for loop runs only if the loop completed without break'
+    },
+    {
+      question: 'What prints?\nfor i in range(3):\n    pass\nelse:\n    print("done")',
+      options: ['nothing', 'done', 'error', '0 1 2 done'],
+      correctIndex: 1,
+      explanation: 'The loop completes without break, so the else block runs'
+    },
+    {
+      question: 'What prints?\nfor i in range(5):\n    if i == 1:\n        break\nelse:\n    print("complete")',
+      options: ['complete', 'nothing', '0', '0 complete'],
+      correctIndex: 1,
+      explanation: 'break was used so the else block does NOT run'
+    },
+    {
+      question: 'Can you use both break and continue in the same loop?',
+      options: ['No', 'Only in while loops', 'Only in for loops', 'Yes'],
+      correctIndex: 3,
+      explanation: 'Both can be used in the same loop for different conditions'
+    },
+    {
+      question: 'What does continue do in a while loop?\nwhile condition:\n    if something:\n        continue\n    other_code()',
+      options: ['Exits the loop', 'Jumps back to check the condition', 'Runs other_code()', 'Ends the program'],
+      correctIndex: 1,
+      explanation: 'continue skips the rest of the body and goes back to the while condition'
+    },
+    {
+      question: 'What prints?\nfor n in [1, 2, 3, 4, 5]:\n    if n % 2 == 0:\n        continue\n    print(n)',
+      options: ['1 2 3 4 5', '2 4', '1 3 5', '1 3'],
+      correctIndex: 2,
+      explanation: 'continue skips even numbers; odd numbers (1, 3, 5) are printed'
+    },
+    {
+      question: 'What happens if break is used outside a loop?',
+      options: ['Nothing', 'SyntaxError', 'Program exits', 'It is ignored'],
+      correctIndex: 1,
+      explanation: 'break can only be used inside a loop; using it outside causes SyntaxError'
+    },
+    {
+      question: 'What does this print?\nfound = False\nfor x in [4, 7, 2, 9]:\n    if x == 7:\n        found = True\n        break\nprint(found)',
+      options: ['False', 'True', '7', 'error'],
+      correctIndex: 1,
+      explanation: 'The loop finds 7, sets found to True, and breaks'
     },
   ],
 
@@ -702,6 +1302,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Lists maintain insertion order'
     },
+    {
+      question: 'What does .pop() return when called with no arguments?',
+      options: ['The first item', 'None', 'The last item', 'The list length'],
+      correctIndex: 2,
+      explanation: '.pop() removes and returns the last item in the list'
+    },
+    {
+      question: 'What does "in" do with a list?',
+      options: ['Adds an item', 'Checks if item exists', 'Removes an item', 'Sorts the list'],
+      correctIndex: 1,
+      explanation: 'The "in" operator checks membership: 3 in [1, 2, 3] returns True'
+    },
+    {
+      question: 'What is the output of len([10, 20, 30, 40])?',
+      options: ['3', '40', '4', '10'],
+      correctIndex: 2,
+      explanation: 'len() counts the number of items; this list has 4 elements'
+    },
+    {
+      question: 'What does .pop(0) do?',
+      options: ['Removes the last item', 'Removes and returns the first item', 'Returns 0', 'Clears the list'],
+      correctIndex: 1,
+      explanation: '.pop(index) removes and returns the item at that index'
+    },
+    {
+      question: 'What happens when you call .remove() on a value not in the list?',
+      options: ['Returns None', 'Does nothing', 'Raises ValueError', 'Removes the last item'],
+      correctIndex: 2,
+      explanation: '.remove() raises ValueError if the item is not found'
+    },
+    {
+      question: 'Which creates a list from a string "abc"?',
+      options: ['list["abc"]', 'list("abc")', '["abc"]', '"abc".list()'],
+      correctIndex: 1,
+      explanation: 'list("abc") creates ["a", "b", "c"] by iterating the string'
+    },
+    {
+      question: 'What does .append() return?',
+      options: ['The new list', 'The appended item', 'None', 'The list length'],
+      correctIndex: 2,
+      explanation: '.append() modifies the list in place and returns None'
+    },
+    {
+      question: 'How do you check if a list is empty?',
+      options: ['if my_list == 0', 'if my_list.empty()', 'if not my_list', 'if my_list is None'],
+      correctIndex: 2,
+      explanation: 'Empty lists are falsy; "if not my_list" is True when the list is empty'
+    },
+    {
+      question: 'What does .insert(1, "x") do?',
+      options: ['Replaces index 1 with "x"', 'Inserts "x" at index 1', 'Adds "x" at end', 'Adds 1 copy of "x"'],
+      correctIndex: 1,
+      explanation: '.insert(index, item) places the item at the given index, shifting others right'
+    },
+    {
+      question: 'What is the result of [1, 2] + [3, 4]?',
+      options: ['[4, 6]', '[[1, 2], [3, 4]]', '[1, 2, 3, 4]', 'Error'],
+      correctIndex: 2,
+      explanation: 'The + operator concatenates lists into a new combined list'
+    },
   ],
 
   'lesson-6-2': [
@@ -764,6 +1424,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Returns None', 'Returns empty list', 'IndexError', 'Wraps around'],
       correctIndex: 2,
       explanation: 'Accessing invalid index raises IndexError'
+    },
+    {
+      question: 'For nums = [10, 20, 30, 40, 50], what is nums[2]?',
+      options: ['20', '30', '10', '40'],
+      correctIndex: 1,
+      explanation: 'Index 2 is the third element (0-based), which is 30'
+    },
+    {
+      question: 'For nums = [10, 20, 30, 40, 50], what is nums[-2]?',
+      options: ['20', '50', '40', '30'],
+      correctIndex: 2,
+      explanation: 'Index -2 is the second-to-last element, which is 40'
+    },
+    {
+      question: 'What does my_list[1:1] return?',
+      options: ['The item at index 1', 'An empty list', 'None', 'IndexError'],
+      correctIndex: 1,
+      explanation: 'When start equals stop, the slice is empty: []'
+    },
+    {
+      question: 'For letters = ["a", "b", "c", "d"], what is letters[0:2]?',
+      options: ['["a", "b", "c"]', '["a", "b"]', '["b", "c"]', '["a"]'],
+      correctIndex: 1,
+      explanation: 'Slice [0:2] includes index 0 and 1 but excludes 2'
+    },
+    {
+      question: 'What does my_list[-3:] return?',
+      options: ['First 3 items', 'Last 3 items', 'All except last 3', 'Error'],
+      correctIndex: 1,
+      explanation: 'Starting at -3 goes from third-to-last to the end'
+    },
+    {
+      question: 'Can you assign a new value to a list index?',
+      options: ['No, lists are immutable', 'Yes, e.g. my_list[0] = 99', 'Only the last index', 'Only with .set()'],
+      correctIndex: 1,
+      explanation: 'Lists are mutable, so you can assign directly by index'
+    },
+    {
+      question: 'What does an out-of-range slice return?',
+      options: ['IndexError', 'None', 'An empty list or partial result', 'The whole list'],
+      correctIndex: 2,
+      explanation: 'Slicing does not raise errors; it returns what is available'
+    },
+    {
+      question: 'For x = [0, 1, 2, 3, 4, 5], what is x[1:5:2]?',
+      options: ['[1, 2, 3, 4]', '[1, 3]', '[1, 3, 5]', '[2, 4]'],
+      correctIndex: 1,
+      explanation: 'Start at 1, stop before 5, step 2 gives indices 1 and 3'
+    },
+    {
+      question: 'What does my_list[:] return?',
+      options: ['An empty list', 'The first item', 'A copy of the entire list', 'None'],
+      correctIndex: 2,
+      explanation: 'Omitting both start and stop creates a shallow copy of the list'
+    },
+    {
+      question: 'For data = [5, 10, 15, 20], what is data[-1:-3:-1]?',
+      options: ['[20, 15]', '[15, 10]', '[20, 15, 10]', '[15, 20]'],
+      correctIndex: 0,
+      explanation: 'Start at -1 (20), step -1, stop before -3 (10), gives [20, 15]'
     },
   ],
 
@@ -828,6 +1548,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: '.keys() returns all dictionary keys'
     },
+    {
+      question: 'What does .values() return?',
+      options: ['All keys', 'All key-value pairs', 'All values', 'The dictionary length'],
+      correctIndex: 2,
+      explanation: '.values() returns a view of all values in the dictionary'
+    },
+    {
+      question: 'What does .items() return?',
+      options: ['Just the keys', 'Just the values', 'Key-value pairs as tuples', 'The number of items'],
+      correctIndex: 2,
+      explanation: '.items() returns pairs like dict_items([("a", 1), ("b", 2)])'
+    },
+    {
+      question: 'How do you delete a key from a dictionary?',
+      options: ['del my_dict["key"]', 'my_dict.delete("key")', 'my_dict.remove("key")', 'my_dict -= "key"'],
+      correctIndex: 0,
+      explanation: 'The del statement removes a key-value pair by key'
+    },
+    {
+      question: 'What does .get("key", 0) return if key is missing?',
+      options: ['None', 'KeyError', '0', 'False'],
+      correctIndex: 2,
+      explanation: '.get() accepts a default value as second argument, returned when key is missing'
+    },
+    {
+      question: 'Can a list be used as a dictionary key?',
+      options: ['Yes', 'Only empty lists', 'No, lists are mutable', 'Only with str()'],
+      correctIndex: 2,
+      explanation: 'Dictionary keys must be immutable; lists are mutable so cannot be keys'
+    },
+    {
+      question: 'What does len() return for {"a": 1, "b": 2, "c": 3}?',
+      options: ['6', '3', '2', '9'],
+      correctIndex: 1,
+      explanation: 'len() counts the number of key-value pairs in the dictionary'
+    },
+    {
+      question: 'How do you update an existing key\'s value?',
+      options: ['my_dict.update("key")', 'my_dict["key"] = new_value', 'my_dict.set("key", value)', 'my_dict.replace("key")'],
+      correctIndex: 1,
+      explanation: 'Assigning to an existing key overwrites the previous value'
+    },
+    {
+      question: 'What does "in" check for with dictionaries?',
+      options: ['If a value exists', 'If a key exists', 'Both keys and values', 'The dict length'],
+      correctIndex: 1,
+      explanation: 'The "in" operator checks for key membership, not values'
+    },
+    {
+      question: 'How do you create an empty dictionary?',
+      options: ['dict[]', 'empty()', '{}', '[]'],
+      correctIndex: 2,
+      explanation: 'Empty curly braces {} create an empty dictionary (not a set)'
+    },
+    {
+      question: 'What does .pop("key") do?',
+      options: ['Removes last item', 'Returns and removes value for key', 'Removes all keys', 'Returns True or False'],
+      correctIndex: 1,
+      explanation: '.pop(key) removes the key and returns its value'
+    },
   ],
 
   'lesson-6-4': [
@@ -891,6 +1671,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Tuples are immutable, so valid as keys'
     },
+    {
+      question: 'What does (1, 2, 3).count(2) return?',
+      options: ['2', '1', '0', 'Error'],
+      correctIndex: 1,
+      explanation: '.count() returns how many times the value appears; 2 appears once'
+    },
+    {
+      question: 'What does (10, 20, 30).index(20) return?',
+      options: ['20', '0', '1', '2'],
+      correctIndex: 2,
+      explanation: '.index() returns the position of the value; 20 is at index 1'
+    },
+    {
+      question: 'What is the result of (1, 2) + (3, 4)?',
+      options: ['(4, 6)', '(1, 2, 3, 4)', '((1, 2), (3, 4))', 'Error'],
+      correctIndex: 1,
+      explanation: 'The + operator concatenates tuples into a new tuple'
+    },
+    {
+      question: 'What does (5,) * 3 produce?',
+      options: ['(15,)', '(5, 5, 5)', '15', 'Error'],
+      correctIndex: 1,
+      explanation: 'Multiplying a tuple repeats it: (5, 5, 5)'
+    },
+    {
+      question: 'What is tuple packing?',
+      options: ['Converting list to tuple', 'Assigning multiple values into a tuple', 'Compressing a tuple', 'Sorting a tuple'],
+      correctIndex: 1,
+      explanation: 'Packing is when multiple values are assigned as a tuple: t = 1, 2, 3'
+    },
+    {
+      question: 'What happens if you try my_tuple[0] = 99?',
+      options: ['It updates the value', 'Returns None', 'TypeError', 'IndexError'],
+      correctIndex: 2,
+      explanation: 'Tuples are immutable; assignment raises TypeError'
+    },
+    {
+      question: 'How many methods do tuples have?',
+      options: ['Many like lists', 'Zero', 'Two: count and index', 'Four'],
+      correctIndex: 2,
+      explanation: 'Tuples only have .count() and .index() since they are immutable'
+    },
+    {
+      question: 'What does a, *b = (1, 2, 3, 4) assign to b?',
+      options: ['2', '(2, 3, 4)', '[2, 3, 4]', 'Error'],
+      correctIndex: 2,
+      explanation: 'The star operator captures remaining values as a list: [2, 3, 4]'
+    },
+    {
+      question: 'Can tuples be nested inside other tuples?',
+      options: ['No', 'Only one level deep', 'Yes', 'Only with lists'],
+      correctIndex: 2,
+      explanation: 'Tuples can contain other tuples: ((1, 2), (3, 4))'
+    },
+    {
+      question: 'Which is generally faster for iteration?',
+      options: ['Lists', 'Tuples', 'Same speed', 'Depends on size'],
+      correctIndex: 1,
+      explanation: 'Tuples are slightly faster than lists due to immutability optimizations'
+    },
   ],
 
   'lesson-6-5': [
@@ -953,6 +1793,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Maintaining order', 'Indexing items', 'Removing duplicates', 'Storing pairs'],
       correctIndex: 2,
       explanation: 'Sets excel at uniqueness and membership'
+    },
+    {
+      question: 'What does .discard(item) do if item is not in the set?',
+      options: ['Raises KeyError', 'Returns False', 'Does nothing', 'Raises ValueError'],
+      correctIndex: 2,
+      explanation: '.discard() silently does nothing if the item is missing, unlike .remove()'
+    },
+    {
+      question: 'What happens when you call .remove(item) on a missing item?',
+      options: ['Does nothing', 'Returns None', 'Raises KeyError', 'Raises ValueError'],
+      correctIndex: 2,
+      explanation: '.remove() raises KeyError if the item is not found in the set'
+    },
+    {
+      question: 'What does set1 - set2 compute?',
+      options: ['Union', 'Intersection', 'Items in set1 but not set2', 'Items in set2 but not set1'],
+      correctIndex: 2,
+      explanation: 'The - operator returns the difference: elements in the first set only'
+    },
+    {
+      question: 'How do you create an empty set?',
+      options: ['{}', 'set()', '[]', 'empty_set()'],
+      correctIndex: 1,
+      explanation: 'Use set() for empty sets; {} creates an empty dictionary'
+    },
+    {
+      question: 'What is a frozenset?',
+      options: ['A sorted set', 'An immutable set', 'A set of numbers only', 'A set with a maximum size'],
+      correctIndex: 1,
+      explanation: 'frozenset is an immutable version of set that cannot be modified'
+    },
+    {
+      question: 'What is len({1, 2, 2, 3, 3, 3})?',
+      options: ['6', '3', '1', '4'],
+      correctIndex: 1,
+      explanation: 'Duplicates are removed, leaving {1, 2, 3} with length 3'
+    },
+    {
+      question: 'Can you add a list to a set?',
+      options: ['Yes', 'Only empty lists', 'No, lists are unhashable', 'Only with tuple()'],
+      correctIndex: 2,
+      explanation: 'Set elements must be hashable; lists are mutable and unhashable'
+    },
+    {
+      question: 'What does set1.symmetric_difference(set2) return?',
+      options: ['Items in both sets', 'Items in neither set', 'Items in one set but not both', 'An empty set'],
+      correctIndex: 2,
+      explanation: 'Symmetric difference returns elements that are in either set, but not in their intersection'
+    },
+    {
+      question: 'What does set1.issubset(set2) check?',
+      options: ['If sets are equal', 'If set1 contains all of set2', 'If all set1 items are in set2', 'If sets overlap'],
+      correctIndex: 2,
+      explanation: '.issubset() returns True if every element of set1 is in set2'
+    },
+    {
+      question: 'What is the result of {1, 2, 3}.union({3, 4, 5})?',
+      options: ['{3}', '{1, 2, 3, 4, 5}', '{1, 2, 4, 5}', '{1, 2, 3, 3, 4, 5}'],
+      correctIndex: 1,
+      explanation: 'Union combines all unique elements from both sets'
     },
   ],
 
@@ -1018,6 +1918,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Nested functions are allowed in Python'
     },
+    {
+      question: 'What does the pass statement do in a function body?',
+      options: ['Ends the function', 'Skips to next function', 'Acts as a placeholder doing nothing', 'Passes a value to caller'],
+      correctIndex: 2,
+      explanation: 'pass is a no-op placeholder for empty function bodies'
+    },
+    {
+      question: 'What happens if you try to call a function before defining it?',
+      options: ['It works fine', 'NameError occurs', 'Returns None', 'SyntaxError occurs'],
+      correctIndex: 1,
+      explanation: 'Python must see the def before the function is called'
+    },
+    {
+      question: 'Which is valid Python function syntax?',
+      options: ['def 2func():', 'def my_func():', 'def my-func():', 'def my func():'],
+      correctIndex: 1,
+      explanation: 'Function names follow variable naming rules — letters, digits, underscores, cannot start with digit'
+    },
+    {
+      question: 'What is the output of: def greet(): print("Hi")  followed by greet()?',
+      options: ['greet', 'None', 'Hi', 'Error'],
+      correctIndex: 2,
+      explanation: 'Calling greet() executes print("Hi") which outputs Hi'
+    },
+    {
+      question: 'What is the difference between defining and calling a function?',
+      options: ['No difference', 'Defining creates it, calling runs it', 'Calling creates it, defining runs it', 'Both run the code'],
+      correctIndex: 1,
+      explanation: 'def creates the function; using name() executes it'
+    },
+    {
+      question: 'How many times can you define a function with the same name?',
+      options: ['Only once', 'Twice', 'Any number — last definition wins', 'Causes error after first'],
+      correctIndex: 2,
+      explanation: 'Redefining a function replaces the previous definition'
+    },
+    {
+      question: 'What does def stand for?',
+      options: ['default', 'defer', 'define', 'definition'],
+      correctIndex: 2,
+      explanation: 'def is short for define'
+    },
+    {
+      question: 'Which line is the function body? def say_hello():\\n    print("hello")',
+      options: ['def say_hello():', 'print("hello")', 'Both lines', 'Neither line'],
+      correctIndex: 1,
+      explanation: 'The indented code after the def line is the function body'
+    },
+    {
+      question: 'What happens if the function body is not indented?',
+      options: ['It still works', 'IndentationError', 'Function is empty', 'Warning is shown'],
+      correctIndex: 1,
+      explanation: 'Python requires indentation to mark the function body'
+    },
+    {
+      question: 'Can a function have an empty body without pass?',
+      options: ['Yes', 'Only with a comment', 'No, it causes an error', 'Only if it has parameters'],
+      correctIndex: 2,
+      explanation: 'An empty body causes IndentationError; use pass as a placeholder'
+    },
   ],
 
   'lesson-7-2': [
@@ -1080,6 +2040,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['No', 'Only numbers', 'Yes', 'Only strings'],
       correctIndex: 2,
       explanation: 'Parameters can accept any type'
+    },
+    {
+      question: 'What does *args allow in a function definition?',
+      options: ['Exactly one argument', 'No arguments', 'Any number of positional arguments', 'Only keyword arguments'],
+      correctIndex: 2,
+      explanation: '*args collects extra positional arguments into a tuple'
+    },
+    {
+      question: 'What does **kwargs allow in a function definition?',
+      options: ['Multiple return values', 'Any number of keyword arguments', 'Only positional arguments', 'Default values'],
+      correctIndex: 1,
+      explanation: '**kwargs collects extra keyword arguments into a dictionary'
+    },
+    {
+      question: 'What is the output of: def f(a, b=10): print(a + b) then f(5)?',
+      options: ['Error', '5', '15', '10'],
+      correctIndex: 2,
+      explanation: 'a=5, b uses default 10, so 5+10=15'
+    },
+    {
+      question: 'Can you put a positional parameter after a default parameter?',
+      options: ['Yes', 'Only at the end', 'No, it causes SyntaxError', 'Only with *args'],
+      correctIndex: 2,
+      explanation: 'Non-default parameters cannot follow default parameters'
+    },
+    {
+      question: 'What happens if you call f(1, 2, 3) but f only accepts 2 parameters?',
+      options: ['Extra argument ignored', 'TypeError', 'Third stored in list', 'Returns None'],
+      correctIndex: 1,
+      explanation: 'Too many arguments raises TypeError unless *args is used'
+    },
+    {
+      question: 'In f(x, y), what is f(y=2, x=1) an example of?',
+      options: ['Positional arguments', 'Default arguments', 'Keyword arguments', 'Variable arguments'],
+      correctIndex: 2,
+      explanation: 'Passing arguments by name allows any order'
+    },
+    {
+      question: 'What type does *args collect its values into?',
+      options: ['List', 'Dictionary', 'Tuple', 'Set'],
+      correctIndex: 2,
+      explanation: '*args stores extra positional arguments as a tuple'
+    },
+    {
+      question: 'What type does **kwargs collect its values into?',
+      options: ['Tuple', 'List', 'Set', 'Dictionary'],
+      correctIndex: 3,
+      explanation: '**kwargs stores extra keyword arguments as a dictionary'
+    },
+    {
+      question: 'What is the output of: def f(a, b, c=0): return a + b + c then f(1, 2)?',
+      options: ['Error', '3', '0', 'None'],
+      correctIndex: 1,
+      explanation: 'a=1, b=2, c defaults to 0, so 1+2+0=3'
+    },
+    {
+      question: 'Can you mix positional and keyword arguments in a function call?',
+      options: ['No', 'Yes, but positional must come first', 'Yes, in any order', 'Only with defaults'],
+      correctIndex: 1,
+      explanation: 'Positional arguments must appear before keyword arguments'
     },
   ],
 
@@ -1144,6 +2164,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'What type the function gives back'
     },
+    {
+      question: 'What does this return? def f(): return 1, 2, 3',
+      options: ['A list [1, 2, 3]', 'Only 1', 'A tuple (1, 2, 3)', 'Error'],
+      correctIndex: 2,
+      explanation: 'Comma-separated return values are packed into a tuple'
+    },
+    {
+      question: 'What is the value of x? def f(): print("hi")  then x = f()',
+      options: ['\"hi\"', '0', 'None', 'Error'],
+      correctIndex: 2,
+      explanation: 'f() has no return statement so it returns None'
+    },
+    {
+      question: 'Can you use a returned value directly in an expression like f() + 5?',
+      options: ['No, must store first', 'Yes, if it returns a number', 'Only with print', 'Only with strings'],
+      correctIndex: 1,
+      explanation: 'Return values can be used directly in expressions'
+    },
+    {
+      question: 'What happens to code after a return statement inside a function?',
+      options: ['It runs normally', 'It is skipped/never executes', 'It runs on next call', 'It causes an error'],
+      correctIndex: 1,
+      explanation: 'return exits the function immediately; code after it is unreachable'
+    },
+    {
+      question: 'How do you unpack multiple return values? def f(): return 1, 2',
+      options: ['x = f()', '[x, y] = f()', 'x, y = f()', 'Both B and C work'],
+      correctIndex: 3,
+      explanation: 'Both list unpacking and tuple unpacking work for multiple return values'
+    },
+    {
+      question: 'What does this print? def f(x): if x > 0: return "pos"  then print(f(-1))',
+      options: ['\"pos\"', '\"neg\"', 'None', 'Error'],
+      correctIndex: 2,
+      explanation: 'When x <= 0 no return is hit, so the function returns None'
+    },
+    {
+      question: 'What is the difference between return and print inside a function?',
+      options: ['No difference', 'return displays, print sends back', 'return sends value to caller, print displays to screen', 'print is faster'],
+      correctIndex: 2,
+      explanation: 'return passes a value back; print outputs text to the console'
+    },
+    {
+      question: 'Can a function return a list?',
+      options: ['No', 'Only tuples', 'Yes', 'Only with *args'],
+      correctIndex: 2,
+      explanation: 'Functions can return any data type including lists'
+    },
+    {
+      question: 'What does return False do in a function?',
+      options: ['Ends the program', 'Raises an error', 'Exits function and sends False to caller', 'Prints False'],
+      correctIndex: 2,
+      explanation: 'return False exits the function and the caller receives the boolean False'
+    },
+    {
+      question: 'What value does bool(f()) give if def f(): return 0?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'f() returns 0 which is falsy, so bool(0) is False'
+    },
   ],
 
   'lesson-7-4': [
@@ -1207,6 +2287,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Prefer parameters and returns'
     },
+    {
+      question: 'What does LEGB stand for in Python scope resolution?',
+      options: ['Local, Enclosed, Global, Built-in', 'Local, External, Global, Base', 'Loop, Enclosed, Global, Built-in', 'Local, Enclosed, General, Built-in'],
+      correctIndex: 0,
+      explanation: 'Python searches Local, Enclosing, Global, then Built-in scopes in order'
+    },
+    {
+      question: 'What does the nonlocal keyword do?',
+      options: ['Creates a global variable', 'Deletes a variable', 'Modifies a variable in an enclosing function scope', 'Makes variable read-only'],
+      correctIndex: 2,
+      explanation: 'nonlocal lets an inner function modify a variable from its enclosing function'
+    },
+    {
+      question: 'What is variable shadowing?',
+      options: ['Deleting a variable', 'A local variable hiding a global with the same name', 'Copying a variable', 'Renaming a variable'],
+      correctIndex: 1,
+      explanation: 'A local variable with the same name as a global hides (shadows) the global'
+    },
+    {
+      question: 'What does this print? x = 5\\ndef f(): x = 10; print(x)\\nf()\\nprint(x)',
+      options: ['10 then 10', '5 then 5', '10 then 5', 'Error'],
+      correctIndex: 2,
+      explanation: 'Inside f, x is local (10). Outside, x is still global (5)'
+    },
+    {
+      question: 'When is the global keyword needed inside a function?',
+      options: ['To read a global variable', 'To create a local variable', 'To assign to a global variable', 'To delete a variable'],
+      correctIndex: 2,
+      explanation: 'global is needed only when you want to reassign a global variable inside a function'
+    },
+    {
+      question: 'What scope does a variable defined in a for loop belong to?',
+      options: ['Loop scope only', 'The enclosing function or global scope', 'Block scope', 'Temporary scope'],
+      correctIndex: 1,
+      explanation: 'Python has no block scope; loop variables belong to the enclosing scope'
+    },
+    {
+      question: 'Can a nested function read variables from its enclosing function?',
+      options: ['No', 'Only with global keyword', 'Yes', 'Only parameters'],
+      correctIndex: 2,
+      explanation: 'Inner functions can read enclosing (nonlocal) variables through the LEGB rule'
+    },
+    {
+      question: 'What error occurs if you read a variable before assigning it locally in the same function?',
+      options: ['NameError', 'UnboundLocalError', 'TypeError', 'SyntaxError'],
+      correctIndex: 1,
+      explanation: 'If a function assigns to a name, Python treats it as local for the whole function, causing UnboundLocalError if read before assignment'
+    },
+    {
+      question: 'Which built-in names can be accidentally shadowed?',
+      options: ['None of them', 'Only print', 'Any built-in like list, str, len', 'Only keywords'],
+      correctIndex: 2,
+      explanation: 'Assigning to names like list or len shadows the built-in, which is a common mistake'
+    },
+    {
+      question: 'What is the enclosing scope in LEGB?',
+      options: ['The module-level scope', 'The scope of an outer function containing a nested function', 'The built-in scope', 'The class scope'],
+      correctIndex: 1,
+      explanation: 'Enclosing scope refers to the local scope of any enclosing (outer) function'
+    },
   ],
 
   'lesson-7-5': [
@@ -1269,6 +2409,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Sorts in place', 'Reverses list', 'Returns sorted list', 'Removes duplicates'],
       correctIndex: 2,
       explanation: 'sorted([3, 1, 2]) returns [1, 2, 3]'
+    },
+    {
+      question: 'What does enumerate() return?',
+      options: ['Only values', 'Only indices', 'Pairs of (index, value)', 'A count of items'],
+      correctIndex: 2,
+      explanation: 'enumerate(["a","b"]) yields (0,"a"), (1,"b")'
+    },
+    {
+      question: 'What does zip() do?',
+      options: ['Compresses a file', 'Combines iterables element-wise into tuples', 'Sorts two lists', 'Merges dictionaries'],
+      correctIndex: 1,
+      explanation: 'zip([1,2], ["a","b"]) yields (1,"a"), (2,"b")'
+    },
+    {
+      question: 'What does isinstance(5, int) return?',
+      options: ['5', '"int"', 'True', 'False'],
+      correctIndex: 2,
+      explanation: 'isinstance checks if an object is of a given type; 5 is an int'
+    },
+    {
+      question: 'What does range(3) produce?',
+      options: ['[1, 2, 3]', '[0, 1, 2]', '[0, 1, 2, 3]', '[3]'],
+      correctIndex: 1,
+      explanation: 'range(3) generates 0, 1, 2 — it starts at 0 and stops before 3'
+    },
+    {
+      question: 'What does len("hello") return?',
+      options: ['4', '5', '6', 'Error'],
+      correctIndex: 1,
+      explanation: '"hello" has 5 characters so len returns 5'
+    },
+    {
+      question: 'What does sum([1, 2, 3], 10) return?',
+      options: ['6', '10', '16', 'Error'],
+      correctIndex: 2,
+      explanation: 'sum adds the iterable elements (6) to the start value (10), giving 16'
+    },
+    {
+      question: 'What does abs(-3.7) return?',
+      options: ['-3.7', '3', '3.7', '4'],
+      correctIndex: 2,
+      explanation: 'abs returns the absolute value, removing the negative sign'
+    },
+    {
+      question: 'What does sorted("cab") return?',
+      options: ['"abc"', "['a', 'b', 'c']", "['c', 'a', 'b']", 'Error'],
+      correctIndex: 1,
+      explanation: 'sorted on a string returns a sorted list of characters'
+    },
+    {
+      question: 'What does type([]) return?',
+      options: ["<class 'tuple'>", "<class 'dict'>", "<class 'list'>", "<class 'set'>"],
+      correctIndex: 2,
+      explanation: '[] is an empty list, so type returns list'
+    },
+    {
+      question: 'What does range(2, 8, 2) produce?',
+      options: ['[2, 4, 6, 8]', '[2, 4, 6]', '[2, 3, 4, 5, 6, 7]', '[8, 6, 4, 2]'],
+      correctIndex: 1,
+      explanation: 'range(2, 8, 2) starts at 2, stops before 8, stepping by 2: 2, 4, 6'
     },
   ],
 
@@ -1334,6 +2534,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: '.startswith() checks beginning of string'
     },
+    {
+      question: 'What does "hello world".find("world") return?',
+      options: ['True', '6', '5', '-1'],
+      correctIndex: 1,
+      explanation: '.find() returns the index where the substring starts; "world" starts at index 6'
+    },
+    {
+      question: 'What does "banana".count("a") return?',
+      options: ['1', '2', '3', '0'],
+      correctIndex: 2,
+      explanation: '"banana" contains the letter "a" three times'
+    },
+    {
+      question: 'What does "  hello  ".lstrip() return?',
+      options: ['"hello"', '"hello  "', '"  hello"', '"hello  "'],
+      correctIndex: 1,
+      explanation: '.lstrip() only removes whitespace from the left side'
+    },
+    {
+      question: 'What does "hello".endswith("xyz") return?',
+      options: ['True', '-1', 'Error', 'False'],
+      correctIndex: 3,
+      explanation: '"hello" does not end with "xyz", so .endswith() returns False'
+    },
+    {
+      question: 'What does "hello".replace("l", "r") return?',
+      options: ['"herlo"', '"herro"', '"hello"', 'Error'],
+      correctIndex: 1,
+      explanation: '.replace() replaces ALL occurrences by default, so both "l"s become "r"s'
+    },
+    {
+      question: 'What does "HELLO".swapcase() return?',
+      options: ['"hello"', '"HELLO"', '"Hello"', 'Error'],
+      correctIndex: 0,
+      explanation: '.swapcase() converts uppercase to lowercase and vice versa'
+    },
+    {
+      question: 'What does "cat".find("dog") return?',
+      options: ['0', 'False', 'None', '-1'],
+      correctIndex: 3,
+      explanation: '.find() returns -1 when the substring is not found'
+    },
+    {
+      question: 'What does "hello world".replace("world", "python") return?',
+      options: ['"hello python"', '"hello world"', 'Error', '"python python"'],
+      correctIndex: 0,
+      explanation: '.replace() substitutes "world" with "python"'
+    },
+    {
+      question: 'What does "Python".startswith("py") return?',
+      options: ['True', 'False', 'Error', '"Py"'],
+      correctIndex: 1,
+      explanation: '.startswith() is case-sensitive; "Python" starts with "Py", not "py"'
+    },
+    {
+      question: 'What does "  hi  ".rstrip() return?',
+      options: ['"hi"', '"hi  "', '"  hi"', '" hi "'],
+      correctIndex: 2,
+      explanation: '.rstrip() only removes whitespace from the right side'
+    },
   ],
 
   'lesson-3-2': [
@@ -1396,6 +2656,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['+ is faster', 'Same speed', '.join() is faster', 'Depends'],
       correctIndex: 2,
       explanation: '.join() more efficient for multiple strings'
+    },
+    {
+      question: 'What does "abc" + "def" return?',
+      options: ['"abc def"', '"abcdef"', 'Error', '"abc+def"'],
+      correctIndex: 1,
+      explanation: 'The + operator joins strings directly with no space between them'
+    },
+    {
+      question: 'What does "-".join(["a", "b", "c"]) return?',
+      options: ['"abc"', '"a-b-c"', '["-a", "-b", "-c"]', 'Error'],
+      correctIndex: 1,
+      explanation: '.join() inserts the separator string between each list item'
+    },
+    {
+      question: 'What does "hello world".split("o") return?',
+      options: ['["hell", " w", "rld"]', '["hello", "world"]', '["hell", "world"]', 'Error'],
+      correctIndex: 0,
+      explanation: 'Splitting on "o" breaks the string at every "o" character'
+    },
+    {
+      question: 'What happens when you do "hi" * 0?',
+      options: ['Error', '"hi"', '""', 'None'],
+      correctIndex: 2,
+      explanation: 'Multiplying a string by 0 produces an empty string'
+    },
+    {
+      question: 'What does "".join(["h", "e", "l", "l", "o"]) return?',
+      options: ['["h", "e", "l", "l", "o"]', '"h e l l o"', '"hello"', 'Error'],
+      correctIndex: 2,
+      explanation: 'Using an empty string as separator joins characters with nothing between them'
+    },
+    {
+      question: 'What does "a,b,c".split(",") return?',
+      options: ['"a b c"', '["a", "b", "c"]', '("a", "b", "c")', '["a,", "b,", "c"]'],
+      correctIndex: 1,
+      explanation: 'Splitting on "," breaks the string at each comma into a list'
+    },
+    {
+      question: 'Can you concatenate a string and an integer with +?',
+      options: ['Yes', 'Only in Python 2', 'No, causes TypeError', 'It converts automatically'],
+      correctIndex: 2,
+      explanation: 'You must convert the integer to a string first using str()'
+    },
+    {
+      question: 'What does "one two three".split(maxsplit=1) return?',
+      options: ['["one", "two", "three"]', '["one", "two three"]', '["one two", "three"]', 'Error'],
+      correctIndex: 1,
+      explanation: 'maxsplit=1 splits only at the first whitespace, leaving the rest intact'
+    },
+    {
+      question: 'What does " ".join([]) return?',
+      options: ['Error', 'None', '" "', '""'],
+      correctIndex: 3,
+      explanation: 'Joining an empty list returns an empty string regardless of separator'
+    },
+    {
+      question: 'What is the result of "Go" + "!" * 3?',
+      options: ['"Go!Go!Go!"', '"Go!!!"', '"GoGoGo!"', 'Error'],
+      correctIndex: 1,
+      explanation: '* has higher precedence than +, so "!" * 3 = "!!!", then "Go" + "!!!" = "Go!!!"'
     },
   ],
 
@@ -1460,6 +2780,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Can nest for advanced formatting'
     },
+    {
+      question: 'If name = "Alice", what does f"Hi {name}!" produce?',
+      options: ['"Hi name!"', '"Hi {Alice}!"', '"Hi Alice!"', 'Error'],
+      correctIndex: 2,
+      explanation: 'The variable inside {} is replaced with its value'
+    },
+    {
+      question: 'What does f"{len(\'hello\')}" return?',
+      options: ['"len(hello)"', '"5"', 'Error', '"hello"'],
+      correctIndex: 1,
+      explanation: 'Function calls inside {} are evaluated; len("hello") is 5'
+    },
+    {
+      question: 'How do you include a literal curly brace in an f-string?',
+      options: ['Use \\{', 'Use {{', 'Use {{}', 'Not possible'],
+      correctIndex: 1,
+      explanation: 'Double the braces: f"{{" produces a literal "{"'
+    },
+    {
+      question: 'If x = 3 and y = 4, what does f"{x + y}" return?',
+      options: ['"x + y"', '"34"', '"7"', 'Error'],
+      correctIndex: 2,
+      explanation: 'Arithmetic expressions inside {} are evaluated'
+    },
+    {
+      question: 'What does f"{"hello".upper()}" return?',
+      options: ['"hello"', '"HELLO"', 'Error', '"{hello.upper()}"'],
+      correctIndex: 1,
+      explanation: 'Method calls on strings work inside f-string expressions'
+    },
+    {
+      question: 'What prefix creates an f-string?',
+      options: ['s', 'str', 'f', 'fmt'],
+      correctIndex: 2,
+      explanation: 'The letter f before the opening quote creates an f-string'
+    },
+    {
+      question: 'If items = ["a", "b"], what does f"{items[0]}" return?',
+      options: ['"items[0]"', '"a"', 'Error', '"["a"]"'],
+      correctIndex: 1,
+      explanation: 'You can use indexing expressions inside f-string braces'
+    },
+    {
+      question: 'Can you use conditional expressions in f-strings?',
+      options: ['No', 'Only if/else', 'Yes, ternary expressions', 'Causes error'],
+      correctIndex: 2,
+      explanation: 'f"{"even" if x % 2 == 0 else "odd"}" works'
+    },
+    {
+      question: 'What does f"{3.14159:.2f}" produce?',
+      options: ['"3.14159"', '"3.14"', '"3.15"', '"3.1"'],
+      correctIndex: 1,
+      explanation: ':.2f formats the float to 2 decimal places, rounding as needed'
+    },
+    {
+      question: 'If d = {"key": "val"}, what does f"{d[\'key\']}" return?',
+      options: ['Error', '"d[key]"', '"val"', '"key"'],
+      correctIndex: 2,
+      explanation: 'Dictionary access works inside f-string expressions'
+    },
   ],
 
   'lesson-3-4': [
@@ -1523,6 +2903,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'f"{price:>10,.2f}" combines alignment and decimals'
     },
+    {
+      question: 'What does f"{num:d}" do?',
+      options: ['Formats as decimal integer', 'Formats as double', 'Deletes the number', 'Formats as date'],
+      correctIndex: 0,
+      explanation: ':d formats a number as a base-10 integer'
+    },
+    {
+      question: 'What does f"{num:o}" do?',
+      options: ['Formats as octal', 'Formats as ordinal', 'Rounds to zero', 'Error'],
+      correctIndex: 0,
+      explanation: ':o converts an integer to its octal (base-8) representation'
+    },
+    {
+      question: 'What is the output of f"{0.85:.0%}"?',
+      options: ['"85"', '"85%"', '"0.85%"', '"85.0%"'],
+      correctIndex: 1,
+      explanation: ':.0% multiplies by 100 and shows 0 decimal places with a % sign'
+    },
+    {
+      question: 'What does f"{num:+d}" do?',
+      options: ['Adds 1 to num', 'Shows sign for both positive and negative', 'Only shows minus sign', 'Error'],
+      correctIndex: 1,
+      explanation: 'The + sign specifier forces display of the sign for both positive and negative numbers'
+    },
+    {
+      question: 'What does f"{5:0>4}" produce?',
+      options: ['"0005"', '"5000"', '"0050"', 'Error'],
+      correctIndex: 0,
+      explanation: '0 is the fill character, > is right-align, 4 is the width, so 5 is right-aligned and padded with zeros'
+    },
+    {
+      question: 'What is the output of f"{42:08b}"?',
+      options: ['"00101010"', '"42"', '"00042"', '"101010"'],
+      correctIndex: 0,
+      explanation: ':08b formats 42 as binary padded with zeros to 8 characters wide'
+    },
+    {
+      question: 'What does f"{text:*^20}" do?',
+      options: ['Multiplies text by 20', 'Centers text in 20 chars padded with *', 'Repeats * 20 times', 'Error'],
+      correctIndex: 1,
+      explanation: '* is the fill character, ^ centers the text, and 20 is the total width'
+    },
+    {
+      question: 'What does f"{num: d}" (with a space before d) do?',
+      options: ['Adds a space after the number', 'Adds a leading space for positive numbers', 'Error', 'Same as :d'],
+      correctIndex: 1,
+      explanation: 'A space before d reserves a space for the sign of positive numbers, keeping alignment with negatives'
+    },
+    {
+      question: 'What is the output of f"{255:#x}"?',
+      options: ['"ff"', '"0xff"', '"#ff"', '"255x"'],
+      correctIndex: 1,
+      explanation: 'The # flag adds the 0x prefix for hexadecimal formatting'
+    },
+    {
+      question: 'What does f"{3.14159:.4f}" produce?',
+      options: ['"3.14"', '"3.1416"', '"3.1415"', '"3.14159"'],
+      correctIndex: 1,
+      explanation: ':.4f rounds to 4 decimal places, so 3.14159 becomes "3.1416"'
+    },
   ],
 
   'lesson-3-5': [
@@ -1585,6 +3025,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['.isLower()', '.lowercase()', '.islower()', '.lower() == text'],
       correctIndex: 2,
       explanation: '"hello".islower() returns True'
+    },
+    {
+      question: 'What does .isupper() check?',
+      options: ['First character is uppercase', 'All cased characters are uppercase', 'String has any uppercase letter', 'String is not lowercase'],
+      correctIndex: 1,
+      explanation: '"HELLO".isupper() is True, "Hello" is False because not all cased chars are uppercase'
+    },
+    {
+      question: 'What does .istitle() check?',
+      options: ['String is a title tag', 'First char is upper', 'Each word starts with uppercase and rest are lowercase', 'String is all caps'],
+      correctIndex: 2,
+      explanation: '"Hello World".istitle() is True, "Hello world" is False'
+    },
+    {
+      question: 'What does .isspace() check?',
+      options: ['String contains a space', 'String starts with space', 'All characters are whitespace', 'String is empty'],
+      correctIndex: 2,
+      explanation: '"   ".isspace() is True, " a ".isspace() is False'
+    },
+    {
+      question: 'What does .isdecimal() check?',
+      options: ['String contains a decimal point', 'All characters are decimal digits', 'String is a float', 'String has numbers'],
+      correctIndex: 1,
+      explanation: '"123".isdecimal() is True; it is stricter than isdigit() and does not accept superscripts'
+    },
+    {
+      question: 'What happens when .index("sub") cannot find the substring?',
+      options: ['Returns -1', 'Returns None', 'Raises a ValueError', 'Returns False'],
+      correctIndex: 2,
+      explanation: 'Unlike .find() which returns -1, .index() raises a ValueError when the substring is not found'
+    },
+    {
+      question: 'What does "abc" not in "abcdef" return?',
+      options: ['True', 'False', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: '"abc" IS in "abcdef", so not in returns False'
+    },
+    {
+      question: 'What does "".isalpha() return?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'All string testing methods (isalpha, isdigit, etc.) return False on an empty string'
+    },
+    {
+      question: 'What does "Hello 123".isalnum() return?',
+      options: ['True', 'False', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'The space character is not alphanumeric, so isalnum() returns False'
+    },
+    {
+      question: 'What does "hello".find("ll", 3) return?',
+      options: ['2', '-1', '3', 'Error'],
+      correctIndex: 1,
+      explanation: '.find() accepts a start parameter; searching from index 3, "ll" is not found so it returns -1'
+    },
+    {
+      question: 'What does "ABC123".isdigit() return?',
+      options: ['True', 'False', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'isdigit() returns False because "ABC123" contains letters, not only digits'
     },
   ],
 
@@ -1653,6 +3153,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 0,
       explanation: 'Even numbers have remainder 0 when divided by 2'
     },
+    {
+      question: 'What is 2 ** 0?',
+      options: ['0', '2', '1', 'Error'],
+      correctIndex: 2,
+      explanation: 'Any number raised to the power of 0 equals 1'
+    },
+    {
+      question: 'What is 15 % 4?',
+      options: ['3', '4', '2', '3.75'],
+      correctIndex: 0,
+      explanation: '15 divided by 4 is 3 remainder 3, so 15 % 4 = 3'
+    },
+    {
+      question: 'What is 17 // 5?',
+      options: ['3.4', '4', '3', '2'],
+      correctIndex: 2,
+      explanation: '17 // 5 performs integer division: 17 / 5 = 3.4, floored to 3'
+    },
+    {
+      question: 'What does abs(0) return?',
+      options: ['Error', '0', '1', 'None'],
+      correctIndex: 1,
+      explanation: 'The absolute value of 0 is 0'
+    },
+    {
+      question: 'What is 3 ** 3?',
+      options: ['9', '6', '27', '12'],
+      correctIndex: 2,
+      explanation: '3 ** 3 means 3 * 3 * 3 = 27'
+    },
+    {
+      question: 'What is 20 % 5?',
+      options: ['4', '5', '1', '0'],
+      correctIndex: 3,
+      explanation: '20 is evenly divisible by 5, so the remainder is 0'
+    },
+    {
+      question: 'What is -9 // 2?',
+      options: ['-4', '-5', '-4.5', '4'],
+      correctIndex: 1,
+      explanation: 'Integer division floors toward negative infinity: -9 / 2 = -4.5, floored to -5'
+    },
+    {
+      question: 'What does pow(5, 0) return?',
+      options: ['0', '5', '1', 'Error'],
+      correctIndex: 2,
+      explanation: 'Any number raised to the power 0 equals 1'
+    },
+    {
+      question: 'What is abs(-3.7)?',
+      options: ['-3.7', '3', '4', '3.7'],
+      correctIndex: 3,
+      explanation: 'abs() returns the absolute value, so abs(-3.7) = 3.7'
+    },
+    {
+      question: 'What is 100 // 7?',
+      options: ['14', '15', '14.28', '13'],
+      correctIndex: 0,
+      explanation: '100 / 7 = 14.28..., integer division floors to 14'
+    },
   ],
 
   'lesson-2-2': [
@@ -1715,6 +3275,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['6', '8', '8.0', '9'],
       correctIndex: 2,
       explanation: 'math.pow returns float: 8.0'
+    },
+    {
+      question: 'What does math.factorial(5) return?',
+      options: ['25', '120', '15', '5'],
+      correctIndex: 1,
+      explanation: 'math.factorial(5) = 5 * 4 * 3 * 2 * 1 = 120'
+    },
+    {
+      question: 'What does math.sqrt(0) return?',
+      options: ['Error', 'None', '0.0', '1'],
+      correctIndex: 2,
+      explanation: 'The square root of 0 is 0.0'
+    },
+    {
+      question: 'What does math.ceil(7.0) return?',
+      options: ['7', '8', '7.0', '6'],
+      correctIndex: 0,
+      explanation: 'ceil of a whole number returns that number as an integer: 7'
+    },
+    {
+      question: 'What does math.floor(3.999) return?',
+      options: ['4', '3', '3.999', '3.9'],
+      correctIndex: 1,
+      explanation: 'floor rounds down to the nearest integer, so 3.999 becomes 3'
+    },
+    {
+      question: 'How do you import the entire math module?',
+      options: ['from math import all', 'import math', 'include math', 'require math'],
+      correctIndex: 1,
+      explanation: 'Use "import math" to import the entire module'
+    },
+    {
+      question: 'What does math.sqrt(144) return?',
+      options: ['14.4', '72', '12.0', '11.0'],
+      correctIndex: 2,
+      explanation: 'The square root of 144 is 12.0'
+    },
+    {
+      question: 'What is math.factorial(0)?',
+      options: ['0', '1', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'By definition, 0! (zero factorial) equals 1'
+    },
+    {
+      question: 'What does math.ceil(-1.1) return?',
+      options: ['-2', '-1', '0', '-1.1'],
+      correctIndex: 1,
+      explanation: 'ceil rounds toward positive infinity, so -1.1 becomes -1'
+    },
+    {
+      question: 'What does math.floor(0.5) return?',
+      options: ['1', '0.5', '0', '-1'],
+      correctIndex: 2,
+      explanation: 'floor rounds down, so 0.5 becomes 0'
+    },
+    {
+      question: 'What is the return type of math.sqrt(25)?',
+      options: ['int', 'float', 'str', 'complex'],
+      correctIndex: 1,
+      explanation: 'math.sqrt always returns a float, so sqrt(25) returns 5.0'
     },
   ],
 
@@ -1779,6 +3399,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 3,
       explanation: 'Returns [0.0, 1.0) - includes 0.0, excludes 1.0'
     },
+    {
+      question: 'What does random.uniform(1, 5) return?',
+      options: ['Integer 1 to 5', 'Float 1.0 to 5.0', 'Always 3.0', 'Float 0.0 to 5.0'],
+      correctIndex: 1,
+      explanation: 'random.uniform(a, b) returns a random float between a and b inclusive'
+    },
+    {
+      question: 'What does random.sample([1,2,3,4,5], 3) return?',
+      options: ['3 random items as a list', 'One random item', 'The original list', 'Error'],
+      correctIndex: 0,
+      explanation: 'random.sample returns a list of k unique elements chosen from the sequence'
+    },
+    {
+      question: 'What does random.shuffle() return?',
+      options: ['Shuffled list', 'None', 'True', 'Original list'],
+      correctIndex: 1,
+      explanation: 'shuffle modifies the list in place and returns None'
+    },
+    {
+      question: 'What happens with random.choice([])?',
+      options: ['Returns None', 'Returns 0', 'IndexError', 'Returns empty list'],
+      correctIndex: 2,
+      explanation: 'random.choice raises IndexError when given an empty sequence'
+    },
+    {
+      question: 'How do you simulate a coin flip?',
+      options: ['random.flip()', 'random.choice(["H", "T"])', 'random.coin()', 'random.bool()'],
+      correctIndex: 1,
+      explanation: 'Use random.choice with a list of two options to simulate a coin flip'
+    },
+    {
+      question: 'What is the range of random.randint(0, 1)?',
+      options: ['Only 0', 'Only 1', '0 or 1', '0.0 to 1.0'],
+      correctIndex: 2,
+      explanation: 'randint(0, 1) returns either 0 or 1 (both endpoints included)'
+    },
+    {
+      question: 'Can random.sample pick duplicates from a list?',
+      options: ['Yes always', 'Only if k > len', 'No, picks unique elements', 'Only with replace=True'],
+      correctIndex: 2,
+      explanation: 'random.sample picks without replacement, so all selected elements are unique'
+    },
+    {
+      question: 'How generate random float between 5 and 10?',
+      options: ['random.random(5, 10)', 'random.uniform(5, 10)', 'random.float(5, 10)', 'random.randint(5.0, 10.0)'],
+      correctIndex: 1,
+      explanation: 'random.uniform(5, 10) returns a random float between 5 and 10'
+    },
+    {
+      question: 'What does random.sample("hello", 2) return?',
+      options: ['Error', 'A string of 2 chars', 'A list of 2 characters', 'A tuple'],
+      correctIndex: 2,
+      explanation: 'random.sample works on strings and returns a list of sampled characters'
+    },
+    {
+      question: 'Does random.shuffle work on strings?',
+      options: ['Yes', 'Only with list()', 'No, strings are immutable', 'Yes, returns new string'],
+      correctIndex: 2,
+      explanation: 'Strings are immutable so shuffle cannot modify them in place; it raises a TypeError'
+    },
   ],
 
   'lesson-2-4': [
@@ -1842,6 +3522,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Converts float to string "3.14"'
     },
+    {
+      question: 'What does bool(0) return?',
+      options: ['True', 'False', '0', 'Error'],
+      correctIndex: 1,
+      explanation: 'Zero is falsy in Python, so bool(0) returns False'
+    },
+    {
+      question: 'What does bool("") return?',
+      options: ['True', 'False', '""', 'Error'],
+      correctIndex: 1,
+      explanation: 'An empty string is falsy, so bool("") returns False'
+    },
+    {
+      question: 'What does int(True) return?',
+      options: ['True', '0', '1', 'Error'],
+      correctIndex: 2,
+      explanation: 'True is treated as 1 when converted to an integer'
+    },
+    {
+      question: 'What does list("cat") return?',
+      options: ['["cat"]', '["c", "a", "t"]', 'Error', '"cat"'],
+      correctIndex: 1,
+      explanation: 'list() splits a string into individual characters'
+    },
+    {
+      question: 'What does float("inf") return?',
+      options: ['Error', '0', 'inf', 'None'],
+      correctIndex: 2,
+      explanation: 'Python can convert the string "inf" to positive infinity float'
+    },
+    {
+      question: 'What does bool([]) return?',
+      options: ['True', 'False', '[]', 'Error'],
+      correctIndex: 1,
+      explanation: 'An empty list is falsy, so bool([]) returns False'
+    },
+    {
+      question: 'What does int(False) return?',
+      options: ['False', '1', '0', 'Error'],
+      correctIndex: 2,
+      explanation: 'False is treated as 0 when converted to an integer'
+    },
+    {
+      question: 'What does type(3.0) return?',
+      options: ['<class \'int\'>', '<class \'float\'>', '<class \'str\'>', '<class \'number\'>'],
+      correctIndex: 1,
+      explanation: '3.0 is a float, so type(3.0) returns <class \'float\'>'
+    },
+    {
+      question: 'What does str(True) return?',
+      options: ['1', '"1"', '"True"', 'Error'],
+      correctIndex: 2,
+      explanation: 'str(True) converts the boolean to the string "True"'
+    },
+    {
+      question: 'What does bool(1) return?',
+      options: ['1', 'True', 'False', 'Error'],
+      correctIndex: 1,
+      explanation: 'Any non-zero number is truthy, so bool(1) returns True'
+    },
   ],
 
   'lesson-2-5': [
@@ -1904,6 +3644,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['f"{x:>10}"', 'f"{x:10<}"', 'f"{x:<10}"', 'f"{x:^10}"'],
       correctIndex: 2,
       explanation: '< means left-align in specified width'
+    },
+    {
+      question: 'What does f"{255:x}" display?',
+      options: ['255', 'ff', '0xff', 'FF'],
+      correctIndex: 1,
+      explanation: ':x formats an integer as a lowercase hexadecimal string'
+    },
+    {
+      question: 'What does f"{10:b}" display?',
+      options: ['10', '1010', '0b1010', 'binary'],
+      correctIndex: 1,
+      explanation: ':b formats an integer as a binary string'
+    },
+    {
+      question: 'What does f"{42:d}" display?',
+      options: ['"42"', '42', '42.0', 'Error'],
+      correctIndex: 1,
+      explanation: ':d formats a value as a decimal integer'
+    },
+    {
+      question: 'What does f"{3.14159:.4f}" show?',
+      options: ['3.14', '3.1416', '3.1415', '3.14159'],
+      correctIndex: 1,
+      explanation: ':.4f rounds to 4 decimal places: 3.1416'
+    },
+    {
+      question: 'What does f"{0.123:.1%}" show?',
+      options: ['0.1%', '12.3%', '1.2%', '123%'],
+      correctIndex: 1,
+      explanation: ':.1% multiplies by 100 and formats with 1 decimal: 12.3%'
+    },
+    {
+      question: 'What does f"{"hi":*^10}" display?',
+      options: ['****hi****', '**hi**', '  hi      ', 'hi********'],
+      correctIndex: 0,
+      explanation: '*^10 centers "hi" in 10 chars, padding with * on both sides'
+    },
+    {
+      question: 'What does f"{7:03d}" display?',
+      options: ['7', '007', '070', '700'],
+      correctIndex: 1,
+      explanation: ':03d pads the integer with leading zeros to width 3'
+    },
+    {
+      question: 'What does f"{1000000:,.2f}" display?',
+      options: ['1000000.00', '1,000,000.00', '1.000.000,00', '1,000,000'],
+      correctIndex: 1,
+      explanation: ':,.2f adds comma separators and 2 decimal places'
+    },
+    {
+      question: 'What does f"{"test":>10}" display?',
+      options: ['test      ', '      test', '   test   ', 'test'],
+      correctIndex: 1,
+      explanation: ':>10 right-aligns "test" in a field of width 10'
+    },
+    {
+      question: 'What does f"{8:04b}" display?',
+      options: ['1000', '0100', '0008', '00001000'],
+      correctIndex: 0,
+      explanation: ':04b formats 8 as binary (1000) padded to 4 characters'
     },
   ],
 
@@ -1972,6 +3772,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: '3 is not less than 3'
     },
+    {
+      question: 'What does 10 == 10.0 return?',
+      options: ['False', 'True', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'Python considers int 10 and float 10.0 equal in value'
+    },
+    {
+      question: 'What does "abc" > "abd" return?',
+      options: ['True', 'False', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'Strings are compared character by character; "c" < "d" so "abc" < "abd"'
+    },
+    {
+      question: 'What does 7 != 7 return?',
+      options: ['True', '7', 'False', 'Error'],
+      correctIndex: 2,
+      explanation: '7 equals 7, so != returns False'
+    },
+    {
+      question: 'What does True == 1 return?',
+      options: ['False', 'True', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'In Python, True is treated as 1 in numeric comparisons'
+    },
+    {
+      question: 'What does 0 < -1 return?',
+      options: ['True', 'False', '0', 'Error'],
+      correctIndex: 1,
+      explanation: '0 is greater than -1, so 0 < -1 is False'
+    },
+    {
+      question: 'What does "Z" < "a" return?',
+      options: ['False', 'True', 'Error', 'Depends'],
+      correctIndex: 1,
+      explanation: 'Uppercase letters have lower ASCII values than lowercase, so "Z" < "a" is True'
+    },
+    {
+      question: 'Which operator means "less than or equal to"?',
+      options: ['<', '>=', '<=', '!='],
+      correctIndex: 2,
+      explanation: '<= checks if the left value is less than or equal to the right'
+    },
+    {
+      question: 'What does False == 0 return?',
+      options: ['True', 'False', 'Error', 'None'],
+      correctIndex: 0,
+      explanation: 'In Python, False is treated as 0 in numeric comparisons'
+    },
+    {
+      question: 'What does len("hi") == 2 return?',
+      options: ['False', '"hi"', 'True', 'Error'],
+      correctIndex: 2,
+      explanation: 'len("hi") is 2, and 2 == 2 is True'
+    },
+    {
+      question: 'Can you compare a string and an integer with ==?',
+      options: ['Yes, returns True if same', 'Yes, always returns False', 'No, raises an error', 'Only with int()'],
+      correctIndex: 1,
+      explanation: 'Comparing different types with == returns False without error (e.g., "5" == 5 is False)'
+    },
   ],
 
   'lesson-4-2': [
@@ -2034,6 +3894,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['True', 'False', '5', 'Error'],
       correctIndex: 1,
       explanation: '5 > 3 is True, not True is False'
+    },
+    {
+      question: 'What does False and False return?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'and returns True only if both operands are True'
+    },
+    {
+      question: 'What does 0 or "hello" return?',
+      options: ['0', 'True', '"hello"', 'False'],
+      correctIndex: 2,
+      explanation: 'or returns the first truthy value; 0 is falsy, so it returns "hello"'
+    },
+    {
+      question: 'What does "" and "world" return?',
+      options: ['"world"', '""', 'True', 'False'],
+      correctIndex: 1,
+      explanation: 'and short-circuits: "" is falsy, so it returns "" without evaluating "world"'
+    },
+    {
+      question: 'What is the precedence order of logical operators?',
+      options: ['and, or, not', 'or, and, not', 'not, and, or', 'not, or, and'],
+      correctIndex: 2,
+      explanation: 'Precedence from highest to lowest: not, and, or'
+    },
+    {
+      question: 'What does True or True and False return?',
+      options: ['False', 'True', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'and binds tighter: True and False is False, then True or False is True'
+    },
+    {
+      question: 'What does not not True return?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 0,
+      explanation: 'not True is False, not False is True (double negation)'
+    },
+    {
+      question: 'What does 5 and 0 return?',
+      options: ['5', '0', 'True', 'False'],
+      correctIndex: 1,
+      explanation: 'and returns the first falsy value; 5 is truthy so it evaluates 0 and returns it'
+    },
+    {
+      question: 'What does None or 42 return?',
+      options: ['None', '42', 'True', 'False'],
+      correctIndex: 1,
+      explanation: 'or returns the first truthy value; None is falsy, so it returns 42'
+    },
+    {
+      question: 'What does not 0 return?',
+      options: ['0', '1', 'True', 'False'],
+      correctIndex: 2,
+      explanation: '0 is falsy, so not 0 returns True'
+    },
+    {
+      question: 'What does (True or False) and (False or False) return?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'True or False is True; False or False is False; True and False is False'
     },
   ],
 
@@ -2098,6 +4018,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'Empty string is falsy, so block is skipped'
     },
+    {
+      question: 'What does bool(None) return?',
+      options: ['True', 'None', 'False', 'Error'],
+      correctIndex: 2,
+      explanation: 'None is falsy, so bool(None) returns False'
+    },
+    {
+      question: 'Is bool(0.0) truthy or falsy?',
+      options: ['Truthy', 'Falsy', 'Error', 'Depends'],
+      correctIndex: 1,
+      explanation: '0.0 is a zero value, which is falsy just like integer 0'
+    },
+    {
+      question: 'What does bool(" ") return (string with a space)?',
+      options: ['False', 'True', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'A string with a space is non-empty, so it is truthy'
+    },
+    {
+      question: 'What does bool([0]) return?',
+      options: ['False', 'True', '0', 'Error'],
+      correctIndex: 1,
+      explanation: 'A list containing an element (even 0) is non-empty, so it is truthy'
+    },
+    {
+      question: 'How many falsy values does Python have?',
+      options: ['2', '4', '6 or more', 'Only False'],
+      correctIndex: 2,
+      explanation: 'Falsy values include False, None, 0, 0.0, "", [], {}, set(), and more'
+    },
+    {
+      question: 'Is bool(-1) truthy or falsy?',
+      options: ['Falsy', 'Truthy', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'Any non-zero number is truthy, including negative numbers'
+    },
+    {
+      question: 'What does bool(False) return?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'False is already a falsy boolean value'
+    },
+    {
+      question: 'Is an empty tuple () truthy or falsy?',
+      options: ['Truthy', 'Falsy', 'Error', 'Depends'],
+      correctIndex: 1,
+      explanation: 'Empty collections including tuples are falsy'
+    },
+    {
+      question: 'What does bool({"key": "value"}) return?',
+      options: ['False', 'True', 'Error', 'None'],
+      correctIndex: 1,
+      explanation: 'A non-empty dictionary is truthy'
+    },
+    {
+      question: 'If x = 0, what does "value = x or 10" assign?',
+      options: ['0', '10', 'True', 'Error'],
+      correctIndex: 1,
+      explanation: '0 is falsy, so or evaluates the second operand and returns 10'
+    },
   ],
 
   'lesson-4-4': [
@@ -2161,6 +4141,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'and returns first falsy value or last value'
     },
+    {
+      question: 'What does 3 in [1, 2, 3, 4] return?',
+      options: ['3', 'True', 'False', '2'],
+      correctIndex: 1,
+      explanation: '3 is in the list, so in returns True'
+    },
+    {
+      question: 'What does 1 < 5 < 10 return?',
+      options: ['False', 'True', 'Error', '5'],
+      correctIndex: 1,
+      explanation: '1 < 5 is True and 5 < 10 is True, so the chained comparison returns True'
+    },
+    {
+      question: 'What does "key" in {"key": 1, "val": 2} return?',
+      options: ['1', 'False', 'True', 'Error'],
+      correctIndex: 2,
+      explanation: 'in checks dictionary keys; "key" is a key in the dict'
+    },
+    {
+      question: 'What does x is not None check?',
+      options: ['x does not equal None', 'x is a different object than None', 'x is truthy', 'x has a value'],
+      correctIndex: 1,
+      explanation: 'is not checks that x is not the same object as None (identity check)'
+    },
+    {
+      question: 'What does 10 < 5 < 20 return?',
+      options: ['True', 'False', 'Error', '5'],
+      correctIndex: 1,
+      explanation: '10 < 5 is False, so the entire chained comparison is False'
+    },
+    {
+      question: 'What does "hello" not in ["hi", "hey"] return?',
+      options: ['False', 'True', '"hello"', 'Error'],
+      correctIndex: 1,
+      explanation: '"hello" is not in the list, so not in returns True'
+    },
+    {
+      question: 'What does 1 <= 1 <= 1 return?',
+      options: ['False', 'True', '1', 'Error'],
+      correctIndex: 1,
+      explanation: '1 <= 1 is True and 1 <= 1 is True, so the chain returns True'
+    },
+    {
+      question: 'What is the difference between == and is?',
+      options: ['No difference', '== checks value, is checks identity', '== checks identity, is checks value', '== is faster'],
+      correctIndex: 1,
+      explanation: '== compares values for equality; is checks if two references point to the same object'
+    },
+    {
+      question: 'What does "at" in "cat" return?',
+      options: ['True', 'False', '1', 'Error'],
+      correctIndex: 0,
+      explanation: '"at" is a substring of "cat", so in returns True'
+    },
+    {
+      question: 'What does 0 == 0 < 1 return?',
+      options: ['True', 'False', 'Error', '0'],
+      correctIndex: 0,
+      explanation: 'This is a chained comparison: 0 == 0 and 0 < 1, both True, so result is True'
+    },
   ],
 
   'lesson-4-5': [
@@ -2223,6 +4263,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Yes', 'No, use "if not is_valid:"', 'Same thing', 'Always best'],
       correctIndex: 1,
       explanation: 'Use "if not is_valid:" instead'
+    },
+    {
+      question: 'What does all([True, True, False]) return?',
+      options: ['True', 'False', '[True, True, False]', 'Error'],
+      correctIndex: 1,
+      explanation: 'all() returns True only if every element is truthy; False makes it return False'
+    },
+    {
+      question: 'What does any([False, False, True]) return?',
+      options: ['False', 'True', '[True]', 'Error'],
+      correctIndex: 1,
+      explanation: 'any() returns True if at least one element is truthy'
+    },
+    {
+      question: 'What is the Pythonic way to check if x is None?',
+      options: ['if x == None:', 'if x is None:', 'if not x:', 'if x == False:'],
+      correctIndex: 1,
+      explanation: 'Use "is None" for identity comparison with None, not =='
+    },
+    {
+      question: 'Which naming prefix indicates a boolean variable?',
+      options: ['get_', 'set_', 'has_', 'do_'],
+      correctIndex: 2,
+      explanation: 'Prefixes like is_, has_, can_ signal boolean values'
+    },
+    {
+      question: 'What does any([]) return?',
+      options: ['True', 'False', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'any() on an empty iterable returns False (no truthy elements)'
+    },
+    {
+      question: 'What does all([]) return?',
+      options: ['False', 'True', 'None', 'Error'],
+      correctIndex: 1,
+      explanation: 'all() on an empty iterable returns True (vacuous truth)'
+    },
+    {
+      question: 'How to simplify: if len(my_list) > 0:?',
+      options: ['if len(my_list):', 'if my_list:', 'if my_list > 0:', 'Cannot simplify'],
+      correctIndex: 1,
+      explanation: 'Non-empty lists are truthy, so "if my_list:" is Pythonic'
+    },
+    {
+      question: 'Which is the Pythonic check for an empty string?',
+      options: ['if s == "":', 'if len(s) == 0:', 'if not s:', 'if s is None:'],
+      correctIndex: 2,
+      explanation: '"if not s:" is Pythonic since empty strings are falsy'
+    },
+    {
+      question: 'What does any(x > 0 for x in [-1, -2, 3]) return?',
+      options: ['False', 'True', '3', 'Error'],
+      correctIndex: 1,
+      explanation: 'any() with a generator returns True because 3 > 0 is True'
+    },
+    {
+      question: 'Is "can_edit" a good boolean variable name?',
+      options: ['No, too vague', 'Yes, uses a boolean prefix', 'No, should be "edit_flag"', 'Only for functions'],
+      correctIndex: 1,
+      explanation: 'can_ is a clear boolean prefix indicating capability'
     },
   ],
 
@@ -2291,6 +4391,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'with automatically handles closing'
     },
+    {
+      question: 'What does "rb" mode do?',
+      options: ['Read backwards', 'Read binary', 'Read buffered', 'Read backup'],
+      correctIndex: 1,
+      explanation: '"rb" opens a file in binary read mode for non-text files'
+    },
+    {
+      question: 'What is the default mode for open()?',
+      options: ['"w"', '"a"', '"r"', '"x"'],
+      correctIndex: 2,
+      explanation: 'If no mode is specified, open() defaults to "r" (read)'
+    },
+    {
+      question: 'What error occurs opening a non-existent file in "r" mode?',
+      options: ['ValueError', 'IOError', 'FileNotFoundError', 'TypeError'],
+      correctIndex: 2,
+      explanation: 'FileNotFoundError is raised when opening a missing file for reading'
+    },
+    {
+      question: 'What does open() return?',
+      options: ['A string', 'A file object', 'A list', 'A boolean'],
+      correctIndex: 1,
+      explanation: 'open() returns a file object used to read or write'
+    },
+    {
+      question: 'Which mode opens for writing in binary?',
+      options: ['"bw"', '"wb"', '"write-binary"', '"b"'],
+      correctIndex: 1,
+      explanation: '"wb" opens a file for writing in binary mode'
+    },
+    {
+      question: 'What happens if "x" mode is used on an existing file?',
+      options: ['Overwrites it', 'Appends to it', 'Raises FileExistsError', 'Ignores it'],
+      correctIndex: 2,
+      explanation: '"x" mode raises FileExistsError if the file already exists'
+    },
+    {
+      question: 'How do you open a file for both reading and writing?',
+      options: ['"rw"', '"r+"', '"read_write"', '"rw+"'],
+      correctIndex: 1,
+      explanation: '"r+" mode opens a file for both reading and writing'
+    },
+    {
+      question: 'What is a benefit of using the with statement for files?',
+      options: ['Faster reading', 'File is closed even if an exception occurs', 'Enables binary mode', 'Locks the file'],
+      correctIndex: 1,
+      explanation: 'The with statement guarantees the file is closed, even if an error occurs'
+    },
+    {
+      question: 'Which argument of open() sets the character encoding?',
+      options: ['mode', 'encoding', 'charset', 'format'],
+      correctIndex: 1,
+      explanation: 'The encoding parameter (e.g., encoding="utf-8") sets the character encoding'
+    },
+    {
+      question: 'What does "a+" mode allow?',
+      options: ['Read only', 'Write only', 'Append and read', 'Create only'],
+      correctIndex: 2,
+      explanation: '"a+" opens a file for both appending and reading'
+    },
   ],
 
   'lesson-10-2': [
@@ -2353,6 +4513,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['file.read()', 'file.readlines()', 'for line in file:', 'while True:'],
       correctIndex: 2,
       explanation: 'Iterating over file is most Pythonic'
+    },
+    {
+      question: 'What does file.seek(0) do?',
+      options: ['Closes the file', 'Moves cursor to beginning', 'Reads first byte', 'Deletes content'],
+      correctIndex: 1,
+      explanation: 'seek(0) moves the file cursor back to the start of the file'
+    },
+    {
+      question: 'What does file.tell() return?',
+      options: ['File size', 'Current cursor position', 'Number of lines', 'File name'],
+      correctIndex: 1,
+      explanation: 'tell() returns the current position of the file cursor'
+    },
+    {
+      question: 'What happens when readline() reaches end of file?',
+      options: ['Raises an error', 'Returns None', 'Returns empty string', 'Restarts from beginning'],
+      correctIndex: 2,
+      explanation: 'readline() returns an empty string when there are no more lines'
+    },
+    {
+      question: 'Which method reads all lines into a list?',
+      options: ['read()', 'readline()', 'readlines()', 'list()'],
+      correctIndex: 2,
+      explanation: 'readlines() reads all lines and returns them as a list'
+    },
+    {
+      question: 'What does read().splitlines() return?',
+      options: ['A string', 'A list of lines without newlines', 'A list of words', 'A dictionary'],
+      correctIndex: 1,
+      explanation: 'splitlines() splits text into lines and removes newline characters'
+    },
+    {
+      question: 'Why is readlines() less memory efficient for large files?',
+      options: ['It is slower', 'It loads the entire file into memory', 'It creates duplicates', 'It locks the file'],
+      correctIndex: 1,
+      explanation: 'readlines() loads all lines into a list in memory at once'
+    },
+    {
+      question: 'What does file.read().count("word") do?',
+      options: ['Counts lines', 'Counts occurrences of "word"', 'Returns file size', 'Raises an error'],
+      correctIndex: 1,
+      explanation: 'count() on a string counts how many times a substring appears'
+    },
+    {
+      question: 'What does rstrip() do when reading lines?',
+      options: ['Removes left whitespace', 'Removes right whitespace and newlines', 'Removes all spaces', 'Adds newlines'],
+      correctIndex: 1,
+      explanation: 'rstrip() removes trailing whitespace including newline characters'
+    },
+    {
+      question: 'Can you use seek() on a file opened in text mode?',
+      options: ['No, only binary', 'Yes, but only seek(0)', 'Yes, any position', 'Only with "r+" mode'],
+      correctIndex: 2,
+      explanation: 'seek() works in text mode, though non-zero offsets should use values from tell()'
+    },
+    {
+      question: 'What does enumerate() add when iterating over file lines?',
+      options: ['File size', 'Line numbers', 'Timestamps', 'Line lengths'],
+      correctIndex: 1,
+      explanation: 'enumerate() provides an index counter alongside each line'
     },
   ],
 
@@ -2417,6 +4637,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'Check existence to avoid losing data'
     },
+    {
+      question: 'How can you use print() to write to a file?',
+      options: ['print(text, file=f)', 'print(text, to=f)', 'print(text, output=f)', 'print(text, dest=f)'],
+      correctIndex: 0,
+      explanation: 'The file parameter of print() redirects output to a file object'
+    },
+    {
+      question: 'What advantage does print(file=f) have over write()?',
+      options: ['It is faster', 'It automatically adds a newline', 'It converts to binary', 'It locks the file'],
+      correctIndex: 1,
+      explanation: 'print() adds a newline by default, unlike write()'
+    },
+    {
+      question: 'What does file.truncate() do?',
+      options: ['Deletes the file', 'Resizes file to current position', 'Clears the buffer', 'Closes the file'],
+      correctIndex: 1,
+      explanation: 'truncate() resizes the file to the current cursor position'
+    },
+    {
+      question: 'What must strings in writelines() include for separate lines?',
+      options: ['Commas', 'Newline characters', 'Semicolons', 'Nothing special'],
+      correctIndex: 1,
+      explanation: 'writelines() does not add separators, so strings must include \\n'
+    },
+    {
+      question: 'What does file.flush() do?',
+      options: ['Deletes file content', 'Writes buffered data to disk', 'Closes the file', 'Resets the cursor'],
+      correctIndex: 1,
+      explanation: 'flush() forces buffered data to be written to the file immediately'
+    },
+    {
+      question: 'Can write() accept a list as an argument?',
+      options: ['Yes', 'No, only strings', 'Only lists of numbers', 'Only tuples'],
+      correctIndex: 1,
+      explanation: 'write() only accepts strings; use writelines() for lists or convert first'
+    },
+    {
+      question: 'What mode should you use to add data without erasing existing content?',
+      options: ['"w"', '"r"', '"a"', '"x"'],
+      correctIndex: 2,
+      explanation: '"a" (append) mode adds data to the end without erasing existing content'
+    },
+    {
+      question: 'How do you write formatted data like f-strings to a file?',
+      options: ['file.format()', 'file.write(f"text {var}")', 'file.fwrite()', 'format(file)'],
+      correctIndex: 1,
+      explanation: 'Pass an f-string directly to write() for formatted output'
+    },
+    {
+      question: 'What does "w" mode do to a file\'s existing content?',
+      options: ['Keeps it intact', 'Appends after it', 'Erases it completely', 'Backs it up first'],
+      correctIndex: 2,
+      explanation: '"w" mode truncates the file, erasing all existing content before writing'
+    },
+    {
+      question: 'What happens if you call write() on a file opened in "r" mode?',
+      options: ['Writes normally', 'Raises io.UnsupportedOperation', 'Silently fails', 'Appends instead'],
+      correctIndex: 1,
+      explanation: 'Writing to a read-only file raises an UnsupportedOperation error'
+    },
   ],
 
   'lesson-10-4': [
@@ -2480,6 +4760,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: '. represents current directory'
     },
+    {
+      question: 'What does Path.stem return?',
+      options: ['File extension', 'File name without extension', 'Parent directory', 'Full path'],
+      correctIndex: 1,
+      explanation: 'Path.stem returns the file name without its extension (e.g., "data" from "data.csv")'
+    },
+    {
+      question: 'What does Path.suffix return?',
+      options: ['File name', 'File extension including dot', 'Directory name', 'Drive letter'],
+      correctIndex: 1,
+      explanation: 'Path.suffix returns the file extension including the dot (e.g., ".csv")'
+    },
+    {
+      question: 'What does Path.parent return?',
+      options: ['The root directory', 'The parent directory as a Path', 'The file name', 'The home directory'],
+      correctIndex: 1,
+      explanation: 'Path.parent returns the directory containing the file as a Path object'
+    },
+    {
+      question: 'What does Path.name return?',
+      options: ['Directory name only', 'Full path', 'File name with extension', 'File name without extension'],
+      correctIndex: 2,
+      explanation: 'Path.name returns the final component of the path (file name with extension)'
+    },
+    {
+      question: 'How do you create a directory with pathlib?',
+      options: ['Path.create()', 'Path.mkdir()', 'Path.makedir()', 'Path.new_dir()'],
+      correctIndex: 1,
+      explanation: 'Path.mkdir() creates a new directory at the specified path'
+    },
+    {
+      question: 'What does Path.mkdir(parents=True) do?',
+      options: ['Creates only the leaf directory', 'Creates all missing parent directories', 'Raises an error', 'Deletes parent directories'],
+      correctIndex: 1,
+      explanation: 'parents=True creates any missing intermediate directories in the path'
+    },
+    {
+      question: 'How do you combine paths with pathlib?',
+      options: ['Path.join()', 'Path + Path', 'Path / "subdir"', 'Path.combine()'],
+      correctIndex: 2,
+      explanation: 'The / operator joins Path objects and strings together'
+    },
+    {
+      question: 'What does os.path.basename() return?',
+      options: ['Directory name', 'File name from path', 'File extension', 'Drive letter'],
+      correctIndex: 1,
+      explanation: 'os.path.basename() returns the final component (file name) of a path'
+    },
+    {
+      question: 'What does os.path.dirname() return?',
+      options: ['File name', 'Directory portion of path', 'Current directory', 'Home directory'],
+      correctIndex: 1,
+      explanation: 'os.path.dirname() returns the directory part of a path'
+    },
+    {
+      question: 'What does Path.exists() return?',
+      options: ['The file content', 'A Path object', 'True or False', 'The file size'],
+      correctIndex: 2,
+      explanation: 'Path.exists() returns True if the path points to an existing file or directory'
+    },
   ],
 
   'lesson-10-5': [
@@ -2542,6 +4882,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Can\'t do it', 'Read each, write to output', 'Use merge()', 'Use combine()'],
       correctIndex: 1,
       explanation: 'Read each file and write contents to new file'
+    },
+    {
+      question: 'What does the errors parameter in open() control?',
+      options: ['File permissions', 'How encoding errors are handled', 'Error logging', 'Exception types'],
+      correctIndex: 1,
+      explanation: 'The errors parameter (e.g., errors="ignore") controls how encoding errors are handled'
+    },
+    {
+      question: 'What is PermissionError raised for?',
+      options: ['Wrong encoding', 'File not found', 'Insufficient file access permissions', 'Invalid mode'],
+      correctIndex: 2,
+      explanation: 'PermissionError occurs when you lack read or write permissions for a file'
+    },
+    {
+      question: 'Why should you specify encoding="utf-8" explicitly?',
+      options: ['It is faster', 'Default encoding varies by platform', 'It enables binary mode', 'It compresses the file'],
+      correctIndex: 1,
+      explanation: 'The default encoding differs across operating systems, so explicit utf-8 ensures consistency'
+    },
+    {
+      question: 'What is a context manager in Python?',
+      options: ['A debugger', 'An object that manages setup and teardown via with', 'A type of loop', 'A package manager'],
+      correctIndex: 1,
+      explanation: 'Context managers handle resource setup and cleanup using the with statement'
+    },
+    {
+      question: 'How do you read a large file without loading it all into memory?',
+      options: ['Use read()', 'Use readlines()', 'Iterate line by line with a for loop', 'Use load()'],
+      correctIndex: 2,
+      explanation: 'Iterating with for line in file: reads one line at a time, saving memory'
+    },
+    {
+      question: 'What does the finally block ensure when working with files?',
+      options: ['File is created', 'Cleanup code always runs', 'Errors are suppressed', 'File is backed up'],
+      correctIndex: 1,
+      explanation: 'finally always executes, making it useful for cleanup like closing files'
+    },
+    {
+      question: 'What is a UnicodeDecodeError?',
+      options: ['File not found', 'Wrong file mode', 'Cannot decode bytes with the specified encoding', 'Permission denied'],
+      correctIndex: 2,
+      explanation: 'UnicodeDecodeError occurs when file bytes cannot be decoded with the given encoding'
+    },
+    {
+      question: 'What is the advantage of processing files in chunks?',
+      options: ['Simpler code', 'Handles files larger than available memory', 'Faster for small files', 'Enables concurrent access'],
+      correctIndex: 1,
+      explanation: 'Reading in chunks allows processing files that are too large to fit in memory'
+    },
+    {
+      question: 'Can you nest multiple with statements for files?',
+      options: ['No', 'Yes, or use comma-separated syntax', 'Only two files', 'Only in Python 3.10+'],
+      correctIndex: 1,
+      explanation: 'You can nest with blocks or use with open(a) as f1, open(b) as f2:'
+    },
+    {
+      question: 'What is a best practice when writing temporary files?',
+      options: ['Use "w" mode directly', 'Use the tempfile module', 'Write to the root directory', 'Skip error handling'],
+      correctIndex: 1,
+      explanation: 'The tempfile module creates secure temporary files that are cleaned up automatically'
     },
   ],
 
@@ -2610,6 +5010,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 2,
       explanation: 'Logic errors produce wrong results without error messages'
     },
+    {
+      question: 'What does a traceback display first?',
+      options: ['The error type', 'The most recent call', 'The oldest call in the stack', 'The variable values'],
+      correctIndex: 2,
+      explanation: 'Tracebacks show the call stack starting from the oldest call at the top to the most recent at the bottom'
+    },
+    {
+      question: 'Which error occurs when you misspell a variable name?',
+      options: ['SyntaxError', 'TypeError', 'NameError', 'ValueError'],
+      correctIndex: 2,
+      explanation: 'NameError occurs when Python encounters a name that has not been defined'
+    },
+    {
+      question: 'What does int("3.14") raise?',
+      options: ['TypeError', 'SyntaxError', 'No error', 'ValueError'],
+      correctIndex: 3,
+      explanation: 'int() cannot convert a string with a decimal point directly, raising a ValueError'
+    },
+    {
+      question: 'Which line of a traceback shows the actual error type and message?',
+      options: ['The first line', 'The middle line', 'The last line', 'Every line'],
+      correctIndex: 2,
+      explanation: 'The last line of a traceback shows the exception type and its message'
+    },
+    {
+      question: 'What error does "5" + 5 produce?',
+      options: ['ValueError', 'SyntaxError', 'TypeError', 'NameError'],
+      correctIndex: 2,
+      explanation: 'You cannot add a string and an integer, so Python raises a TypeError'
+    },
+    {
+      question: 'What happens when you access index 10 of a 3-element list?',
+      options: ['Returns None', 'Returns 0', 'IndexError', 'KeyError'],
+      correctIndex: 2,
+      explanation: 'Accessing an index beyond the list length raises an IndexError'
+    },
+    {
+      question: 'Which error is raised by a missing colon after an if statement?',
+      options: ['NameError', 'SyntaxError', 'IndentationError', 'TypeError'],
+      correctIndex: 1,
+      explanation: 'A missing colon is a grammar violation that raises a SyntaxError'
+    },
+    {
+      question: 'What is the difference between SyntaxError and other errors?',
+      options: ['SyntaxError is caught before the program runs', 'SyntaxError only happens in loops', 'SyntaxError can be caught with try/except', 'There is no difference'],
+      correctIndex: 0,
+      explanation: 'SyntaxError is detected during parsing, before any code executes'
+    },
+    {
+      question: 'What does 10 % 0 raise?',
+      options: ['ValueError', 'TypeError', 'Returns 0', 'ZeroDivisionError'],
+      correctIndex: 3,
+      explanation: 'The modulo operator with zero also raises ZeroDivisionError, just like division'
+    },
+    {
+      question: 'Which error occurs when you call len(42)?',
+      options: ['ValueError', 'TypeError', 'NameError', 'AttributeError'],
+      correctIndex: 1,
+      explanation: 'Integers do not have a length, so passing one to len() raises a TypeError'
+    },
   ],
 
   'lesson-9-2': [
@@ -2672,6 +5132,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Program ends', 'Program crashes', 'Program continues', 'Returns to try'],
       correctIndex: 2,
       explanation: 'Program continues after except'
+    },
+    {
+      question: 'If an error occurs on the second line of a try block, does the third line run?',
+      options: ['Yes, all lines run', 'No, execution jumps to except', 'Only if the error is minor', 'It depends on the error type'],
+      correctIndex: 1,
+      explanation: 'When an error occurs in a try block, the remaining lines are skipped and execution jumps to the except block'
+    },
+    {
+      question: 'What is the correct syntax for try/except?',
+      options: ['try { } except { }', 'try: ... except: ...', 'try() except()', 'try[] except[]'],
+      correctIndex: 1,
+      explanation: 'Python uses colons and indentation: try: followed by except:'
+    },
+    {
+      question: 'What does a bare except: catch?',
+      options: ['Only ValueError', 'Only TypeError', 'All exceptions', 'No exceptions'],
+      correctIndex: 2,
+      explanation: 'A bare except: with no exception type catches all exceptions, which is generally discouraged'
+    },
+    {
+      question: 'Can try/except handle errors from user input?',
+      options: ['No, only code errors', 'Yes, it is a common use case', 'Only with special imports', 'Only in Python 3'],
+      correctIndex: 1,
+      explanation: 'try/except is commonly used to handle invalid user input gracefully'
+    },
+    {
+      question: 'What happens if no error occurs in the try block?',
+      options: ['except still runs', 'Program crashes', 'except is skipped', 'Program ends'],
+      correctIndex: 2,
+      explanation: 'If no exception is raised in the try block, the except block is skipped entirely'
+    },
+    {
+      question: 'Can you nest try/except inside another try/except?',
+      options: ['No, that causes a SyntaxError', 'Yes, nesting is allowed', 'Only one level deep', 'Only in functions'],
+      correctIndex: 1,
+      explanation: 'try/except blocks can be nested inside each other when needed'
+    },
+    {
+      question: 'Why is bare except: considered bad practice?',
+      options: ['It is slower', 'It hides bugs by catching unexpected errors', 'It does not actually work', 'Python will remove it in future versions'],
+      correctIndex: 1,
+      explanation: 'Bare except catches all errors including ones you did not anticipate, making bugs harder to find'
+    },
+    {
+      question: 'What is a common pattern for validating user input with try/except?',
+      options: ['Put try/except after the input', 'Use try/except inside a while loop', 'Use try without except', 'Use if/else instead'],
+      correctIndex: 1,
+      explanation: 'A while loop with try/except keeps asking until the user provides valid input'
+    },
+    {
+      question: 'Does try/except catch SyntaxError during normal execution?',
+      options: ['Yes, always', 'No, SyntaxError is caught before runtime', 'Only with bare except', 'Only in the main file'],
+      correctIndex: 1,
+      explanation: 'SyntaxError occurs during parsing before the code runs, so try/except cannot catch it in the same file'
+    },
+    {
+      question: 'What is the purpose of error handling in programs?',
+      options: ['To make code run faster', 'To prevent the program from crashing unexpectedly', 'To remove all bugs', 'To avoid writing tests'],
+      correctIndex: 1,
+      explanation: 'Error handling allows programs to respond gracefully to problems instead of crashing'
     },
   ],
 
@@ -2736,6 +5256,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'Can have many except blocks'
     },
+    {
+      question: 'What is the syntax for catching two exception types in one except block?',
+      options: ['except ValueError, TypeError:', 'except (ValueError, TypeError):', 'except [ValueError, TypeError]:', 'except ValueError & TypeError:'],
+      correctIndex: 1,
+      explanation: 'Use a tuple in parentheses: except (ValueError, TypeError):'
+    },
+    {
+      question: 'What does "raise" do inside an except block?',
+      options: ['Creates a new variable', 'Re-raises the current exception', 'Ends the program', 'Prints the error'],
+      correctIndex: 1,
+      explanation: 'raise with no argument re-raises the exception that was caught, allowing it to propagate'
+    },
+    {
+      question: 'What does except Exception as e give you access to?',
+      options: ['The line number only', 'The error message and exception object', 'The source code', 'The variable values'],
+      correctIndex: 1,
+      explanation: 'The as keyword binds the exception object to the variable e, giving access to the error message'
+    },
+    {
+      question: 'Why should specific exceptions come before general ones?',
+      options: ['It is faster', 'Python requires it alphabetically', 'A general except would catch the error first', 'It does not matter'],
+      correctIndex: 2,
+      explanation: 'Python checks except blocks in order, so a general one first would catch everything before specific ones get a chance'
+    },
+    {
+      question: 'What does except Exception: catch that except: does not?',
+      options: ['It catches more errors', 'They catch the same things', 'except Exception: skips SystemExit and KeyboardInterrupt', 'except Exception: only catches ValueError'],
+      correctIndex: 2,
+      explanation: 'except Exception: does not catch SystemExit or KeyboardInterrupt, making it safer than bare except:'
+    },
+    {
+      question: 'How can you print the error message from a caught exception?',
+      options: ['print(error)', 'print(except)', 'except ValueError as e: print(e)', 'print(ValueError)'],
+      correctIndex: 2,
+      explanation: 'Catch the exception with as e, then print(e) to display the error message'
+    },
+    {
+      question: 'What happens if an exception is not caught by any except block?',
+      options: ['It is silently ignored', 'The program crashes with a traceback', 'Python retries the code', 'The else block runs'],
+      correctIndex: 1,
+      explanation: 'An unhandled exception causes the program to crash and display a traceback'
+    },
+    {
+      question: 'Can you raise a new exception inside an except block?',
+      options: ['No, that causes a SyntaxError', 'Yes, using raise ExceptionType()', 'Only the same exception type', 'Only with finally'],
+      correctIndex: 1,
+      explanation: 'You can raise any exception inside an except block, including a different type than was caught'
+    },
+    {
+      question: 'Which is the correct order for multiple except blocks?',
+      options: ['General to specific', 'Specific to general', 'Alphabetical order', 'Order does not matter'],
+      correctIndex: 1,
+      explanation: 'Place specific exceptions first so they are matched before more general ones'
+    },
+    {
+      question: 'What does str(e) do when e is an exception object?',
+      options: ['Converts it to an integer', 'Returns the error message as a string', 'Deletes the exception', 'Re-raises the exception'],
+      correctIndex: 1,
+      explanation: 'str(e) converts the exception object to its string message, which is the same as what print(e) displays'
+    },
   ],
 
   'lesson-9-4': [
@@ -2799,6 +5379,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'with statement is better for files'
     },
+    {
+      question: 'If an exception occurs in try, does else still run?',
+      options: ['Yes, always', 'No, else only runs when there is no exception', 'Only for certain errors', 'Only if finally is present'],
+      correctIndex: 1,
+      explanation: 'The else block is skipped when an exception occurs; it only runs on success'
+    },
+    {
+      question: 'Does finally run even if there is a return statement in try?',
+      options: ['No, return exits immediately', 'Yes, finally runs before the return completes', 'Only in Python 3', 'Only if except is present'],
+      correctIndex: 1,
+      explanation: 'finally always executes, even if a return statement is encountered in the try or except block'
+    },
+    {
+      question: 'What is a common use for the else block in try/except?',
+      options: ['Closing files', 'Running code that should only execute if try succeeded', 'Handling errors', 'Defining variables'],
+      correctIndex: 1,
+      explanation: 'else is ideal for code that depends on the try block succeeding, like processing data that was successfully loaded'
+    },
+    {
+      question: 'Can you have try/finally without an except block?',
+      options: ['No, except is always required', 'Yes, try/finally is valid', 'Only with else', 'Only in Python 2'],
+      correctIndex: 1,
+      explanation: 'try/finally without except is valid and ensures cleanup runs while still letting the exception propagate'
+    },
+    {
+      question: 'What is the correct order of all four blocks?',
+      options: ['try, else, except, finally', 'try, finally, except, else', 'try, except, else, finally', 'except, try, else, finally'],
+      correctIndex: 2,
+      explanation: 'The correct order is: try, then except, then else, then finally'
+    },
+    {
+      question: 'If both except and finally are present, which runs first when an error occurs?',
+      options: ['finally', 'except', 'They run simultaneously', 'Neither runs'],
+      correctIndex: 1,
+      explanation: 'When an error occurs, except runs first to handle it, then finally runs for cleanup'
+    },
+    {
+      question: 'What happens if an exception occurs inside the except block?',
+      options: ['It is silently ignored', 'finally still runs before the new exception propagates', 'The program freezes', 'Python retries the try block'],
+      correctIndex: 1,
+      explanation: 'Even if an exception occurs in the except block, finally will still execute before the exception propagates'
+    },
+    {
+      question: 'Why put code in else instead of at the end of try?',
+      options: ['It runs faster in else', 'Else code is protected from accidental exception catching', 'There is no difference', 'Else supports more operations'],
+      correctIndex: 1,
+      explanation: 'Code in else will not have its exceptions caught by the except block, preventing accidental masking of bugs'
+    },
+    {
+      question: 'Which block would you use to close a database connection?',
+      options: ['try', 'except', 'else', 'finally'],
+      correctIndex: 3,
+      explanation: 'finally is ideal for cleanup tasks like closing connections because it always runs regardless of errors'
+    },
+    {
+      question: 'Can you use else without except?',
+      options: ['Yes, try/else is valid', 'No, else requires except to be present', 'Only with finally', 'Only in Python 3.10+'],
+      correctIndex: 1,
+      explanation: 'The else clause requires at least one except clause to be present in the try statement'
+    },
   ],
 
   'lesson-9-5': [
@@ -2861,6 +5501,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Hiding errors', 'Checking assumptions', 'Avoiding errors', 'Removing try/except'],
       correctIndex: 1,
       explanation: 'Defensive programming checks assumptions and validates'
+    },
+    {
+      question: 'What does assert do in Python?',
+      options: ['Prints a message', 'Tests a condition and raises AssertionError if false', 'Catches exceptions', 'Defines a variable'],
+      correctIndex: 1,
+      explanation: 'assert checks a condition and raises AssertionError if it evaluates to False'
+    },
+    {
+      question: 'Where should you add print statements when debugging?',
+      options: ['At the very end of the program', 'Before and after the suspected problem area', 'Only at the start', 'In every single line'],
+      correctIndex: 1,
+      explanation: 'Place print statements around the area where you suspect the bug to narrow down the issue'
+    },
+    {
+      question: 'What is the benefit of rubber duck debugging?',
+      options: ['The duck fixes the code', 'Explaining forces you to think through each step', 'It runs the code faster', 'It catches syntax errors'],
+      correctIndex: 1,
+      explanation: 'The act of explaining your code step by step often reveals logical errors you missed'
+    },
+    {
+      question: 'What does input validation mean?',
+      options: ['Checking that user input meets expected criteria before using it', 'Asking the user to try again', 'Removing all input', 'Converting input to strings'],
+      correctIndex: 0,
+      explanation: 'Input validation checks that data is in the correct format and range before processing it'
+    },
+    {
+      question: 'What should you do before changing code to fix a bug?',
+      options: ['Delete the function', 'Reproduce the bug consistently', 'Rewrite the entire file', 'Add more features'],
+      correctIndex: 1,
+      explanation: 'Reproducing the bug ensures you understand when it occurs and can verify your fix works'
+    },
+    {
+      question: 'Which is an example of defensive programming?',
+      options: ['Checking if a list is empty before accessing its first element', 'Wrapping all code in try/except', 'Ignoring error messages', 'Using short variable names'],
+      correctIndex: 0,
+      explanation: 'Checking preconditions like list length before accessing elements prevents IndexError'
+    },
+    {
+      question: 'What is a good use of assert statements?',
+      options: ['Handling user input errors', 'Verifying assumptions during development', 'Replacing try/except', 'Printing output'],
+      correctIndex: 1,
+      explanation: 'assert is used during development to verify that conditions you expect to be true actually are'
+    },
+    {
+      question: 'Why should you remove or comment out debugging print statements?',
+      options: ['They cause errors', 'They clutter the output and slow the program', 'Python requires it', 'They change variable values'],
+      correctIndex: 1,
+      explanation: 'Leftover debug prints clutter output and can confuse users; remove them when done debugging'
+    },
+    {
+      question: 'What is the "divide and conquer" debugging strategy?',
+      options: ['Splitting code into two files', 'Commenting out half the code to isolate the bug', 'Using two monitors', 'Having two people debug'],
+      correctIndex: 1,
+      explanation: 'By commenting out sections of code, you can narrow down which part contains the bug'
+    },
+    {
+      question: 'When should you use assert vs try/except?',
+      options: ['assert for user errors, try/except for developer errors', 'assert for developer assumptions, try/except for expected runtime errors', 'They are interchangeable', 'assert is always better'],
+      correctIndex: 1,
+      explanation: 'assert checks developer assumptions during development, while try/except handles expected errors in production'
     },
   ],
 
@@ -2929,6 +5629,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: '[char for char in "abc"] creates [\'a\',\'b\',\'c\']'
     },
+    {
+      question: 'What does [x + 1 for x in [10, 20, 30]] produce?',
+      options: ['[10, 20, 30]', '[11, 21, 31]', '[1, 2, 3]', 'Error'],
+      correctIndex: 1,
+      explanation: 'Each element has 1 added to it: 10+1=11, 20+1=21, 30+1=31'
+    },
+    {
+      question: 'What does [len(w) for w in ["hi", "bye", "ok"]] create?',
+      options: ['["hi", "bye", "ok"]', '[2, 3, 2]', '[3, 3, 3]', 'Error'],
+      correctIndex: 1,
+      explanation: 'len() returns the length of each string: 2, 3, 2'
+    },
+    {
+      question: 'Which is equivalent to: result = []; for x in range(3): result.append(x)?',
+      options: ['[x for x in range(3)]', '[range(3)]', '[append(x) for x in range(3)]', 'list(3)'],
+      correctIndex: 0,
+      explanation: 'List comprehension [x for x in range(3)] replaces the append loop pattern'
+    },
+    {
+      question: 'What does [word.lower() for word in ["HELLO", "WORLD"]] produce?',
+      options: ['["HELLO", "WORLD"]', '["hello", "world"]', '["Hello", "World"]', 'Error'],
+      correctIndex: 1,
+      explanation: '.lower() converts each string to lowercase'
+    },
+    {
+      question: 'What does [i * i for i in range(1, 5)] create?',
+      options: ['[1, 2, 3, 4]', '[1, 4, 9, 16]', '[0, 1, 4, 9]', '[2, 4, 6, 8]'],
+      correctIndex: 1,
+      explanation: 'range(1,5) gives 1,2,3,4 and each is squared: 1,4,9,16'
+    },
+    {
+      question: 'Can you use a list comprehension with a dictionary?',
+      options: ['No, only lists', 'Yes, you can iterate over dict keys', 'Only with dict()', 'Only in Python 3.10+'],
+      correctIndex: 1,
+      explanation: '[k for k in my_dict] iterates over the dictionary keys'
+    },
+    {
+      question: 'What does [x / 2 for x in [10, 20, 30]] produce?',
+      options: ['[5, 10, 15]', '[5.0, 10.0, 15.0]', '[20, 40, 60]', 'Error'],
+      correctIndex: 1,
+      explanation: 'Division in Python 3 returns floats: 10/2=5.0, 20/2=10.0, 30/2=15.0'
+    },
+    {
+      question: 'What does [bool(x) for x in [0, 1, "", "hi"]] create?',
+      options: ['[0, 1, 0, 1]', '[False, True, False, True]', '[True, True, True, True]', 'Error'],
+      correctIndex: 1,
+      explanation: '0 and empty string are falsy, 1 and "hi" are truthy'
+    },
+    {
+      question: 'What does [s[0] for s in ["apple", "banana", "cherry"]] create?',
+      options: ['["apple", "banana", "cherry"]', '["a", "b", "c"]', '["e", "a", "y"]', 'Error'],
+      correctIndex: 1,
+      explanation: 's[0] gets the first character of each string'
+    },
+    {
+      question: 'What does list comprehension [x for x in []] produce?',
+      options: ['None', '[]', 'Error', '[None]'],
+      correctIndex: 1,
+      explanation: 'Iterating over an empty list produces an empty list'
+    },
   ],
 
   'lesson-8-2': [
@@ -2991,6 +5751,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['Yes', 'No, syntax error', 'Sometimes', 'Only with for'],
       correctIndex: 1,
       explanation: 'if-else must be at start (conditional expression)'
+    },
+    {
+      question: 'What does [x for x in "hello" if x not in "aeiou"] create?',
+      options: ['["hello"]', '["h", "l", "l"]', '["e", "o"]', '["h", "e", "l", "l", "o"]'],
+      correctIndex: 1,
+      explanation: 'Filters out vowels, keeping only consonants: h, l, l'
+    },
+    {
+      question: 'What does [x for x in [1, None, 3, None, 5] if x is not None] create?',
+      options: ['[1, 3, 5]', '[None, None]', '[1, None, 3, None, 5]', 'Error'],
+      correctIndex: 0,
+      explanation: 'Filters out None values, keeping 1, 3, and 5'
+    },
+    {
+      question: 'What does [x for x in range(20) if x % 3 == 0 and x % 5 == 0] create?',
+      options: ['[0, 15]', '[0, 3, 5, 6, 9, 10, 12, 15, 18]', '[3, 5, 15]', '[0, 5, 10, 15]'],
+      correctIndex: 0,
+      explanation: 'Only 0 and 15 are divisible by both 3 and 5 in range(20)'
+    },
+    {
+      question: 'What does ["pass" if score >= 60 else "fail" for score in [80, 45, 60]] create?',
+      options: ['["pass", "fail", "fail"]', '["pass", "fail", "pass"]', '[80, 45, 60]', 'Error'],
+      correctIndex: 1,
+      explanation: '80>=60 is pass, 45<60 is fail, 60>=60 is pass'
+    },
+    {
+      question: 'What does [word for word in ["cat", "elephant", "dog"] if len(word) <= 3] create?',
+      options: ['["cat", "dog"]', '["elephant"]', '["cat", "elephant", "dog"]', 'Error'],
+      correctIndex: 0,
+      explanation: 'Filters for words with 3 or fewer characters'
+    },
+    {
+      question: 'What does [x for x in [True, False, True, False] if x] create?',
+      options: ['[True, False, True, False]', '[True, True]', '[False, False]', '[]'],
+      correctIndex: 1,
+      explanation: 'if x keeps only truthy values, so only True items remain'
+    },
+    {
+      question: 'What does [x**2 for x in range(-3, 4) if x > 0] create?',
+      options: ['[1, 4, 9]', '[9, 4, 1, 0, 1, 4, 9]', '[0, 1, 4, 9]', '[-3, -2, -1]'],
+      correctIndex: 0,
+      explanation: 'Filters for positive numbers (1,2,3) then squares them: 1,4,9'
+    },
+    {
+      question: 'Can you have multiple if conditions in a list comprehension?',
+      options: ['No, only one if', 'Yes, using multiple if clauses', 'Only with elif', 'Only with nested comprehensions'],
+      correctIndex: 1,
+      explanation: '[x for x in items if cond1 if cond2] is valid and acts like "and"'
+    },
+    {
+      question: 'What does [abs(x) if x < 0 else x for x in [-1, 2, -3, 4]] create?',
+      options: ['[-1, 2, -3, 4]', '[1, 2, 3, 4]', '[-1, -3]', 'Error'],
+      correctIndex: 1,
+      explanation: 'Negative numbers get abs() applied, positives stay the same'
+    },
+    {
+      question: 'What does [n for n in [1, 2, 3, 4, 5] if n % 2 != 0] create?',
+      options: ['[2, 4]', '[1, 3, 5]', '[1, 2, 3, 4, 5]', '[]'],
+      correctIndex: 1,
+      explanation: 'Filters for odd numbers where remainder is not 0 when divided by 2'
     },
   ],
 
@@ -3055,6 +5875,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'Can modify elements at any level'
     },
+    {
+      question: 'What does len([[1,2],[3,4],[5,6]]) return?',
+      options: ['6', '3', '2', 'Error'],
+      correctIndex: 1,
+      explanation: 'len() counts the outer elements, which are 3 inner lists'
+    },
+    {
+      question: 'What does [[1,2],[3,4]][0][1] return?',
+      options: ['1', '2', '3', '4'],
+      correctIndex: 1,
+      explanation: 'First list is [1,2], second element (index 1) is 2'
+    },
+    {
+      question: 'Why is [[0]*3]*3 problematic for a matrix?',
+      options: ['It creates errors', 'All rows reference the same list', 'It creates too many zeros', 'It only works in Python 2'],
+      correctIndex: 1,
+      explanation: 'Multiplying a list creates references, so changing one row changes all rows'
+    },
+    {
+      question: 'How do you get the number of columns in a regular 2D list?',
+      options: ['len(matrix)', 'len(matrix[0])', 'matrix.columns()', 'matrix.width()'],
+      correctIndex: 1,
+      explanation: 'len(matrix[0]) gives the length of the first row, which is the number of columns'
+    },
+    {
+      question: 'What does [[i+j for j in range(2)] for i in range(2)] create?',
+      options: ['[[0,1],[1,2]]', '[[0,0],[1,1]]', '[[0,1],[2,3]]', '[[1,2],[3,4]]'],
+      correctIndex: 0,
+      explanation: 'i=0: [0+0,0+1]=[0,1]; i=1: [1+0,1+1]=[1,2]'
+    },
+    {
+      question: 'How do you append a new row to a 2D list?',
+      options: ['matrix.add([1,2])', 'matrix.append([1,2])', 'matrix += [1,2]', 'matrix.insert([1,2])'],
+      correctIndex: 1,
+      explanation: '.append() adds a new inner list as a new row'
+    },
+    {
+      question: 'What does [row[-1] for row in [[1,2,3],[4,5,6],[7,8,9]]] create?',
+      options: ['[1, 4, 7]', '[3, 6, 9]', '[7, 8, 9]', '[1, 2, 3]'],
+      correctIndex: 1,
+      explanation: 'row[-1] gets the last element of each row: 3, 6, 9'
+    },
+    {
+      question: 'What does sum([len(row) for row in [[1],[2,3],[4,5,6]]]) return?',
+      options: ['3', '6', '9', 'Error'],
+      correctIndex: 1,
+      explanation: 'Row lengths are 1, 2, 3. Sum is 1+2+3=6, the total number of elements'
+    },
+    {
+      question: 'How do you access the element in row 2, column 3 of a matrix?',
+      options: ['matrix[2][3]', 'matrix[3][2]', 'matrix(2,3)', 'matrix[2,3]'],
+      correctIndex: 0,
+      explanation: 'Use matrix[row][col] with zero-based indexing: matrix[2][3]'
+    },
+    {
+      question: 'What does [item for sublist in [[1],[2,3]] for item in sublist] create?',
+      options: ['[[1],[2,3]]', '[1, 2, 3]', '[[1, 2, 3]]', 'Error'],
+      correctIndex: 1,
+      explanation: 'This flattens the nested list into a single list [1, 2, 3]'
+    },
   ],
 
   'lesson-8-4': [
@@ -3118,6 +5998,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       correctIndex: 1,
       explanation: 'Repeats list 3 times'
     },
+    {
+      question: 'What is the difference between .sort() and sorted()?',
+      options: ['No difference', '.sort() modifies in place, sorted() returns new list', 'sorted() is faster', '.sort() only works on numbers'],
+      correctIndex: 1,
+      explanation: '.sort() changes the original list; sorted() creates and returns a new sorted list'
+    },
+    {
+      question: 'What does sorted("python") return?',
+      options: ['["python"]', '["h", "n", "o", "p", "t", "y"]', '"hnopty"', 'Error'],
+      correctIndex: 1,
+      explanation: 'sorted() on a string returns a list of characters in alphabetical order'
+    },
+    {
+      question: 'What does [3, 1, 2].sort() return when assigned to a variable?',
+      options: ['[1, 2, 3]', 'None', '[3, 1, 2]', 'Error'],
+      correctIndex: 1,
+      explanation: '.sort() returns None because it modifies the list in place'
+    },
+    {
+      question: 'What does sorted(["banana", "apple", "cherry"], key=len) return?',
+      options: ['["apple", "banana", "cherry"]', '["apple", "cherry", "banana"]', '["cherry", "banana", "apple"]', '["banana", "apple", "cherry"]'],
+      correctIndex: 0,
+      explanation: 'Sorts by string length: apple(5), banana(6), cherry(6) — stable sort preserves original order for equal lengths'
+    },
+    {
+      question: 'What does [1, 2, 3, 2, 1].count(2) return?',
+      options: ['1', '2', '3', '5'],
+      correctIndex: 1,
+      explanation: 'The value 2 appears twice in the list'
+    },
+    {
+      question: 'What happens when you call .index() on a value not in the list?',
+      options: ['Returns -1', 'Returns None', 'Raises ValueError', 'Returns the last index'],
+      correctIndex: 2,
+      explanation: '.index() raises a ValueError if the element is not found'
+    },
+    {
+      question: 'What does sorted([5, 3, 8, 1], reverse=True) return?',
+      options: ['[1, 3, 5, 8]', '[8, 5, 3, 1]', '[5, 3, 8, 1]', 'Error'],
+      correctIndex: 1,
+      explanation: 'reverse=True sorts in descending order: 8, 5, 3, 1'
+    },
+    {
+      question: 'What does a = [1, 2, 3]; b = a; b.sort(reverse=True) do to a?',
+      options: ['a stays [1, 2, 3]', 'a becomes [3, 2, 1]', 'a becomes None', 'Error'],
+      correctIndex: 1,
+      explanation: 'b = a creates a reference, not a copy, so sorting b also changes a'
+    },
+    {
+      question: 'What does a = [1, 2, 3]; b = a.copy(); b.append(4) do to a?',
+      options: ['a becomes [1, 2, 3, 4]', 'a stays [1, 2, 3]', 'a becomes [4, 1, 2, 3]', 'Error'],
+      correctIndex: 1,
+      explanation: '.copy() creates a new list, so modifying b does not affect a'
+    },
+    {
+      question: 'What does [10, 20, 30].index(20) return?',
+      options: ['20', '1', '2', '0'],
+      correctIndex: 1,
+      explanation: '.index() returns the position of the value; 20 is at index 1'
+    },
   ],
 
   'lesson-8-5': [
@@ -3180,6 +6120,66 @@ export const quizQuestionsByLesson: Record<string, QuizQuestion[]> = {
       options: ['list', 'tuple', 'enumerate object', 'generator'],
       correctIndex: 2,
       explanation: 'Returns enumerate object (iterator)'
+    },
+    {
+      question: 'What does list(enumerate(["a", "b", "c"])) produce?',
+      options: ['["a", "b", "c"]', '[(0, "a"), (1, "b"), (2, "c")]', '[("a", 0), ("b", 1), ("c", 2)]', '{"a": 0, "b": 1, "c": 2}'],
+      correctIndex: 1,
+      explanation: 'enumerate pairs each element with its index as (index, value) tuples'
+    },
+    {
+      question: 'What does list(zip("abc", [1, 2, 3])) produce?',
+      options: ['["a1", "b2", "c3"]', '[("a", 1), ("b", 2), ("c", 3)]', '[["a", 1], ["b", 2], ["c", 3]]', 'Error'],
+      correctIndex: 1,
+      explanation: 'zip pairs elements from both iterables into tuples'
+    },
+    {
+      question: 'What does dict(zip(["x", "y"], [10, 20])) create?',
+      options: ['[("x", 10), ("y", 20)]', '{"x": 10, "y": 20}', '{10: "x", 20: "y"}', 'Error'],
+      correctIndex: 1,
+      explanation: 'zip creates pairs, dict() converts them to key-value pairs'
+    },
+    {
+      question: 'What does enumerate("hi", start=5) produce when converted to list?',
+      options: ['[(5, "hi")]', '[(5, "h"), (6, "i")]', '[(0, "h"), (1, "i")]', 'Error'],
+      correctIndex: 1,
+      explanation: 'Enumerates characters starting from index 5: (5, "h"), (6, "i")'
+    },
+    {
+      question: 'What does list(zip([1, 2, 3], [4, 5])) produce?',
+      options: ['[(1, 4), (2, 5), (3, None)]', '[(1, 4), (2, 5)]', 'Error', '[(1, 4), (2, 5), (3,)]'],
+      correctIndex: 1,
+      explanation: 'zip stops at the shortest iterable, so (3,) is excluded'
+    },
+    {
+      question: 'How do you unpack enumerate in a for loop?',
+      options: ['for i, val in enumerate(items):', 'for (i, val) = enumerate(items):', 'for i = enumerate(items):', 'for val, i in enumerate(items):'],
+      correctIndex: 0,
+      explanation: 'Use for i, val in enumerate(items) to unpack index and value'
+    },
+    {
+      question: 'What does [i for i, v in enumerate(["a", "b", "a"]) if v == "a"] create?',
+      options: ['["a", "a"]', '[0, 2]', '[0, 1, 2]', 'Error'],
+      correctIndex: 1,
+      explanation: 'Finds indices where value is "a": positions 0 and 2'
+    },
+    {
+      question: 'What does list(zip(*[(1, "a"), (2, "b"), (3, "c")])) produce?',
+      options: ['[(1, "a"), (2, "b"), (3, "c")]', '[(1, 2, 3), ("a", "b", "c")]', '[[1, 2, 3], ["a", "b", "c"]]', 'Error'],
+      correctIndex: 1,
+      explanation: 'The * operator unpacks, and zip transposes the pairs into two tuples'
+    },
+    {
+      question: 'What does {i: v for i, v in enumerate(["x", "y", "z"])} create?',
+      options: ['["x", "y", "z"]', '{0: "x", 1: "y", 2: "z"}', '{"x": 0, "y": 1, "z": 2}', 'Error'],
+      correctIndex: 1,
+      explanation: 'Dict comprehension with enumerate creates index-to-value mapping'
+    },
+    {
+      question: 'What does list(zip(range(3), range(3, 6), range(6, 9))) produce?',
+      options: ['[(0, 3, 6), (1, 4, 7), (2, 5, 8)]', '[(0, 1, 2), (3, 4, 5), (6, 7, 8)]', '[0, 1, 2, 3, 4, 5, 6, 7, 8]', 'Error'],
+      correctIndex: 0,
+      explanation: 'zip with three iterables creates 3-element tuples from corresponding positions'
     },
   ],
 };

@@ -176,8 +176,8 @@ export function ListChefGame({ onComplete, gameData }: ListChefGameProps) {
             {gameActive && (
               <div className="mt-2 w-full bg-orange-100 rounded-full h-2">
                 <div
-                  className="bg-gradient-to-r from-orange-400 to-emerald-400 h-2 rounded-full transition-all duration-500"
-                  style={{ width: `${Math.min((score / GOAL_POINTS) * 100, 100)}%` }}
+                  className="h-2 rounded-full transition-all duration-500"
+                  style={{background:'linear-gradient(to right,#fb923c,#34d399)', width: `${Math.min((score / GOAL_POINTS) * 100, 100)}%`}}
                 />
               </div>
             )}
@@ -185,7 +185,7 @@ export function ListChefGame({ onComplete, gameData }: ListChefGameProps) {
           <div className="lc-panel rounded-xl p-4 flex items-center justify-center">
             <button
               onClick={startGame}
-              className="w-full py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white font-bold rounded-lg transition-all shadow-md shadow-orange-500/15"
+              className="w-full py-2.5 text-white font-bold rounded-lg transition-all shadow-md" style={{background:'linear-gradient(to right,#f97316,#f59e0b)'}}
             >
               {gameActive ? '🔄 Restart' : '▶️ Start Cooking'}
             </button>

@@ -80,11 +80,8 @@ export function Orders({ currentOrder, onCheck, gameActive }: OrdersProps) {
         <button
           onClick={handleCheck}
           disabled={!gameActive}
-          className={`w-full py-3 font-bold rounded-xl shadow-md transition-all ${
-            gameActive
-              ? 'bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 text-white shadow-emerald-500/15'
-              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-          }`}
+          className={`w-full py-3 font-bold rounded-xl shadow-md transition-all ${gameActive ? 'text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+          style={gameActive ? {background:'linear-gradient(to right,#10b981,#22c55e)'} : {}}
         >
           ✅ Serve Dish
         </button>

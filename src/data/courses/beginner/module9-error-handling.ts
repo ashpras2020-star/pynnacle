@@ -357,7 +357,7 @@ def calculate_average(values):
         'Try: 10 / 0 for ZeroDivisionError',
         'Comment out errors with #'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -801,7 +801,7 @@ else:
         'Put division in try block',
         'Return 0 in except block'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -1302,7 +1302,7 @@ if age:
         'except IndexError: for out of range',
         'except TypeError: for wrong type'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -1927,7 +1927,7 @@ process_numbers_file('numbers.txt', 'results.txt')`,
         'Finally always runs, even after errors',
         'Structure: try, except, else, finally'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -2484,9 +2484,9 @@ print(safe_list_access(numbers, "2"))    # None (wrong type)`,
         'Then check: 0 <= age_int <= 120',
         'Return None if validation fails'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     activityType: 'game',
     gameType: 'quiz'
   }

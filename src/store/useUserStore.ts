@@ -1,7 +1,7 @@
 // User Store - Manages user goals and settings with Firebase cloud sync
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { UserGoal } from '@types';
 import { authService } from '@services/authService';
 import type { AuthUser } from '@services/authService';
@@ -57,15 +57,14 @@ export const useUserStore = create<UserState>()(
       setUser: (authUser: AuthUser | null) => {
         if (authUser) {
           const currentUser = get().user;
+          const defaultAvatar = `${import.meta.env.BASE_URL}avatars/avatar-1.png`;
           set({
             isAuthenticated: true,
             user: {
               uid: authUser.uid,
               email: authUser.email,
-              // Preserve custom profile name/picture if already set (e.g. from ProfileSetup)
-              // Only fall back to Google auth data if no custom profile exists
               name: currentUser?.name || authUser.displayName,
-              picture: currentUser?.picture || authUser.photoURL,
+              picture: currentUser?.picture || authUser.photoURL || defaultAvatar,
             },
           });
         } else {
@@ -77,54 +76,38 @@ export const useUserStore = create<UserState>()(
       },
 
       signInWithGoogle: async () => {
-        console.log('🔄 Starting Google sign-in...');
-        set({ isLoading: true });
+        // Don't start if already loading
+        if (get().isLoading) {
+          return;
+        }
 
-        // Safety timeout - reset loading after 30 seconds
-        const timeout = setTimeout(() => {
-          console.warn('⚠️ Sign-in timeout - resetting loading state');
-          set({ isLoading: false });
-        }, 30000);
+        set({ isLoading: true });
 
         try {
           const user = await authService.signInWithGoogle();
-          console.log('📝 User data received:', user.email);
           get().setUser(user);
 
-          // Sync progress after successful sign-in (don't block on sync errors)
-          try {
-            // Reset local progress before syncing so stale guest/other-user data
-            // doesn't get merged into this user's cloud data
-            const { useProgressStore } = await import('@store/useProgressStore');
-            useProgressStore.getState().resetProgress();
-
-            console.log('🔄 Starting cloud sync...');
-            await get().syncToCloud();
-            console.log('✅ Cloud sync completed');
-
-            // Start real-time sync listener
-            const { syncService } = await import('@services/syncService');
-            syncService.startRealtimeSync(user.uid);
-          } catch (syncError) {
-            console.warn('⚠️ Cloud sync failed after sign-in:', syncError);
-            // Don't throw - user is still signed in, just sync failed
-          }
-
-          console.log('✅ Signed in successfully:', user.email);
+          // Fire-and-forget cloud sync — don't block the UI
+          // Do NOT reset progress here — syncToCloud merges cloud + local properly
+          (async () => {
+            try {
+              await get().syncToCloud();
+              const { syncService } = await import('@services/syncService');
+              syncService.startRealtimeSync(user.uid);
+            } catch (syncError) {
+              console.warn('Cloud sync failed after sign-in:', syncError);
+            }
+          })();
         } catch (error: any) {
-          console.error('❌ Sign-in failed:', error);
-          // Reset state to ensure app isn't in broken state
-          set({
-            isAuthenticated: false,
-            user: null,
-            isLoading: false,
-          });
+          // If user closed the popup, silently reset — not an error
+          const silentCodes = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request', 'auth/already-in-progress'];
+          if (!silentCodes.includes(error.code)) {
+            console.error('Sign-in failed:', error);
+          }
+          set({ isAuthenticated: false, user: null });
           throw error;
         } finally {
-          clearTimeout(timeout);
-          console.log('🔄 Resetting loading state...');
           set({ isLoading: false });
-          console.log('✅ Loading state reset');
         }
       },
 
@@ -165,22 +148,30 @@ export const useUserStore = create<UserState>()(
           return;
         }
 
-        // Update local state
-        set({
-          user: {
-            ...state.user,
-            name: updates.name ?? state.user.name,
-            picture: updates.picture ?? state.user.picture,
-          },
-        });
+        const newUser = {
+          ...state.user,
+          name: updates.name ?? state.user.name,
+          picture: updates.picture ?? state.user.picture,
+        };
 
-        // Sync to cloud
+        // Update local state first
+        set({ user: newUser });
+
+        // Write profile directly to cloud — bypasses merge so the new values
+        // become authoritative immediately (merge always prefers cloud).
         try {
-          await get().syncToCloud();
+          const { syncService } = await import('@services/syncService');
+          await syncService.syncProfileOnly(newUser.uid, newUser.name, newUser.picture);
           console.log('✅ Profile updated and synced to cloud');
         } catch (error) {
           console.warn('⚠️ Failed to sync profile to cloud:', error);
         }
+
+        // Also update the public profile (friends list, leaderboard, etc.)
+        try {
+          const { friendsService } = await import('@services/friendsService');
+          await friendsService.syncPublicProfile(newUser.uid);
+        } catch {}
       },
 
       syncToCloud: async () => {
@@ -204,37 +195,89 @@ export const useUserStore = create<UserState>()(
     }),
     {
       name: 'python-learning-user',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        goal: state.goal,
+        hasCompletedGoalSetting: state.hasCompletedGoalSetting,
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+      }),
     }
   )
 );
+
+// Track whether a user was previously signed in, so we only reset progress
+// on actual sign-out transitions (not on initial page load with no user).
+let previouslySignedIn = false;
+
+// Helper: wait for both stores to finish rehydrating from localStorage.
+// Without this, the auth listener can fire before persist middleware loads
+// saved state, causing syncUserData to read empty (initial) state and
+// overwrite real progress in the cloud.
+async function waitForHydration(): Promise<void> {
+  const { useProgressStore } = await import('@store/useProgressStore');
+
+  const waitStore = (store: { persist: { hasHydrated: () => boolean; onFinishHydration: (fn: () => void) => () => void } }) =>
+    store.persist.hasHydrated()
+      ? Promise.resolve()
+      : new Promise<void>((resolve) => {
+          const unsub = store.persist.onFinishHydration(() => { unsub(); resolve(); });
+        });
+
+  await Promise.all([
+    waitStore(useUserStore),
+    waitStore(useProgressStore),
+  ]);
+}
 
 // Initialize auth state listener
 authService.onAuthStateChange((user) => {
   try {
     useUserStore.getState().setUser(user);
     if (user) {
-      // Reset progress before syncing so stale data doesn't merge into this user's cloud
-      import('@store/useProgressStore').then(({ useProgressStore }) => {
-        useProgressStore.getState().resetProgress();
-        // Auto-sync when auth state changes (don't await to avoid blocking)
+      previouslySignedIn = true;
+
+      // Wait for stores to rehydrate from localStorage before syncing.
+      // This prevents reading empty initial state during cloud sync.
+      waitForHydration().then(() => {
         useUserStore.getState().syncToCloud().catch((err) => {
           console.warn('⚠️ Auto-sync failed:', err);
         });
-      });
 
-      // Start real-time sync for this user
-      import('@services/syncService').then(({ syncService }) => {
-        syncService.startRealtimeSync(user.uid);
+        // Start real-time sync for this user
+        import('@services/syncService').then(({ syncService }) => {
+          syncService.startRealtimeSync(user.uid);
+        }).catch(() => {});
+
+        // Start friends listeners and presence
+        import('@store/useFriendsStore').then(({ useFriendsStore }) => {
+          useFriendsStore.getState().startListening(user.uid);
+          useFriendsStore.getState().startPresenceUpdater(user.uid);
+        }).catch(() => {});
       });
     } else {
-      // Stop real-time sync when user signs out
+      // Stop real-time sync
       import('@services/syncService').then(({ syncService }) => {
         syncService.stopRealtimeSync();
-      });
-      // Clear progress when user signs out
-      import('@store/useProgressStore').then(({ useProgressStore }) => {
-        useProgressStore.getState().resetProgress();
-      });
+      }).catch(() => {});
+
+      // Stop friends listeners and presence
+      import('@store/useFriendsStore').then(({ useFriendsStore }) => {
+        useFriendsStore.getState().stopListening();
+        useFriendsStore.getState().stopPresenceUpdater();
+      }).catch(() => {});
+
+      // Only reset progress on actual sign-out (was signed in → now null).
+      // Do NOT reset when auth listener fires with null on initial page load,
+      // as that would wipe localStorage progress for non-authenticated users.
+      if (previouslySignedIn) {
+        previouslySignedIn = false;
+        waitForHydration().then(() => {
+          import('@store/useProgressStore').then(({ useProgressStore }) => {
+            useProgressStore.getState().resetProgress();
+          }).catch(() => {});
+        }).catch(() => {});
+      }
     }
   } catch (error) {
     console.error('❌ Error in auth state listener:', error);

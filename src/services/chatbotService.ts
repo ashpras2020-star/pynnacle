@@ -1,5 +1,7 @@
 // AI Chatbot Service - Python learning assistant
-// Uses OpenAI to answer Python questions and provide help
+// Uses Firebase Cloud Function proxy to securely call OpenAI
+
+import { AI_PROXY_URL } from '@config/aiProxy';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -13,6 +15,7 @@ interface ChatRequest {
     lessonId: string;
     lessonTitle: string;
     concepts: string[];
+    challengePrompt?: string;
   };
 }
 
@@ -30,11 +33,10 @@ export async function sendChatMessage(
   const { message, chatHistory, lessonContext } = request;
 
   try {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (!apiKey) {
+    if (!AI_PROXY_URL) {
       return {
-        message: "I'm sorry, but I'm not available right now. The chatbot requires an OpenAI API key to function.",
-        error: 'API key not configured',
+        message: "I'm sorry, but I'm not available right now. The AI service is not configured.",
+        error: 'AI proxy not configured',
       };
     }
 
@@ -62,10 +64,19 @@ Guidelines:
 - Concepts: ${lessonContext.concepts.join(', ')}
 
 The student is working on this lesson, so tailor your explanations to be relevant.`;
+
+      if (lessonContext.challengePrompt) {
+        systemPrompt += `\n\nThis lesson has a coding challenge the student must pass with AI validation:
+--- CHALLENGE ---
+${lessonContext.challengePrompt}
+--- END CHALLENGE ---
+
+STRICT RULE: You must NEVER give the student the complete solution code for this specific challenge. You may give short hints (1-2 lines), explain concepts, point out what's missing, or give a tiny illustrative snippet that is NOT the answer — but never provide a full working solution or anything that directly solves the challenge prompt. For all other Python questions unrelated to this challenge, you can give full code examples freely.`;
+      }
     }
 
     // Build messages array
-    const messages = [
+    const msgs = [
       { role: 'system' as const, content: systemPrompt },
       ...chatHistory,
       { role: 'user' as const, content: message },
@@ -73,24 +84,20 @@ The student is working on this lesson, so tailor your explanations to be relevan
 
     console.log('Sending message to chatbot...');
 
-    // Call OpenAI API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call Firebase Cloud Function proxy
+    const response = await fetch(AI_PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: messages,
-        temperature: 0.7, // Slightly creative but still consistent
-        max_tokens: 500, // Keep responses concise
+        messages: msgs,
+        temperature: 0.7,
+        max_tokens: 500,
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error('OpenAI API error:', response.status, errorData);
+      console.error('AI proxy error:', response.status, errorData);
 
       return {
         message: "I'm having trouble connecting right now. Please try again in a moment.",

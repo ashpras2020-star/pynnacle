@@ -65,7 +65,7 @@ export function CodeEditorPanel({ onExecute, codeHistory }: CodeEditorPanelProps
           onExecute(code);
           setCode('# Write your next operation\n');
         }}
-        className="w-full mt-3 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white font-bold rounded-xl shadow-md shadow-orange-500/15 transition-all hover:shadow-lg"
+        className="w-full mt-3 py-3 text-white font-bold rounded-xl shadow-md transition-all hover:shadow-lg" style={{background:'linear-gradient(to right,#f97316,#ef4444)'}}
       >
         👨‍🍳 Run Code
       </button>

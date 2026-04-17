@@ -12,7 +12,7 @@ export function GoalSetting() {
   const [days, setDays] = useState(30);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const lessonsPerDay = Math.ceil(25 / days);
+  const lessonsPerDay = Math.ceil(50 / days);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,8 +37,8 @@ export function GoalSetting() {
       const { syncToCloud } = useUserStore.getState();
       await syncToCloud().catch(err => console.warn('Cloud sync skipped:', err));
 
-      // Navigate to dashboard
-      navigate('/dashboard');
+      // Navigate to profile setup, then dashboard
+      navigate('/profile-setup');
     } catch (error) {
       console.error('Failed to save goal:', error);
       setIsSubmitting(false);
@@ -46,7 +46,7 @@ export function GoalSetting() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         {/* Header */}
         <div className="text-center mb-12">
@@ -55,7 +55,7 @@ export function GoalSetting() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl font-bold gradient-text mb-4">
             Set Your Learning Goal
           </h1>
           <p className="text-xl text-gray-600">
@@ -64,7 +64,7 @@ export function GoalSetting() {
         </div>
 
         {/* Goal Form */}
-        <div className="bg-white rounded-xl shadow-xl p-8">
+        <div className="bg-white rounded-xl shadow-xl p-8 border border-purple-200">
           <form onSubmit={handleSubmit}>
             <div className="mb-8">
               <label htmlFor="days" className="block text-sm font-medium text-gray-700 mb-4">
@@ -112,7 +112,7 @@ export function GoalSetting() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold py-4 rounded-lg hover:from-purple-700 hover:to-purple-600 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full btn-purple font-semibold py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2">
@@ -129,16 +129,16 @@ export function GoalSetting() {
         {/* Info Cards */}
         <div className="grid md:grid-cols-3 gap-4 mt-8">
           <div className="bg-white rounded-lg p-4 text-center shadow-md">
-            <div className="text-2xl font-bold text-purple-600">5</div>
+            <div className="text-2xl font-bold text-purple-600">10</div>
             <div className="text-sm text-gray-600">Modules</div>
           </div>
           <div className="bg-white rounded-lg p-4 text-center shadow-md">
-            <div className="text-2xl font-bold text-purple-600">25</div>
+            <div className="text-2xl font-bold text-purple-600">50</div>
             <div className="text-sm text-gray-600">Lessons</div>
           </div>
           <div className="bg-white rounded-lg p-4 text-center shadow-md">
-            <div className="text-2xl font-bold text-purple-600">2</div>
-            <div className="text-sm text-gray-600">Game Types</div>
+            <div className="text-2xl font-bold text-purple-600">10</div>
+            <div className="text-sm text-gray-600">Unique Games</div>
           </div>
         </div>
       </div>

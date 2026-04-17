@@ -134,7 +134,7 @@ Lists are mutable, meaning they can be changed after creation. This makes them i
         'Access first item with [0]',
         'Use shopping.append("butter") to add'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     gameType: 'quiz',
@@ -300,7 +300,7 @@ Master slicing and negative indexing, and you'll write cleaner, more Pythonic co
         'Every 2nd: numbers[::2]',
         'Reverse: numbers[::-1]'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     gameType: 'quiz',
@@ -523,7 +523,7 @@ Master dictionaries, and you'll be able to organize and access data efficiently 
         'Access: student["name"]',
         'Add/modify: student["key"] = new_value'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     gameType: 'quiz',
@@ -770,7 +770,7 @@ Tuples might seem simple, but they're a fundamental part of writing clean, effic
         'Unpack: x, y = point',
         'Create new tuple with calculated values'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     gameType: 'quiz',
@@ -1034,7 +1034,7 @@ Sets are powerful tools for data cleaning, fast lookups, and elegant solutions t
         'Add item: unique.add(6)',
         'Check membership: 3 in unique'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     gameType: 'quiz',

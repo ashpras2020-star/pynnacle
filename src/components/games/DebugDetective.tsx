@@ -111,8 +111,8 @@ export function DebugDetective({ game, onComplete }: DebugDetectiveProps) {
           </span>
           <div className="flex-1 bg-slate-700 rounded-full h-2.5 overflow-hidden">
             <div
-              className="bg-gradient-to-r from-amber-500 to-amber-400 h-2.5 rounded-full transition-all duration-500"
-              style={{ width: `${((currentChallengeIndex + 1) / game.challenges.length) * 100}%` }}
+              className="h-2.5 rounded-full transition-all duration-500"
+              style={{background:'linear-gradient(to right,#f59e0b,#fbbf24)', width: `${((currentChallengeIndex + 1) / game.challenges.length) * 100}%`}}
             />
           </div>
           <span className="text-xs text-amber-400/60 font-mono">
@@ -304,14 +304,14 @@ export function DebugDetective({ game, onComplete }: DebugDetectiveProps) {
           <button
             onClick={handleSubmit}
             disabled={selectedLines.length === 0}
-            className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-900 font-bold rounded-lg hover:from-amber-400 hover:to-orange-400 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all"
+            className="px-8 py-3 text-slate-900 font-bold rounded-lg disabled:opacity-40 disabled:cursor-not-allowed shadow-lg transition-all" style={{background:'linear-gradient(to right,#f59e0b,#f97316)'}}
           >
             🔏 Submit Report
           </button>
         ) : (
           <button
             onClick={handleNext}
-            className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-900 font-bold rounded-lg hover:from-amber-400 hover:to-orange-400 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all"
+            className="px-8 py-3 text-slate-900 font-bold rounded-lg shadow-lg transition-all" style={{background:'linear-gradient(to right,#f59e0b,#f97316)'}}
           >
             {isLastChallenge ? 'Close Case File' : 'Next Case'} →
           </button>

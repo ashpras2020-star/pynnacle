@@ -1,17 +1,23 @@
 // Profile Setup Page - After Google sign-in
 // Users can choose an avatar, customize their name, and view badges
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '@store/useUserStore';
 import { useProgressStore } from '@store/useProgressStore';
+import { useThemeStore } from '@store/useThemeStore';
 import { ALL_BADGES, getEarnedBadgeIds, type BadgeProgress } from '@data/badges';
+import { PinBadgesModal } from '@components/friends/PinBadgesModal';
+import { friendsService } from '@services/friendsService';
+import toast from 'react-hot-toast';
+import { Moon, Sun } from 'lucide-react';
 
-// Avatar options
+// Avatar options — use BASE_URL so paths work on GitHub Pages (/pynnacle/)
+const base = import.meta.env.BASE_URL;
 const AVATAR_OPTIONS = [
-  { id: 'avatar-1', src: '/avatars/avatar-1.png', alt: 'Avatar 1', name: 'Viper' },
-  { id: 'avatar-2', src: '/avatars/avatar-2.png', alt: 'Avatar 2', name: 'Phoenix' },
-  { id: 'avatar-3', src: '/avatars/avatar-3.png', alt: 'Avatar 3', name: 'Shadow' },
+  { id: 'avatar-1', src: `${base}avatars/avatar-1.png`, alt: 'Avatar 1', name: 'Viper' },
+  { id: 'avatar-2', src: `${base}avatars/avatar-2.png`, alt: 'Avatar 2', name: 'Phoenix' },
+  { id: 'avatar-3', src: `${base}avatars/avatar-3.png`, alt: 'Avatar 3', name: 'Shadow' },
 ];
 
 // Badge category labels
@@ -27,6 +33,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export function ProfileSetup() {
   const navigate = useNavigate();
   const { user, updateUserProfile, hasCompletedGoalSetting } = useUserStore();
+  const { darkMode, toggleDarkMode } = useThemeStore();
   const {
     currentStreak,
     totalXP,
@@ -38,6 +45,14 @@ export function ProfileSetup() {
   const [selectedAvatar, setSelectedAvatar] = useState<string>(user?.picture || AVATAR_OPTIONS[0].src);
   const [displayName, setDisplayName] = useState<string>(user?.name || '');
   const [isSaving, setIsSaving] = useState(false);
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pinnedBadges, setPinnedBadges] = useState<string[]>([]);
+
+  // Load pinned badges from cloud on mount
+  useEffect(() => {
+    if (!user?.uid) return;
+    friendsService.getPinnedBadges(user.uid).then(setPinnedBadges).catch(() => {});
+  }, [user?.uid]);
 
   // Calculate badge progress from stores
   const badgeProgress: BadgeProgress = useMemo(() => {
@@ -115,14 +130,14 @@ export function ProfileSetup() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-6">
         {/* Profile Card */}
-        <div className="bg-white rounded-xl shadow-2xl p-8">
+        <div className="bg-white rounded-xl shadow-2xl p-8 border border-purple-200">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="text-5xl mb-4">👤</div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold gradient-text mb-2">
               Complete Your Profile
             </h1>
             <p className="text-gray-600">
@@ -192,6 +207,39 @@ export function ProfileSetup() {
             </p>
           </div>
 
+          {/* Appearance */}
+          <div className="mb-8">
+            <label className="block text-lg font-semibold text-gray-800 mb-3">
+              Appearance
+            </label>
+            <button
+              onClick={toggleDarkMode}
+              className={`w-full flex items-center justify-between px-5 py-4 rounded-xl border-2 transition-all duration-200 ${
+                darkMode
+                  ? 'bg-gray-900 border-purple-500 text-white'
+                  : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-purple-300'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                {darkMode ? (
+                  <Moon className="w-5 h-5 text-purple-400" />
+                ) : (
+                  <Sun className="w-5 h-5 text-yellow-500" />
+                )}
+                <div className="text-left">
+                  <p className="font-semibold">{darkMode ? 'Dark Mode' : 'Light Mode'}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    {darkMode ? 'Click to switch to light mode' : 'Click to switch to dark mode'}
+                  </p>
+                </div>
+              </div>
+              {/* Toggle pill */}
+              <div className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${darkMode ? 'bg-purple-600' : 'bg-gray-300'}`}>
+                <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${darkMode ? 'translate-x-6' : 'translate-x-0.5'}`} />
+              </div>
+            </button>
+          </div>
+
           {/* Action Buttons */}
           <div className="flex gap-4">
             <button
@@ -207,7 +255,7 @@ export function ProfileSetup() {
                 flex-1 px-6 py-3 font-semibold rounded-lg transition-all shadow-lg
                 ${isSaving || !displayName.trim()
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 hover:shadow-xl'
+                  : 'btn-purple hover:shadow-xl'
                 }
               `}
             >
@@ -217,14 +265,22 @@ export function ProfileSetup() {
         </div>
 
         {/* Badges Card */}
-        <div className="bg-white rounded-xl shadow-2xl p-8">
+        <div className="bg-white rounded-xl shadow-2xl p-8 border border-purple-200">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent mb-1">
+            <h2 className="text-2xl font-bold gradient-text mb-1">
               Badges
             </h2>
             <p className="text-gray-500 text-sm">
               {earnedBadgeIds.length} / {ALL_BADGES.length} earned
             </p>
+            {earnedBadgeIds.length > 0 && (
+              <button
+                onClick={() => setShowPinModal(true)}
+                className="mt-3 px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-semibold hover:bg-purple-200 transition-colors"
+              >
+                Pin Badges to Profile ({pinnedBadges.length}/3)
+              </button>
+            )}
           </div>
 
           <div className="space-y-6">
@@ -249,13 +305,8 @@ export function ProfileSetup() {
                       >
                         {/* Badge icon */}
                         <div
-                          className={`
-                            w-12 h-12 mx-auto rounded-full flex items-center justify-center text-2xl mb-2
-                            ${isEarned
-                              ? 'bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg'
-                              : 'bg-gray-300'
-                            }
-                          `}
+                          className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center text-2xl mb-2 ${isEarned ? 'shadow-lg' : 'bg-gray-300'}`}
+                          style={isEarned ? {background:'linear-gradient(135deg,#8b5cf6,#6d28d9)'} : {}}
                         >
                           {isEarned ? (
                             <span>{badge.icon}</span>
@@ -282,6 +333,26 @@ export function ProfileSetup() {
           </div>
         </div>
       </div>
+
+      {showPinModal && (
+        <PinBadgesModal
+          earnedBadgeIds={earnedBadgeIds}
+          currentPinned={pinnedBadges}
+          onSave={async (ids) => {
+            setPinnedBadges(ids);
+            setShowPinModal(false);
+            if (user?.uid) {
+              try {
+                await friendsService.updatePinnedBadges(user.uid, ids);
+                toast.success('Pinned badges updated!');
+              } catch {
+                toast.error('Failed to save pinned badges');
+              }
+            }
+          }}
+          onClose={() => setShowPinModal(false)}
+        />
+      )}
     </div>
   );
 }

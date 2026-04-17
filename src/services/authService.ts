@@ -36,7 +36,17 @@ class AuthService {
   /**
    * Sign in with Google
    */
+  private signInInProgress = false;
+
   async signInWithGoogle(): Promise<AuthUser> {
+    // Prevent overlapping sign-in attempts
+    if (this.signInInProgress) {
+      throw Object.assign(new Error('Sign-in already in progress'), {
+        code: 'auth/already-in-progress',
+      });
+    }
+
+    this.signInInProgress = true;
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
@@ -49,7 +59,10 @@ class AuthService {
       };
     } catch (error: any) {
       console.error('Sign-in error:', error);
-      throw new Error(error.message || 'Failed to sign in with Google');
+      // Preserve the Firebase error code so callers can check it
+      throw error;
+    } finally {
+      this.signInInProgress = false;
     }
   }
 

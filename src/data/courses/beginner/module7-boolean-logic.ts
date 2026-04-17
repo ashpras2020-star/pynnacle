@@ -267,7 +267,7 @@ print("hello" == "Hello")  # False`,
         'Store the result: passed = score >= passing_score',
         'Use == to check equality: score == 100'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -592,7 +592,7 @@ print(gets_discount)  # True`,
         'Entry: age >= 13 and has_id',
         'Both conditions can use logical operators'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -937,7 +937,7 @@ if not user_data:
         'Empty strings evaluate to False',
         'Non-empty strings evaluate to True'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -1281,7 +1281,7 @@ print(display_name)  # "Alice"`,
         'Passing check: score > 60',
         'Combine with and'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -1717,9 +1717,9 @@ else:
         'Check password: len(password) >= 8',
         'Combine: valid_email and strong_password'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     activityType: 'game',
     gameType: 'quiz'
   }

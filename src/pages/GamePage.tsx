@@ -1,9 +1,10 @@
 // Game Page - Gamified Quiz Challenge (TypingClub-style) or Debug Detective
 
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useProgressStore } from '@store/useProgressStore';
 import { getQuizQuestions } from '@data/gameConfigs/quizQuestions';
+import { selectQuizQuestions } from '@utils/questionRandomizer';
 import { getDebugGameByModuleId } from '@data/games/debug';
 import { getListChefGameByModuleId } from '@data/games/listchef';
 import { getGuardGateGameByModuleId } from '@data/games/guardgate';
@@ -36,7 +37,11 @@ export function GamePage() {
   const [showGuardGate, setShowGuardGate] = useState(gameType === 'guardgate');
   const [showMathQuest, setShowMathQuest] = useState(gameType === 'mathquest');
 
-  const questions = getQuizQuestions(lessonId!);
+  const pickQuestions = useCallback(
+    () => selectQuizQuestions(getQuizQuestions(lessonId!), 10),
+    [lessonId],
+  );
+  const [questions, setQuestions] = useState(pickQuestions);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -93,7 +98,7 @@ export function GamePage() {
             addCompletedLesson({
               lessonId: lessonId!,
               completedAt: new Date().toISOString(),
-              xpEarned: lesson.challenge?.xpReward || 0,
+              xpEarned: lesson.xpReward || 0,
               codeSubmitted: '// Completed via game',
             });
           }
@@ -119,7 +124,7 @@ export function GamePage() {
           addCompletedLesson({
             lessonId: lessonId!,
             completedAt: new Date().toISOString(),
-            xpEarned: lesson.challenge?.xpReward || 0,
+            xpEarned: lesson.xpReward || 0,
             codeSubmitted: '// Completed via game',
           });
         }
@@ -142,7 +147,7 @@ export function GamePage() {
       addCompletedLesson({
         lessonId: lessonId!,
         completedAt: new Date().toISOString(),
-        xpEarned: lesson.challenge?.xpReward || 0,
+        xpEarned: lesson.xpReward || 0,
         codeSubmitted: '// Completed via game',
       });
     }
@@ -162,7 +167,7 @@ export function GamePage() {
       addCompletedLesson({
         lessonId: lessonId!,
         completedAt: new Date().toISOString(),
-        xpEarned: lesson.challenge?.xpReward || 0,
+        xpEarned: lesson.xpReward || 0,
         codeSubmitted: '// Completed via game',
       });
     }
@@ -182,7 +187,7 @@ export function GamePage() {
       addCompletedLesson({
         lessonId: lessonId!,
         completedAt: new Date().toISOString(),
-        xpEarned: lesson.challenge?.xpReward || 0,
+        xpEarned: lesson.xpReward || 0,
         codeSubmitted: '// Completed via game',
       });
     }
@@ -202,7 +207,7 @@ export function GamePage() {
       addCompletedLesson({
         lessonId: lessonId!,
         completedAt: new Date().toISOString(),
-        xpEarned: lesson.challenge?.xpReward || 0,
+        xpEarned: lesson.xpReward || 0,
         codeSubmitted: '// Completed via game',
       });
     }
@@ -217,6 +222,7 @@ export function GamePage() {
   }
 
   function handleRetry() {
+    setQuestions(pickQuestions()); // Re-randomize questions on retry
     setCurrentQuestion(0);
     setScore(0);
     setLives(3);
@@ -243,7 +249,7 @@ export function GamePage() {
   // Game Over Screen
   if (gameOver) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-red-50 flex items-center justify-center p-4">
         <div className="max-w-lg w-full bg-white rounded-xl shadow-2xl p-8 text-center animate-scale-in">
           <div className="text-7xl mb-4 animate-bounce">💔</div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2">Game Over!</h1>
@@ -269,7 +275,7 @@ export function GamePage() {
           <div className="flex gap-4">
             <button
               onClick={handleRetry}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold py-3 rounded-lg hover:from-purple-700 hover:to-purple-600 transition-all duration-200 shadow-lg"
+              className="flex-1 btn-purple font-semibold py-3 rounded-lg transition-all duration-200 shadow-lg"
             >
               🔄 Try Again
             </button>
@@ -291,7 +297,7 @@ export function GamePage() {
     const starCount = lives === 3 ? 3 : lives === 2 ? 2 : 1;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
         <div className="max-w-lg w-full bg-white rounded-xl shadow-2xl p-8 text-center animate-scale-in">
           <div className="text-7xl mb-4 animate-bounce">🎉</div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
@@ -348,7 +354,7 @@ export function GamePage() {
 
           <button
             onClick={handleNext}
-            className="w-full bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold py-4 rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+            className="w-full btn-green font-semibold py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           >
             Continue to Next Lesson
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -378,7 +384,7 @@ export function GamePage() {
   // Debug Detective Game
   if (showDebugGame && debugGame) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white py-8">
+      <div className="min-h-screen bg-white py-8">
         <header className="bg-white shadow-sm border-b border-gray-200 mb-8">
           <div className="max-w-7xl mx-auto px-4 py-4">
             <Link to="/course/beginner" className="text-purple-600 hover:text-purple-700 font-semibold text-sm">
@@ -394,7 +400,7 @@ export function GamePage() {
   // No questions available
   if (!question) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="text-center">
           <div className="text-6xl mb-4">❓</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">No Questions Available</h1>
@@ -409,7 +415,7 @@ export function GamePage() {
 
   // Main Game Screen
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
@@ -472,8 +478,8 @@ export function GamePage() {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
-              className="bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 h-3 rounded-full transition-all duration-500"
-              style={{ width: `${((currentQuestion + 1) / totalQuestions) * 100}%` }}
+              className="h-3 rounded-full transition-all duration-500"
+              style={{ width: `${((currentQuestion + 1) / totalQuestions) * 100}%`, background: 'linear-gradient(to right, #9333ea, #a855f7, #c084fc)' }}
             ></div>
           </div>
         </div>
@@ -535,8 +541,8 @@ export function GamePage() {
             <div
               className={`p-5 rounded-xl animate-slide-up ${
                 isCorrect
-                  ? 'bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-400'
-                  : 'bg-gradient-to-r from-red-50 to-red-100 border-2 border-red-400'
+                  ? 'bg-green-50 border-2 border-green-400'
+                  : 'bg-red-50 border-2 border-red-400'
               }`}
             >
               <div className="flex items-start gap-3">

@@ -31,7 +31,7 @@ export function MathQuestPage() {
   // Game not found
   if (!mathQuestGame) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{background:'linear-gradient(to bottom,#1e1b4b,#3b0764,#0f172a)'}}>
         <div className="text-center">
           <div className="text-6xl mb-4">{'\u{1F3F0}'}</div>
           <h1 className="text-3xl font-bold text-purple-300 font-serif mb-2">Tower Not Found</h1>
@@ -47,8 +47,8 @@ export function MathQuestPage() {
   // Completion screen
   if (gameComplete) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-yellow-900/30 via-purple-950 to-indigo-950 flex items-center justify-center p-4">
-        <div className="max-w-lg w-full bg-indigo-900/60 backdrop-blur rounded-2xl shadow-2xl border border-purple-500/30 p-8 text-center">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{background:'linear-gradient(to bottom,#78350f40,#3b0764,#1e1b4b)'}}>
+        <div className="max-w-lg w-full rounded-2xl shadow-2xl border border-purple-500/30 p-8 text-center" style={{background:'rgba(30,27,75,0.6)'}}>
           <div className="text-7xl mb-4">{'\u{1F451}'}</div>
           <h1 className="text-4xl font-bold text-yellow-300 font-serif mb-2">Quest Complete!</h1>
           <p className="text-purple-300 mb-6">The Wizard's Tower has been conquered!</p>
@@ -66,7 +66,7 @@ export function MathQuestPage() {
 
           <button
             onClick={handleBackToCourse}
-            className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-indigo-950 font-semibold py-4 rounded-lg hover:from-yellow-400 hover:to-amber-400 transition-all shadow-lg hover:shadow-xl font-serif text-lg tracking-wide"
+            className="w-full text-indigo-950 font-semibold py-4 rounded-lg transition-all shadow-lg hover:shadow-xl font-serif text-lg tracking-wide" style={{background:'linear-gradient(to right,#eab308,#f59e0b)'}}
           >
             Return to Course
           </button>

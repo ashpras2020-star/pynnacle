@@ -331,6 +331,166 @@ export const module8Assessment: Assessment = {
       explanation: 'Comprehension creates independent list [3,4,5], clearing data doesn\'t affect it',
       points: 5,
       concepts: ['comprehensions', 'independence', 'clear']
+    },
+
+    // Question 21 - pathlib Path operations
+    {
+      id: 'q21',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\nfrom pathlib import Path\n\np = Path("/home/user/docs/report.txt")\nprint(p.stem)',
+      options: [
+        'report.txt',
+        'report',
+        '.txt',
+        '/home/user/docs'
+      ],
+      correctAnswer: 1,
+      explanation: 'Path.stem returns the filename without the extension: "report".',
+      points: 5,
+    },
+
+    // Question 22 - Writing lines with writelines
+    {
+      id: 'q22',
+      type: 'multiple-choice' as const,
+      question: 'What does the file contain after this code?\n\nlines = ["one", "two", "three"]\nwith open("out.txt", "w") as f:\n    f.writelines(lines)\n\n# File contains:',
+      options: [
+        'one\\ntwo\\nthree',
+        'onetwothree',
+        '["one", "two", "three"]',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'writelines() writes each string directly with no separator or newline added. The file contains "onetwothree".',
+      points: 5,
+    },
+
+    // Question 23 - os.path operations
+    {
+      id: 'q23',
+      type: 'multiple-choice' as const,
+      question: 'What is printed?\n\nimport os\n\npath = "/home/user/data/file.csv"\nprint(os.path.basename(path))',
+      options: [
+        '/home/user/data',
+        'file.csv',
+        'file',
+        '.csv'
+      ],
+      correctAnswer: 1,
+      explanation: 'os.path.basename() returns the final component of the path: "file.csv".',
+      points: 5,
+    },
+
+    // Question 24 - File mode "x" (exclusive creation)
+    {
+      id: 'q24',
+      type: 'multiple-choice' as const,
+      question: 'What happens if "output.txt" already exists?\n\nwith open("output.txt", "x") as f:\n    f.write("data")',
+      options: [
+        'Overwrites the file',
+        'Appends to the file',
+        'FileExistsError is raised',
+        'Creates output(1).txt instead'
+      ],
+      correctAnswer: 2,
+      explanation: 'Mode "x" is exclusive creation. If the file already exists, it raises FileExistsError instead of overwriting.',
+      points: 5,
+    },
+
+    // Question 25 - Reading file into list with strip
+    {
+      id: 'q25',
+      type: 'multiple-choice' as const,
+      question: 'What does this print?\n\n# File "data.txt" contains: "apple\\nbanana\\ncherry\\n"\n\nwith open("data.txt", "r") as f:\n    items = [line.strip() for line in f]\n\nprint(len(items))',
+      options: [
+        '2',
+        '3',
+        '4',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'The file has 3 lines. The trailing newline is part of the last line ("cherry\\n"), not a separate line. Iterating over the file yields 3 lines, and strip() removes the newlines.',
+      points: 5,
+    },
+
+    // Question 26 - pathlib parent and name
+    {
+      id: 'q26',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\nfrom pathlib import Path\n\np = Path("/projects/app/src/main.py")\nprint(p.parent.name)',
+      options: [
+        'app',
+        'src',
+        'projects',
+        'main.py'
+      ],
+      correctAnswer: 1,
+      explanation: 'p.parent is Path("/projects/app/src"). The .name of that path is "src".',
+      points: 5,
+    },
+
+    // Question 27 - File encoding
+    {
+      id: 'q27',
+      type: 'multiple-choice' as const,
+      question: 'Which is the recommended way to open a text file with non-ASCII characters?',
+      options: [
+        'open("file.txt", "r")',
+        'open("file.txt", "r", encoding="utf-8")',
+        'open("file.txt", "rb")',
+        'open("file.txt", "r", encoding="ascii")'
+      ],
+      correctAnswer: 1,
+      explanation: 'Explicitly specifying encoding="utf-8" is best practice for text files with non-ASCII characters. It avoids platform-dependent default encodings.',
+      points: 5,
+    },
+
+    // Question 28 - Binary file mode
+    {
+      id: 'q28',
+      type: 'multiple-choice' as const,
+      question: 'What type does f.read() return when a file is opened in binary mode?\n\nwith open("image.png", "rb") as f:\n    data = f.read()\n\nprint(type(data).__name__)',
+      options: [
+        'str',
+        'bytes',
+        'list',
+        'bytearray'
+      ],
+      correctAnswer: 1,
+      explanation: 'When a file is opened in binary mode ("rb"), read() returns a bytes object, not a string.',
+      points: 5,
+    },
+
+    // Question 29 - os.path.splitext
+    {
+      id: 'q29',
+      type: 'multiple-choice' as const,
+      question: 'What does this print?\n\nimport os\n\nname, ext = os.path.splitext("archive.tar.gz")\nprint(ext)',
+      options: [
+        '.tar.gz',
+        '.gz',
+        '.tar',
+        'tar.gz'
+      ],
+      correctAnswer: 1,
+      explanation: 'os.path.splitext splits at the last dot. name is "archive.tar" and ext is ".gz".',
+      points: 5,
+    },
+
+    // Question 30 - Context manager for multiple files
+    {
+      id: 'q30',
+      type: 'multiple-choice' as const,
+      question: 'Which approach correctly opens two files simultaneously using context managers?\n\n# Option A:\nwith open("in.txt") as f1, open("out.txt", "w") as f2:\n    f2.write(f1.read())\n\n# Option B:\nf1 = open("in.txt")\nf2 = open("out.txt", "w")\nf2.write(f1.read())',
+      options: [
+        'Only A is correct',
+        'Only B is correct',
+        'Both are correct but A is preferred',
+        'Neither is correct'
+      ],
+      correctAnswer: 2,
+      explanation: 'Both work, but Option A is preferred because the with statement guarantees both files are properly closed even if an exception occurs. Option B risks leaving files open.',
+      points: 5,
     }
   ]
 };

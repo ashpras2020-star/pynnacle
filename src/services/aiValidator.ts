@@ -1,5 +1,7 @@
 // AI-powered code validation service
-// Uses OpenAI to validate student code against challenge requirements
+// Uses Firebase Cloud Function proxy to securely call OpenAI
+
+import { AI_PROXY_URL } from '@config/aiProxy';
 
 interface ValidationRequest {
   challengePrompt: string;
@@ -21,7 +23,7 @@ interface ValidationResponse {
 export async function validateCodeWithAI(
   request: ValidationRequest
 ): Promise<ValidationResponse> {
-  const { challengePrompt, studentCode, expectedSolution, hints } = request;
+  const { challengePrompt, studentCode, expectedSolution } = request;
 
   // If no code provided, return early
   if (!studentCode.trim() || studentCode.trim() === '# Write your solution here') {
@@ -32,10 +34,8 @@ export async function validateCodeWithAI(
   }
 
   try {
-    // Check if API key is configured
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (!apiKey) {
-      console.warn('OpenAI API key not configured');
+    if (!AI_PROXY_URL) {
+      console.warn('AI proxy URL not configured');
       return basicValidation(studentCode, challengePrompt);
     }
 
@@ -66,34 +66,30 @@ ${expectedSolution}
 
 Validate if the student's code correctly solves the challenge. Return JSON only.`;
 
-    console.log('Calling OpenAI API for validation...');
+    console.log('Calling AI proxy for validation...');
 
-    // Call OpenAI API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call Firebase Cloud Function proxy
+    const response = await fetch(AI_PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'gpt-4o-mini', // Faster and cheaper model for validation
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.3, // Lower temperature for more consistent validation
+        temperature: 0.3,
         response_format: { type: 'json_object' },
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error('OpenAI API error:', response.status, errorData);
-      throw new Error(`OpenAI API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
+      console.error('AI proxy error:', response.status, errorData);
+      throw new Error(`AI proxy error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('OpenAI response received');
+    console.log('AI validation response received');
 
     const result = JSON.parse(data.choices[0].message.content);
 
@@ -105,8 +101,7 @@ Validate if the student's code correctly solves the challenge. Return JSON only.
   } catch (error) {
     console.error('AI validation error:', error);
 
-    // Show the actual error if it's an API error
-    if (error instanceof Error && error.message.includes('API error')) {
+    if (error instanceof Error && error.message.includes('proxy error')) {
       return {
         isCorrect: false,
         feedback: `AI validation failed: ${error.message}. Using basic validation instead.`,

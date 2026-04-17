@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useEffect, Component } from 'react';
+import type { ReactNode, ErrorInfo } from 'react';
 import { useUserStore } from '@store/useUserStore';
 import { useProgressStore } from '@store/useProgressStore';
+import { useThemeStore } from '@store/useThemeStore';
 
 // Pages
 import { LandingPage } from '@pages/LandingPage';
@@ -23,24 +25,56 @@ import { ConveyorCrafterPage } from '@pages/ConveyorCrafterPage';
 import { CodeRescuePage } from '@pages/CodeRescuePage';
 import { DungeonArchivePage } from '@pages/DungeonArchivePage';
 import { FirebaseTest } from '@pages/FirebaseTest';
+import { FriendsPage } from '@pages/FriendsPage';
+import { QuizLobbyPage } from '@pages/QuizLobbyPage';
+import { QuizGamePage } from '@pages/QuizGamePage';
+import { QuizResultsPage } from '@pages/QuizResultsPage';
 
 // Components
 import { ScrollToTop } from '@components/common/ScrollToTop';
+import { QuizInviteToast } from '@components/liveQuiz/QuizInviteToast';
+import { BadgeEarnedToast } from '@components/ui/BadgeEarnedToast';
+import { StreakAnimation } from '@components/ui/StreakAnimation';
+
+// Game/quiz routes that already have their own dark styling — skip dark-mode filter on these.
+// Assessment pages use a light bg, so dark mode CAN apply there.
+const GAME_ROUTE_RE = /^\/(game|debug|listchef|guardgate|mathquest|ciphercracker|booleanbouncer|robotcommander|conveyorcrafter|coderescue|filesorter|quiz\/lobby|quiz\/play|quiz\/results)(\/|$)/;
+
+// Applies / removes body.dark-mode, skipping game routes
+function DarkModeApplier() {
+  const darkMode = useThemeStore((s) => s.darkMode);
+  const { pathname } = useLocation();
+  const isGameRoute = GAME_ROUTE_RE.test(pathname);
+
+  useEffect(() => {
+    if (darkMode && !isGameRoute) {
+      document.body.classList.add('dark-mode');
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+      document.documentElement.classList.remove('dark-mode');
+    }
+    return () => {
+      document.body.classList.remove('dark-mode');
+      document.documentElement.classList.remove('dark-mode');
+    };
+  }, [darkMode, isGameRoute]);
+
+  return null;
+}
 
 function App() {
-  const { hasCompletedGoalSetting } = useUserStore();
-  const { updateStreak } = useProgressStore();
-
-  // Update streak on app load
-  useEffect(() => {
-    if (hasCompletedGoalSetting) {
-      updateStreak();
-    }
-  }, [hasCompletedGoalSetting, updateStreak]);
+  const { hasCompletedGoalSetting, isAuthenticated } = useUserStore();
+  const { completedLessons } = useProgressStore();
+  const canAccessApp = hasCompletedGoalSetting || completedLessons.length > 0;
 
   return (
     <BrowserRouter basename="/pynnacle">
+      <DarkModeApplier />
       <ScrollToTop />
+      <QuizInviteToast />
+      <BadgeEarnedToast />
+      <StreakAnimation />
       <Routes>
         {/* Public Landing Page */}
         <Route path="/" element={<LandingPage />} />
@@ -51,14 +85,51 @@ function App() {
         {/* Profile Setup - After Google sign-in */}
         <Route path="/profile-setup" element={<ProfileSetup />} />
 
-        {/* Goal Setting */}
-        <Route path="/goal-setting" element={<GoalSetting />} />
+        {/* Goal Setting - requires authentication, skip if already has progress */}
+        <Route
+          path="/goal-setting"
+          element={
+            canAccessApp ? (
+              <Navigate to="/dashboard" replace />
+            ) : isAuthenticated ? (
+              <GoalSetting />
+            ) : (
+              <Navigate to="/dashboard" replace />
+            )
+          }
+        />
+
+        {/* Friends Page */}
+        <Route
+          path="/friends"
+          element={
+            canAccessApp ? (
+              <FriendsPage />
+            ) : (
+              <Navigate to="/goal-setting" replace />
+            )
+          }
+        />
+
+        {/* Live Quiz Pages */}
+        <Route
+          path="/quiz/lobby/:gameId"
+          element={canAccessApp ? <QuizLobbyPage /> : <Navigate to="/goal-setting" replace />}
+        />
+        <Route
+          path="/quiz/play/:gameId"
+          element={canAccessApp ? <QuizGamePage /> : <Navigate to="/goal-setting" replace />}
+        />
+        <Route
+          path="/quiz/results/:gameId"
+          element={canAccessApp ? <QuizResultsPage /> : <Navigate to="/goal-setting" replace />}
+        />
 
         {/* Dashboard (formerly home) - redirect based on goal setting status */}
         <Route
           path="/dashboard"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <Home />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -70,7 +141,7 @@ function App() {
         <Route
           path="/course/:courseId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <CoursePage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -82,7 +153,7 @@ function App() {
         <Route
           path="/lesson/:lessonId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <LessonPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -94,7 +165,7 @@ function App() {
         <Route
           path="/game/:lessonId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <GamePage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -106,7 +177,7 @@ function App() {
         <Route
           path="/assessment/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <AssessmentPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -118,7 +189,7 @@ function App() {
         <Route
           path="/debug/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <DebugPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -130,7 +201,7 @@ function App() {
         <Route
           path="/listchef/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <ListChefPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -142,7 +213,7 @@ function App() {
         <Route
           path="/guardgate/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <GuardGatePage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -154,7 +225,7 @@ function App() {
         <Route
           path="/mathquest/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <MathQuestPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -166,7 +237,7 @@ function App() {
         <Route
           path="/ciphercracker/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <CipherCrackerPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -178,7 +249,7 @@ function App() {
         <Route
           path="/booleanbouncer/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <BooleanBouncerPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -190,7 +261,7 @@ function App() {
         <Route
           path="/robotcommander/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <RobotCommanderPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -202,7 +273,7 @@ function App() {
         <Route
           path="/conveyorcrafter/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <ConveyorCrafterPage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -214,7 +285,7 @@ function App() {
         <Route
           path="/coderescue/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <CodeRescuePage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -226,7 +297,7 @@ function App() {
         <Route
           path="/filesorter/:moduleId"
           element={
-            hasCompletedGoalSetting ? (
+            canAccessApp ? (
               <DungeonArchivePage />
             ) : (
               <Navigate to="/goal-setting" replace />
@@ -241,4 +312,61 @@ function App() {
   );
 }
 
-export default App;
+class ErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('App crashed:', error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+          <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
+            Something went wrong
+          </h1>
+          <p style={{ color: '#666', marginBottom: '2rem' }}>
+            Try refreshing the page. If the problem persists, try disabling
+            browser extensions that may block scripts.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: '#7c3aed',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
+              fontSize: '1rem',
+            }}
+          >
+            Refresh Page
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function AppWithBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+}
+
+export default AppWithBoundary;

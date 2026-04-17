@@ -1,9 +1,21 @@
 // Monaco Code Editor Component
 // Wrapper around Monaco Editor configured for Python
 
-import { Editor } from '@monaco-editor/react';
-import { useRef, useEffect } from 'react';
+import { Editor, loader } from '@monaco-editor/react';
+import { useRef } from 'react';
 import type { editor } from 'monaco-editor';
+import * as monaco from 'monaco-editor';
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+
+// Set up workers locally so Monaco doesn't need any CDN
+(self as any).MonacoEnvironment = {
+  getWorker(_: any, _label: string) {
+    return new editorWorker();
+  },
+};
+
+// Use locally bundled Monaco instead of jsdelivr CDN (blocked on school networks)
+loader.config({ monaco });
 
 interface CodeEditorProps {
   value: string;

@@ -7,6 +7,7 @@ import { useProgressStore } from '@store/useProgressStore';
 import { getLessonById } from '@data/courses/beginner';
 import { validateCodeWithAI } from '@services/aiValidator';
 import { ChatbotButton } from '@components/chatbot/ChatbotButton';
+import { Zap, SkipForward, Lightbulb } from 'lucide-react';
 
 export function LessonPage() {
   const { lessonId } = useParams();
@@ -28,7 +29,7 @@ export function LessonPage() {
   // If lesson not found, show error
   if (!lesson) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Lesson Not Found</h1>
@@ -47,7 +48,7 @@ export function LessonPage() {
   const isUnlocked = isLessonUnlocked(lessonId!);
   if (!isUnlocked) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="text-center">
           <div className="text-6xl mb-4">🔒</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Lesson Locked</h1>
@@ -72,6 +73,7 @@ export function LessonPage() {
   const [challengeOutput, setChallengeOutput] = useState('');
   const [showChallengeHints, setShowChallengeHints] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
+  const [awardedXP, setAwardedXP] = useState(0);
 
   const isCompleted = completedLessons.some(cl => cl.lessonId === lessonId);
 
@@ -94,8 +96,13 @@ export function LessonPage() {
       setChallengeCorrect(result.isCorrect);
 
       if (result.isCorrect) {
-        // Challenge passed - proceed to game (lesson marked complete after game)
-        setChallengeOutput(`✅ ${result.feedback}\n\nGreat job! Click "Continue to Game" to complete this lesson.`);
+        // Award challenge XP immediately when AI validates correctly
+        const xpAmount = lesson.challenge!.xpReward;
+        const boosted = hasActiveXPBoost();
+        const earned = boosted ? xpAmount * 2 : xpAmount;
+        addXP(earned);
+        setAwardedXP(earned);
+        setChallengeOutput(`✅ ${result.feedback}\n\nGreat job! Click "Continue to Quiz" to complete this lesson.`);
       } else {
         // Show AI feedback with suggestions
         let feedback = result.feedback;
@@ -130,7 +137,7 @@ export function LessonPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
@@ -158,7 +165,7 @@ export function LessonPage() {
 
               <div className="text-sm text-gray-600">
                 <span className="font-semibold text-purple-600">
-                  {hasActiveXPBoost() ? (lesson.challenge?.xpReward || lesson.xpReward) * 2 : (lesson.challenge?.xpReward || lesson.xpReward)} XP
+                  {hasActiveXPBoost() ? (lesson.challenge?.xpReward ?? lesson.xpReward) * 2 : (lesson.challenge?.xpReward ?? lesson.xpReward)} XP
                 </span>
               </div>
             </div>
@@ -171,7 +178,7 @@ export function LessonPage() {
           {/* Left Column - Lesson Content */}
           <div className="space-y-6">
             {/* Title */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-purple-200">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
                 {lesson.title}
               </h1>
@@ -188,12 +195,12 @@ export function LessonPage() {
             </div>
 
             {/* Lesson Content */}
-            <div className="bg-white rounded-xl shadow-lg p-6 prose prose-purple max-w-none">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-purple-200 prose prose-purple max-w-none">
               <div dangerouslySetInnerHTML={{ __html: lesson.content.explanation.replace(/\n/g, '<br/>') }} />
             </div>
 
             {/* Hints */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-purple-200">
               <button
                 onClick={() => setShowHints(!showHints)}
                 className="flex items-center gap-2 text-purple-600 hover:text-purple-700 font-semibold"
@@ -207,8 +214,8 @@ export function LessonPage() {
               {showHints && (
                 <div className="mt-4 space-y-2">
                   {lesson.hints.map((hint, index) => (
-                    <div key={index} className="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-gray-700">
-                      💡 {hint}
+                    <div key={index} className="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-gray-700 flex items-start gap-2">
+                      <Lightbulb className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" /> {hint}
                     </div>
                   ))}
                 </div>
@@ -219,9 +226,9 @@ export function LessonPage() {
           {/* Right Column - Challenge Section */}
           <div className="space-y-6">
             {lesson.challenge && (
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-2xl p-8 border-2 border-blue-200">
+            <div className="bg-blue-50 rounded-xl shadow-2xl p-8 border-2 border-purple-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{background:'linear-gradient(135deg,#2563eb,#4338ca)'}}>
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
@@ -233,13 +240,13 @@ export function LessonPage() {
             </div>
 
             {/* Challenge Prompt */}
-            <div className="bg-white rounded-lg p-6 mb-6 shadow-md">
+            <div className="bg-white rounded-lg p-6 mb-6 shadow-md border border-purple-200">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Your Task:</h3>
               <div className="text-gray-700 whitespace-pre-wrap">{lesson.challenge.prompt}</div>
             </div>
 
             {/* Challenge IDE */}
-            <div className="bg-white rounded-lg p-6 shadow-md">
+            <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
               <IDEContainer
                 initialCode={lesson.challenge.starterCode || '# Write your solution here\n'}
                 onCodeChange={setChallengeCode}
@@ -255,9 +262,9 @@ export function LessonPage() {
                     {getItemQuantity('xp-boost') > 0 && !hasActiveXPBoost() && (
                       <button
                         onClick={handleActivateBoost}
-                        className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all text-sm font-semibold flex items-center justify-center gap-2"
+                        className="flex-1 btn-green px-4 py-2 rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2"
                       >
-                        <span className="text-lg">⚡</span>
+                        <Zap className="w-4 h-4" />
                         Activate 2x XP ({getItemQuantity('xp-boost')})
                       </button>
                     )}
@@ -266,9 +273,9 @@ export function LessonPage() {
                     {getItemQuantity('skip-token') > 0 && (
                       <button
                         onClick={handleSkipChallenge}
-                        className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all text-sm font-semibold flex items-center justify-center gap-2"
+                        className="flex-1 btn-orange px-4 py-2 rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2"
                       >
-                        <span className="text-lg">⏭️</span>
+                        <SkipForward className="w-4 h-4" />
                         Skip Challenge ({getItemQuantity('skip-token')})
                       </button>
                     )}
@@ -295,20 +302,20 @@ export function LessonPage() {
                     {showChallengeHints && (
                       <div className="mt-2 space-y-2">
                         {lesson.challenge.hints.map((hint, index) => (
-                          <div key={index} className="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-gray-700">
-                            💡 {hint}
+                          <div key={index} className="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-gray-700 flex items-start gap-2">
+                            <Lightbulb className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" /> {hint}
                           </div>
                         ))}
                         {getItemQuantity('hint-pack') > 0 && (
                           <>
-                            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-500 p-3 text-sm text-gray-700">
-                              💡 <strong>Bonus Hint:</strong> Try breaking down the problem into smaller steps. Write one line at a time and test each part.
+                            <div className="border-l-4 border-yellow-500 p-3 text-sm text-gray-700 flex items-start gap-2" style={{background:'#fffbeb'}}>
+                              <Lightbulb className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" /> <strong>Bonus Hint:</strong> Try breaking down the problem into smaller steps. Write one line at a time and test each part.
                             </div>
-                            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-500 p-3 text-sm text-gray-700">
-                              💡 <strong>Bonus Hint:</strong> Review the lesson content above. The answer often follows the same pattern as the examples shown.
+                            <div className="border-l-4 border-yellow-500 p-3 text-sm text-gray-700 flex items-start gap-2" style={{background:'#fffbeb'}}>
+                              <Lightbulb className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" /> <strong>Bonus Hint:</strong> Review the lesson content above. The answer often follows the same pattern as the examples shown.
                             </div>
-                            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-500 p-3 text-sm text-gray-700">
-                              💡 <strong>Bonus Hint:</strong> Use print() statements to check what your code is doing at each step. This helps you find where things go wrong.
+                            <div className="border-l-4 border-yellow-500 p-3 text-sm text-gray-700 flex items-start gap-2" style={{background:'#fffbeb'}}>
+                              <Lightbulb className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" /> <strong>Bonus Hint:</strong> Use print() statements to check what your code is doing at each step. This helps you find where things go wrong.
                             </div>
                           </>
                         )}
@@ -325,7 +332,7 @@ export function LessonPage() {
                     className={`flex-1 font-semibold py-3 rounded-lg transition-all duration-200 shadow-lg ${
                       (challengeValidated && challengeCorrect) || isValidating
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl'
+                        : 'btn-indigo hover:shadow-xl'
                     }`}
                   >
                     {isValidating ? (
@@ -346,9 +353,9 @@ export function LessonPage() {
                   {challengeValidated && challengeCorrect && (
                     <button
                       onClick={handleNext}
-                      className="flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold py-3 rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="flex-1 btn-green font-semibold py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
-                      Continue to Game
+                      Continue to Quiz
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
@@ -372,9 +379,9 @@ export function LessonPage() {
                           challengeCorrect ? 'text-green-800' : 'text-red-800'
                         }`}>
                           {challengeCorrect
-                            ? hasActiveXPBoost()
-                              ? `Success! +${lesson.challenge.xpReward * 2} XP (2x Boost Applied! ⚡)`
-                              : `Success! +${lesson.challenge.xpReward} XP`
+                            ? awardedXP > lesson.challenge!.xpReward
+                              ? `Success! +${awardedXP} XP (2x Boost Applied! ⚡)`
+                              : `Success! +${awardedXP} XP`
                             : 'Not Quite Right'}
                         </div>
                         <div className={`text-sm whitespace-pre-wrap ${
@@ -400,6 +407,7 @@ export function LessonPage() {
           lessonId: lessonId!,
           lessonTitle: lesson.title,
           concepts: lesson.content.concepts,
+          challengePrompt: lesson.challenge?.prompt,
         }}
       />
     </div>

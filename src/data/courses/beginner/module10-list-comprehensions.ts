@@ -464,7 +464,7 @@ print(dog_phrases)
         'Expression: n**2 for square',
         'Format: [n**2 for n in range(1, 11)]'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -935,7 +935,7 @@ print(grades)  # ['F', 'C', 'D', 'A', 'F', 'B', 'C']`,
         'Place condition after the for clause',
         'Format: [word for word in words if condition]'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -1514,7 +1514,7 @@ for row_idx, row in enumerate(grid):
         'Flatten: [num for row in matrix for num in row]',
         'Outer loop goes through rows, inner through items'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -2081,7 +2081,7 @@ print(f"C grades: {len(c_grades)}")`,
         'Max/Min: max(numbers), min(numbers)',
         'Count: sum(1 for n in numbers if n > 5)'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -2658,9 +2658,9 @@ print(f"\\nHighest score: {usernames[best_user_idx]} with {scores[best_user_idx]
         'Unpack: for i, (name, age) in ...',
         'Format with f-string'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     activityType: 'game',
     gameType: 'quiz'
   }

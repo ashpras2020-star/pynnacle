@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
   base: '/pynnacle/',
-  plugins: [react()],
+  plugins: [
+    react(),
+    (monacoEditorPlugin as any).default({ languageWorkers: ['editorWorkerService', 'typescript', 'json', 'css'] }),
+  ],
 
   server: {
     port: 5185,

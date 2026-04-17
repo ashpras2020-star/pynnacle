@@ -25,7 +25,7 @@ export function Kitchen({ ingredients, timeLeft, gameActive }: KitchenProps) {
         {/* Pot Body */}
         <div className="lc-pot rounded-b-3xl p-8 pt-6 min-h-[280px] relative overflow-hidden">
           {/* Inner glow */}
-          <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 to-transparent" />
+          <div className="absolute inset-0" style={{background:'linear-gradient(to top,rgba(249,115,22,0.1),transparent)'}} />
 
           {/* Steam particles */}
           {gameActive && ingredients.length > 0 && (
@@ -70,10 +70,10 @@ export function Kitchen({ ingredients, timeLeft, gameActive }: KitchenProps) {
 
         {/* Pot Handles */}
         <div className="absolute -left-3 top-1/2 transform -translate-y-1/2">
-          <div className="w-6 h-14 bg-gradient-to-l from-stone-500 to-stone-600 rounded-l-full border-2 border-stone-700" />
+          <div className="w-6 h-14 rounded-l-full border-2 border-stone-700" style={{background:'linear-gradient(to left,#78716c,#57534e)'}} />
         </div>
         <div className="absolute -right-3 top-1/2 transform -translate-y-1/2">
-          <div className="w-6 h-14 bg-gradient-to-r from-stone-500 to-stone-600 rounded-r-full border-2 border-stone-700" />
+          <div className="w-6 h-14 rounded-r-full border-2 border-stone-700" style={{background:'linear-gradient(to right,#78716c,#57534e)'}} />
         </div>
       </div>
 

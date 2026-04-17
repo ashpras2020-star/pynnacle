@@ -18,6 +18,31 @@ html {
   overflow-x: hidden;
 }
 
+/* ── Dark Mode ─────────────────────────────────────────────
+   Applied to <body> (not <html>) to avoid stacking-context
+   issues with fixed elements and browser background handling.
+   Images, canvases and videos are re-inverted so they look
+   natural. Game pages are excluded via JS (see App.tsx).
+──────────────────────────────────────────────────────────── */
+body.dark-mode {
+  filter: invert(1) hue-rotate(180deg) !important;
+  background-color: #ffffff !important;
+  min-height: 100vh !important;
+}
+
+/* Keep html background black so viewport edges don't show white */
+html.dark-mode {
+  background-color: #000000 !important;
+}
+
+body.dark-mode img,
+body.dark-mode video,
+body.dark-mode canvas,
+body.dark-mode iframe {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -25,6 +50,68 @@ body {
   color: #1f2937;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* ── Gradient buttons — hex only, no oklch/oklab (for old Chrome compat) ── */
+.btn-purple {
+  background: linear-gradient(to right, #7c3aed, #8b5cf6) !important;
+  color: #ffffff !important;
+}
+.btn-purple:hover:not(:disabled) {
+  background: linear-gradient(to right, #6d28d9, #7c3aed) !important;
+}
+.btn-purple:disabled {
+  background: #d1d5db !important;
+  color: #6b7280 !important;
+  cursor: not-allowed !important;
+}
+.btn-green {
+  background: linear-gradient(to right, #16a34a, #22c55e) !important;
+  color: #ffffff !important;
+}
+.btn-green:hover:not(:disabled) {
+  background: linear-gradient(to right, #15803d, #16a34a) !important;
+}
+.btn-blue {
+  background: linear-gradient(to right, #2563eb, #3b82f6) !important;
+  color: #ffffff !important;
+}
+.btn-blue:hover:not(:disabled) {
+  background: linear-gradient(to right, #1d4ed8, #2563eb) !important;
+}
+.btn-indigo {
+  background: linear-gradient(to right, #4338ca, #6366f1) !important;
+  color: #ffffff !important;
+}
+.btn-indigo:hover:not(:disabled) {
+  background: linear-gradient(to right, #3730a3, #4338ca) !important;
+}
+.btn-orange {
+  background: linear-gradient(to right, #ea580c, #f97316) !important;
+  color: #ffffff !important;
+}
+.btn-orange:hover:not(:disabled) {
+  background: linear-gradient(to right, #c2410c, #ea580c) !important;
+}
+.btn-amber {
+  background: linear-gradient(to right, #d97706, #f59e0b) !important;
+  color: #ffffff !important;
+}
+.btn-amber:hover:not(:disabled) {
+  background: linear-gradient(to right, #b45309, #d97706) !important;
+}
+
+/* Gradient text — uses hex so it works on older Chrome (no oklch) */
+.gradient-text {
+  background: linear-gradient(to right, #9333ea, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Quiz dark background — uses hex so it works on older Chrome */
+.quiz-dark-bg {
+  background: linear-gradient(to bottom, #1a0533, #111827, #030712);
 }
 
 code {
@@ -38,6 +125,7 @@ code {
 
 .lc-panel {
   background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1.5px solid rgba(234, 88, 12, 0.15);
   box-shadow: 0 4px 20px rgba(234, 88, 12, 0.06);
@@ -352,6 +440,7 @@ code {
 
 .rc-panel {
   background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1.5px solid #b0c4d8;
   box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
@@ -450,6 +539,7 @@ code {
 }
 .cc-panel {
   background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1.5px solid rgba(167, 139, 250, 0.3);
   box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
@@ -480,6 +570,7 @@ code {
 /* ── Debug Detective ─────────────────── */
 .dd-panel {
   background: rgba(30, 41, 59, 0.92);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1.5px solid rgba(245, 158, 11, 0.25);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);

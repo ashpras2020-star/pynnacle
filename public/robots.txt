@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ashpras2020-star.github.io/pynnacle/sitemap.xml

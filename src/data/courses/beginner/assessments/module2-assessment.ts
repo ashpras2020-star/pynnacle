@@ -331,6 +331,156 @@ export const module5Assessment: Assessment = {
       explanation: 'for loop iterates through each character in the string, printing each on new line',
       points: 5,
       concepts: ['for loop', 'strings']
+    },
+
+    {
+      id: 'q21',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print(2 ** 10)',
+      options: [
+        '20',
+        '1024',
+        '100',
+        '512'
+      ],
+      correctAnswer: 1,
+      explanation: '2 ** 10 means 2 to the power of 10, which is 1024.',
+      points: 5,
+    },
+
+    {
+      id: 'q22',
+      type: 'multiple-choice' as const,
+      question: 'What does math.sqrt(144) return?',
+      options: [
+        '12',
+        '12.0',
+        '144',
+        '72'
+      ],
+      correctAnswer: 1,
+      explanation: 'math.sqrt() returns a float, so math.sqrt(144) returns 12.0, not the integer 12.',
+      points: 5,
+    },
+
+    {
+      id: 'q23',
+      type: 'multiple-choice' as const,
+      question: 'What is the result of: -7 % 3 in Python?',
+      options: [
+        '-1',
+        '1',
+        '2',
+        '-2'
+      ],
+      correctAnswer: 2,
+      explanation: 'Python modulo always returns a result with the same sign as the divisor. -7 % 3 = 2 because -7 = (-3)*3 + 2.',
+      points: 5,
+    },
+
+    {
+      id: 'q24',
+      type: 'multiple-choice' as const,
+      question: 'What does round(3.14159, 2) return?',
+      options: [
+        '3.14',
+        '3.15',
+        '3.1',
+        '3.14159'
+      ],
+      correctAnswer: 0,
+      explanation: 'round(number, 2) rounds to 2 decimal places. 3.14159 rounded to 2 decimals is 3.14.',
+      points: 5,
+    },
+
+    {
+      id: 'q25',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print(-7 // 2)',
+      options: [
+        '-3',
+        '-4',
+        '-3.5',
+        '3'
+      ],
+      correctAnswer: 1,
+      explanation: 'Floor division always rounds DOWN (toward negative infinity). -7 / 2 = -3.5, floored to -4.',
+      points: 5,
+    },
+
+    {
+      id: 'q26',
+      type: 'multiple-choice' as const,
+      question: 'Which import statement is needed to use randint(1, 6)?',
+      options: [
+        'import math',
+        'from random import randint',
+        'import randint',
+        'from math import randint'
+      ],
+      correctAnswer: 1,
+      explanation: 'randint is part of the random module. You import it with: from random import randint.',
+      points: 5,
+    },
+
+    {
+      id: 'q27',
+      type: 'multiple-choice' as const,
+      question: 'What is the result of: int(7.9) + int("3")',
+      options: [
+        '10.9',
+        '10',
+        '11',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'int(7.9) truncates to 7 (does not round), and int("3") converts string to 3. 7 + 3 = 10.',
+      points: 5,
+    },
+
+    {
+      id: 'q28',
+      type: 'multiple-choice' as const,
+      question: 'What does format(1234567.89, ",.2f") produce?',
+      options: [
+        '"1234567.89"',
+        '"1,234,567.89"',
+        '"1234567.890"',
+        '"1.234.567,89"'
+      ],
+      correctAnswer: 1,
+      explanation: 'The "," adds thousand separators and ".2f" formats to 2 decimal places, giving "1,234,567.89".',
+      points: 5,
+    },
+
+    {
+      id: 'q29',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print(abs(-15), abs(15))',
+      options: [
+        '-15 15',
+        '15 -15',
+        '15 15',
+        '0 30'
+      ],
+      correctAnswer: 2,
+      explanation: 'abs() returns the absolute (positive) value. abs(-15) is 15, and abs(15) is already 15.',
+      points: 5,
+    },
+
+    {
+      id: 'q30',
+      type: 'multiple-choice' as const,
+      question: 'What does math.ceil(4.1) return compared to math.floor(4.9)?',
+      options: [
+        '5 and 5',
+        '4 and 4',
+        '5 and 4',
+        '4 and 5'
+      ],
+      correctAnswer: 2,
+      explanation: 'math.ceil() rounds UP to the nearest integer (4.1 -> 5), math.floor() rounds DOWN (4.9 -> 4).',
+      points: 5,
     }
   ]
 };

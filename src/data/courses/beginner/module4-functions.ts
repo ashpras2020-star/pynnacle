@@ -295,7 +295,7 @@ Functions are the building blocks of all software. Master them, and you'll be ab
         'Indent the print statement',
         'Call with: greet_user()'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     gameType: 'quiz',
@@ -601,7 +601,7 @@ Parameters are what make functions powerful and reusable. Master parameters, and
         'Use f-string to include variables',
         'Call with actual values: greet("Alice", 25)'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     gameType: 'quiz',
@@ -983,7 +983,7 @@ Return is what makes functions building blocks. Functions that return values can
         'Return the product: return a * b',
         'Save result: result = multiply(6, 7)'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     gameType: 'quiz',
@@ -1398,9 +1398,9 @@ Understanding scope is crucial for writing bug-free code. It keeps your function
         'Then you can modify it: score = score + points',
         'Or use: score += points'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     gameType: 'quiz',
   },
 
@@ -1775,9 +1775,9 @@ Built-in functions are like having expert programmers write code for you. They h
         'Total: sum(scores)',
         'Average: sum(scores) / len(scores)'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     gameType: 'quiz',
   },
 ];

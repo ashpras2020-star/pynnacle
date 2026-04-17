@@ -123,10 +123,10 @@ If statements are the foundation of program logic. Almost every useful program m
         'Remember the colon : at the end of the if line',
         'Indent the print statement with 4 spaces'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 75,
-    gameType: 'guardgate',
+    gameType: 'quiz',
   },
 
   {
@@ -302,10 +302,10 @@ If/elif/else is like giving your program a decision tree. Master this pattern, a
         'Use elif for the middle conditions',
         'Use else for the final case'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 75,
-    gameType: 'guardgate',
+    gameType: 'quiz',
   },
 
   {
@@ -472,10 +472,10 @@ While loops give your programs the power of repetition - essential for automatio
         'The condition is: count > 0',
         'Don\'t forget to decrease count inside the loop!'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
-    gameType: 'guardgate',
+    gameType: 'quiz',
   },
 
   {
@@ -664,10 +664,10 @@ Example output:
         'Calculate result = 7 * i inside the loop',
         'Use an f-string to format the output nicely'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
-    gameType: 'guardgate',
+    gameType: 'quiz',
   },
 
   {
@@ -890,9 +890,9 @@ Expected output: 1, 2, 3, 4, 6, 7`,
         'Use break when i equals 8',
         'Check conditions before printing'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
-    gameType: 'guardgate',
+    gameType: 'quiz',
   },
 ];

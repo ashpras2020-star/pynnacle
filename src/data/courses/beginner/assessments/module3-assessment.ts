@@ -351,6 +351,156 @@ export const module6Assessment: Assessment = {
       explanation: 'Removes 2, leaving [1, 3] with length 2',
       points: 5,
       concepts: ['list modification', 'iteration', 'remove']
+    },
+
+    {
+      id: 'q21',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print("hello world".title())',
+      options: [
+        'HELLO WORLD',
+        'hello world',
+        'Hello World',
+        'Hello world'
+      ],
+      correctAnswer: 2,
+      explanation: 'The .title() method capitalizes the first letter of each word.',
+      points: 5,
+    },
+
+    {
+      id: 'q22',
+      type: 'multiple-choice' as const,
+      question: 'What does "Python".replace("thon", "rate") return?',
+      options: [
+        '"Pyrate"',
+        '"Pythonrate"',
+        '"rate"',
+        '"Pyratethon"'
+      ],
+      correctAnswer: 0,
+      explanation: '.replace() finds "thon" in "Python" and replaces it with "rate", giving "Pyrate".',
+      points: 5,
+    },
+
+    {
+      id: 'q23',
+      type: 'multiple-choice' as const,
+      question: 'What is the result of: "-".join(["2025", "03", "12"])',
+      options: [
+        '"2025-03-12"',
+        '"-2025-03-12-"',
+        '"2025", "03", "12"',
+        '"20250312"'
+      ],
+      correctAnswer: 0,
+      explanation: '.join() inserts the separator string between each element of the list, producing "2025-03-12".',
+      points: 5,
+    },
+
+    {
+      id: 'q24',
+      type: 'multiple-choice' as const,
+      question: 'What does "  hello  ".strip() return?',
+      options: [
+        '"  hello  "',
+        '"hello  "',
+        '"  hello"',
+        '"hello"'
+      ],
+      correctAnswer: 3,
+      explanation: '.strip() removes whitespace from both the beginning and end of the string.',
+      points: 5,
+    },
+
+    {
+      id: 'q25',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print("banana".count("an"))',
+      options: [
+        '1',
+        '2',
+        '3',
+        '0'
+      ],
+      correctAnswer: 1,
+      explanation: '.count() finds non-overlapping occurrences of "an" in "banana": positions 1 and 3, so 2 times.',
+      points: 5,
+    },
+
+    {
+      id: 'q26',
+      type: 'multiple-choice' as const,
+      question: 'What does "hello,world,python".split(",") return?',
+      options: [
+        '"hello world python"',
+        '["hello", "world", "python"]',
+        '("hello", "world", "python")',
+        '["hello,world,python"]'
+      ],
+      correctAnswer: 1,
+      explanation: '.split(",") splits the string at each comma and returns a list of the parts.',
+      points: 5,
+    },
+
+    {
+      id: 'q27',
+      type: 'multiple-choice' as const,
+      question: 'What is the result of: "abc123".isalpha()',
+      options: [
+        'True',
+        'False',
+        '"abc"',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: '.isalpha() returns False because the string contains digits. It only returns True if ALL characters are alphabetic.',
+      points: 5,
+    },
+
+    {
+      id: 'q28',
+      type: 'multiple-choice' as const,
+      question: 'What does this f-string produce? x = 42; print(f"{x:>10}")',
+      options: [
+        '"42        "',
+        '"        42"',
+        '"    42    "',
+        '"42"'
+      ],
+      correctAnswer: 1,
+      explanation: 'The :>10 format spec right-aligns the value in a field 10 characters wide, padding with spaces on the left.',
+      points: 5,
+    },
+
+    {
+      id: 'q29',
+      type: 'multiple-choice' as const,
+      question: 'What is the output of: print("Python"[1:4] + "Python"[0])',
+      options: [
+        '"ythP"',
+        '"ythoP"',
+        '"PythP"',
+        '"ythonP"'
+      ],
+      correctAnswer: 0,
+      explanation: '"Python"[1:4] gives "yth" and "Python"[0] gives "P", concatenated to "ythP".',
+      points: 5,
+    },
+
+    {
+      id: 'q30',
+      type: 'multiple-choice' as const,
+      question: 'What does "Hello World".swapcase() return?',
+      options: [
+        '"HELLO WORLD"',
+        '"hello world"',
+        '"hELLO wORLD"',
+        '"Hello world"'
+      ],
+      correctAnswer: 2,
+      explanation: '.swapcase() converts uppercase letters to lowercase and lowercase letters to uppercase.',
+      points: 5,
     }
   ]
 };

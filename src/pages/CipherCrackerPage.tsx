@@ -27,7 +27,7 @@ export function CipherCrackerPage() {
 
   if (!game) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-green-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{background:'linear-gradient(to bottom,#030712,#111827,#052e16)'}}>
         <div className="text-center">
           <div className="text-6xl mb-4">🔐</div>
           <h1 className="text-3xl font-bold text-green-400 font-mono mb-2">Signal Lost</h1>
@@ -42,7 +42,7 @@ export function CipherCrackerPage() {
 
   if (gameComplete) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-green-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{background:'linear-gradient(to bottom,#030712,#111827,#052e16)'}}>
         <div className="max-w-lg w-full bg-gray-900/90 rounded-xl shadow-2xl border border-green-800/60 p-8 text-center">
           <div className="text-7xl mb-4">🏆</div>
           <h1 className="text-4xl font-bold text-green-400 font-mono mb-2 tracking-wider">Mission Complete</h1>

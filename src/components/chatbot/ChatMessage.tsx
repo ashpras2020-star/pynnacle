@@ -19,8 +19,8 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
       >
         {!isUser && (
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-lg">🐍</span>
-            <span className="text-xs font-semibold text-purple-600">Python Tutor</span>
+            <img src={`${import.meta.env.BASE_URL}avatars/avatar-1.png`} alt="Pynnacle" className="w-5 h-5" />
+            <span className="text-xs font-semibold text-purple-600">Viper</span>
           </div>
         )}
         <div className="text-sm whitespace-pre-wrap break-words">

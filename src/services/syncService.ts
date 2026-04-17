@@ -57,9 +57,17 @@ class SyncService {
     this.isSyncing = true;
 
     try {
+      // Wait for stores to finish rehydrating from localStorage before reading state.
+      // Without this, we may read empty initial state and overwrite cloud data.
+      if (!useProgressStore.persist.hasHydrated()) {
+        await new Promise<void>((resolve) => {
+          const unsub = useProgressStore.persist.onFinishHydration(() => { unsub(); resolve(); });
+        });
+      }
+
       console.log('🔄 Starting cloud sync for user:', userId);
 
-      // Get current local data
+      // Get current local data (guaranteed rehydrated now)
       const userState = useUserStore.getState();
       const progressState = useProgressStore.getState();
 
@@ -69,9 +77,20 @@ class SyncService {
       if (cloudData) {
         // Cloud data exists - merge with local
         await this.mergeData(userId, cloudData, userState, progressState);
-      } else {
-        // No cloud data - push local data to cloud
+      } else if (progressState.completedLessons.length > 0 || progressState.totalXP > 0) {
+        // No cloud data but local has real progress - push local data to cloud
         await this.pushLocalToCloud(userId, userState, progressState);
+      } else {
+        // No cloud data and no local progress - nothing to sync
+        console.log('📭 No data to sync (no cloud data, no local progress)');
+      }
+
+      // Sync public profile for friends feature
+      try {
+        const { friendsService } = await import('@services/friendsService');
+        await friendsService.syncPublicProfile(userId);
+      } catch (profileError) {
+        console.warn('⚠️ Public profile sync failed:', profileError);
       }
 
       console.log('✅ Cloud sync completed successfully');
@@ -251,12 +270,24 @@ class SyncService {
       purchasedItems: mergedPurchasedItems,
     });
 
-    // Merge profile — prefer LOCAL (just saved by user) over cloud (stale)
-    // Cloud profile is only used as fallback when local has no custom profile
+    // Merge profile — prefer CLOUD (custom Pynnacle profile) over local
+    // After logout+login, local has the raw Google auth name/photo, not the custom profile.
+    // Cloud always has the latest custom data because updateUserProfile syncs immediately.
     const mergedProfile = {
-      name: userState.user?.name ?? cloudData.profile?.name ?? null,
-      picture: userState.user?.picture ?? cloudData.profile?.picture ?? null,
+      name: cloudData.profile?.name ?? userState.user?.name ?? null,
+      picture: cloudData.profile?.picture ?? userState.user?.picture ?? null,
     };
+
+    // Immediately restore the custom profile in local state
+    if (userState.user && (mergedProfile.name || mergedProfile.picture)) {
+      useUserStore.setState({
+        user: {
+          ...userState.user,
+          name: mergedProfile.name ?? userState.user.name,
+          picture: mergedProfile.picture ?? userState.user.picture,
+        },
+      });
+    }
 
     // Merge goal and hasCompletedGoalSetting (prefer whichever is set)
     const mergedGoal = userState.goal ?? cloudData.goal;
@@ -292,6 +323,75 @@ class SyncService {
 
     console.log('✅ Data merged successfully');
     console.log(`📊 Total lessons: ${mergedLessons.length}, Total XP: ${mergedXP}`);
+  }
+
+  /**
+   * Write profile (name + picture) directly to Firestore without running the full merge.
+   * Call this from updateUserProfile so the new values are authoritative in the cloud
+   * before any subsequent merge reads them back.
+   */
+  async syncProfileOnly(userId: string, name: string | null, picture: string | null): Promise<void> {
+    const userDocRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      await updateDoc(userDocRef, {
+        'profile.name': name,
+        'profile.picture': picture,
+        updatedAt: new Date().toISOString(),
+      });
+    } else {
+      // Doc doesn't exist yet — create a minimal one
+      await setDoc(userDocRef, {
+        goal: null,
+        hasCompletedGoalSetting: false,
+        profile: { name, picture },
+        progress: {
+          completedLessons: [],
+          completedAssessments: [],
+          totalXP: 0,
+          spentXP: 0,
+          unlockedLessons: ['lesson-1-1'],
+          purchasedItems: [],
+          lastSyncedAt: new Date().toISOString(),
+        },
+        updatedAt: new Date().toISOString(),
+      });
+    }
+  }
+
+  /**
+   * Reset progress in Firestore for a specific user
+   */
+  async resetCloudProgress(userId: string): Promise<void> {
+    try {
+      const userDocRef = doc(db, 'users', userId);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        await updateDoc(userDocRef, {
+          'progress.completedLessons': [],
+          'progress.completedAssessments': [],
+          'progress.totalXP': 0,
+          'progress.spentXP': 0,
+          'progress.unlockedLessons': ['lesson-1-1'],
+          'progress.purchasedItems': [],
+          'progress.lastSyncedAt': new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        console.log('🗑️ Cloud progress reset for user:', userId);
+      }
+
+      // Also reset the public profile stats
+      try {
+        const { friendsService } = await import('@services/friendsService');
+        await friendsService.syncPublicProfile(userId);
+      } catch (e) {
+        // non-critical
+      }
+    } catch (error) {
+      console.error('❌ Failed to reset cloud progress:', error);
+      throw error;
+    }
   }
 
   /**

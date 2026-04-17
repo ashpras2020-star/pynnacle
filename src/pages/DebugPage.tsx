@@ -49,7 +49,7 @@ export function DebugPage() {
     const isPerfect = finalScore === debugGame.challenges.length * 30;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{background:'linear-gradient(135deg,#0f172a,#1e293b,#0f172a)'}}>
         <div className="max-w-lg w-full dd-panel rounded-2xl p-8 text-center animate-dd-fade-in">
           <div className="text-7xl mb-4">{isPerfect ? '🏆' : '🔍'}</div>
           <h1 className="text-4xl font-bold text-amber-400 mb-2 font-mono">
@@ -82,7 +82,7 @@ export function DebugPage() {
 
           <button
             onClick={handleBackToCourse}
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-slate-900 font-bold py-4 rounded-xl hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2"
+            className="w-full text-slate-900 font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2" style={{background:'linear-gradient(to right,#f59e0b,#f97316)'}}
           >
             RETURN TO HQ
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +96,7 @@ export function DebugPage() {
 
   // Main Debug Detective Game
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8 detective-cursor">
+    <div className="min-h-screen py-8 detective-cursor" style={{background:'linear-gradient(135deg,#0f172a,#1e293b,#0f172a)'}}>
       <header className="dd-panel mb-8 border-b border-amber-500/10">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <Link to="/course/beginner" className="text-amber-400 hover:text-amber-300 font-semibold text-sm cursor-pointer">

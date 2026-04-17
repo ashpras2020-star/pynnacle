@@ -95,7 +95,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
             <rect x="150" y="4" width="20" height="14" rx="3" fill="rgba(168,162,158,0.4)" />
           </svg>
           {/* Floor shadow */}
-          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-stone-950/60 via-stone-900/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-32" style={{background:'linear-gradient(to top,rgba(3,3,5,0.6),rgba(10,9,8,0.2),transparent)'}} />
         </div>
       );
 
@@ -150,7 +150,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
           {Array.from({ length: 10 }, (_, i) => (
             <div key={`p-${i}`} className="absolute rounded-full mq-animate-float-up" style={{ top: `${50 + (i * 29) % 40}%`, left: `${25 + (i * 37) % 50}%`, width: `${3 + (i % 2)}px`, height: `${3 + (i % 2)}px`, backgroundColor: `rgba(74,222,128,${0.2 + (i % 3) * 0.1})`, animationDelay: `${i * 0.5}s`, animationDuration: `${3 + (i % 4)}s` }} />
           ))}
-          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-emerald-950/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-24" style={{background:'linear-gradient(to top,rgba(2,44,34,0.3),transparent)'}} />
         </div>
       );
 
@@ -198,7 +198,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
               animationDelay: `${i * 0.3}s`, animationDuration: `${2.5 + (i % 4) * 0.5}s`,
             }} />
           ))}
-          <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-cyan-950/20 via-purple-950/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-28" style={{background:'linear-gradient(to top,rgba(8,51,68,0.2),rgba(59,7,100,0.1),transparent)'}} />
         </div>
       );
 
@@ -259,7 +259,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
               animationDelay: `${i * 0.35}s`, animationDuration: `${6 + (i % 5) * 2}s`,
             }} />
           ))}
-          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-amber-950/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-20" style={{background:'linear-gradient(to top,rgba(69,26,3,0.2),transparent)'}} />
         </div>
       );
 
@@ -286,7 +286,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
             <text x="14" y="146" fill="rgba(168,85,247,0.4)" fontSize="9" fontFamily="monospace">∑ n²</text>
           </svg>
           {/* Workbench at bottom */}
-          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-slate-800/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-16" style={{background:'linear-gradient(to top,rgba(30,41,59,0.3),transparent)'}} />
           <svg className="absolute bottom-0 left-0 w-full h-12 opacity-30" viewBox="0 0 800 48" preserveAspectRatio="none">
             <rect x="30" y="4" width="740" height="6" rx="2" fill="rgba(120,113,108,0.6)" />
             <rect x="50" y="10" width="6" height="38" fill="rgba(120,113,108,0.4)" />
@@ -375,7 +375,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
               </svg>
             </div>
           ))}
-          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-yellow-900/15 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-20" style={{background:'linear-gradient(to top,rgba(113,63,18,0.15),transparent)'}} />
         </div>
       );
 
@@ -411,7 +411,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
             <rect x="14" y="16" width="36" height="12" rx="6" fill="rgba(148,163,184,0.4)" transform="rotate(-35 32 22)" />
             <circle cx="52" cy="8" r="8" fill="none" stroke="rgba(147,197,253,0.25)" strokeWidth="1.5" />
           </svg>
-          <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-blue-950/25 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-1/3" style={{background:'linear-gradient(to bottom,rgba(23,37,84,0.25),transparent)'}} />
         </div>
       );
 
@@ -456,7 +456,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
             <circle cx="105" cy="30" r="3" fill="rgba(251,191,36,0.8)" className="animate-pulse" style={{ animationDuration: '2s' }} />
             <circle cx="105" cy="30" r="6" fill="none" stroke="rgba(251,191,36,0.2)" strokeWidth="1" className="animate-pulse" style={{ animationDuration: '2s' }} />
           </svg>
-          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-red-950/30 via-orange-950/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-32" style={{background:'linear-gradient(to top,rgba(69,10,10,0.3),rgba(67,20,7,0.1),transparent)'}} />
         </div>
       );
 
@@ -501,7 +501,7 @@ function FloorThemeBackground({ floorId }: { floorId: number }) {
               }} />
             );
           })}
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-violet-950/20 via-indigo-950/8 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-1/2" style={{background:'linear-gradient(to bottom,rgba(46,16,101,0.2),rgba(30,27,75,0.08),transparent)'}} />
         </div>
       );
 
@@ -732,7 +732,7 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
   // Intro Screen
   if (gameState === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(to bottom, #1e1b4b, #3b0764, #0f172a)' }}>
         <div className="max-w-lg w-full text-center">
           <div className="text-8xl mb-4 animate-bounce">{'\u{1F3F0}'}</div>
           <h1 className="font-serif text-5xl text-yellow-300 mb-2 drop-shadow-[0_0_15px_rgba(253,224,71,0.5)]">
@@ -778,7 +778,8 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
 
           <button
             onClick={startGame}
-            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-serif text-2xl py-4 rounded-xl hover:from-purple-500 hover:to-indigo-500 transition-all shadow-lg hover:shadow-purple-500/30 hover:scale-105 active:scale-95"
+            className="w-full text-white font-serif text-2xl py-4 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95"
+            style={{ background: 'linear-gradient(to right, #7c3aed, #4338ca)' }}
           >
             Begin the Ascent
           </button>
@@ -790,7 +791,7 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
   // Game Over Screen
   if (gameState === 'gameover') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-red-950 via-slate-950 to-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(to bottom, #450a0a, #0f172a, #0f172a)' }}>
         <div className="max-w-lg w-full text-center">
           <div className="text-8xl mb-4">{'\u{1F480}'}</div>
           <h1 className="font-serif text-4xl text-red-400 mb-2">Tower Collapsed!</h1>
@@ -814,7 +815,8 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
           <div className="flex gap-3">
             <button
               onClick={startGame}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-serif text-xl py-4 rounded-xl hover:from-purple-500 hover:to-indigo-500 transition-all shadow-lg hover:scale-105 active:scale-95"
+              className="flex-1 text-white font-serif text-xl py-4 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95"
+              style={{ background: 'linear-gradient(to right, #7c3aed, #4338ca)' }}
             >
               Try Again
             </button>
@@ -838,7 +840,7 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
     const xpEarned = gameData.baseXP + Math.round((percentage / 100) * gameData.bonusXP);
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-yellow-900/30 via-purple-950 to-indigo-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(to bottom, #422006, #3b0764, #1e1b4b)' }}>
         <div className="max-w-lg w-full text-center relative">
           <StarParticles active={true} />
 
@@ -875,7 +877,8 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
 
           <button
             onClick={() => onComplete(score, xpEarned)}
-            className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-indigo-950 font-serif text-xl py-4 rounded-xl hover:from-yellow-400 hover:to-amber-400 transition-all shadow-lg hover:shadow-yellow-500/30 hover:scale-105 active:scale-95"
+            className="w-full text-indigo-950 font-serif text-xl py-4 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95"
+            style={{ background: 'linear-gradient(to right, #eab308, #f59e0b)' }}
           >
             Claim Rewards &amp; Continue
           </button>
@@ -890,24 +893,25 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
   const timerColor = timer > 30 ? 'text-emerald-400' : timer > 10 ? 'text-yellow-400' : 'text-red-400';
   const timerBarWidth = (timer / gameData.timeLimitSeconds) * 100;
 
-  const floorGradients: Record<number, string> = {
-    1: 'from-stone-950 via-stone-900 to-indigo-950',
-    2: 'from-emerald-950 via-indigo-950 to-purple-950',
-    3: 'from-cyan-950 via-indigo-950 to-purple-950',
-    4: 'from-amber-950 via-stone-900 to-indigo-950',
-    5: 'from-slate-950 via-indigo-950 to-purple-950',
-    6: 'from-violet-950 via-purple-950 to-indigo-950',
-    7: 'from-yellow-950 via-amber-950 to-indigo-950',
-    8: 'from-blue-950 via-indigo-950 to-slate-950',
-    9: 'from-red-950 via-orange-950 to-slate-950',
-    10: 'from-violet-950 via-indigo-950 to-yellow-950/30',
+  const floorBgs: Record<number, string> = {
+    1: 'linear-gradient(to bottom, #1c1917, #292524, #1e1b4b)',
+    2: 'linear-gradient(to bottom, #022c22, #1e1b4b, #3b0764)',
+    3: 'linear-gradient(to bottom, #083344, #1e1b4b, #3b0764)',
+    4: 'linear-gradient(to bottom, #451a03, #292524, #1e1b4b)',
+    5: 'linear-gradient(to bottom, #020617, #1e1b4b, #3b0764)',
+    6: 'linear-gradient(to bottom, #2e1065, #3b0764, #1e1b4b)',
+    7: 'linear-gradient(to bottom, #422006, #451a03, #1e1b4b)',
+    8: 'linear-gradient(to bottom, #172554, #1e1b4b, #0f172a)',
+    9: 'linear-gradient(to bottom, #450a0a, #431407, #0f172a)',
+    10: 'linear-gradient(to bottom, #2e1065, #1e1b4b, #422006)',
   };
 
-  const bgGradient = floorGradients[currentFloor.challenge.id] || 'from-indigo-950 via-purple-950 to-slate-950';
+  const bgStyle = floorBgs[currentFloor.challenge.id] || 'linear-gradient(to bottom, #1e1b4b, #3b0764, #0f172a)';
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-b ${bgGradient} flex flex-col transition-all duration-700 relative ${floorTransition ? 'opacity-0' : 'opacity-100'}`}
+      className={`min-h-screen flex flex-col transition-all duration-700 relative ${floorTransition ? 'opacity-0' : 'opacity-100'}`}
+      style={{ background: bgStyle }}
       onKeyDown={handleKeyDown}
     >
       <FloorThemeBackground floorId={currentFloor.challenge.id} />
@@ -1011,7 +1015,7 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
                   {gameState === 'playing' && (
                     <button
                       onClick={submitAnswer}
-                      className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg font-serif text-lg hover:from-purple-500 hover:to-indigo-500 transition-all hover:scale-105 active:scale-95 shadow-lg"
+                      className="text-white px-6 py-3 rounded-lg font-serif text-lg transition-all hover:scale-105 active:scale-95 shadow-lg" style={{background:'linear-gradient(to right,#7c3aed,#4338ca)'}}
                     >
                       Cast
                     </button>
@@ -1019,7 +1023,7 @@ export function MathQuestGame({ gameData, onComplete }: MathQuestGameProps) {
                   {gameState === 'success' && (
                     <button
                       onClick={nextFloor}
-                      className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-lg font-serif text-lg hover:from-emerald-500 hover:to-teal-500 transition-all hover:scale-105 active:scale-95 shadow-lg animate-pulse"
+                      className="text-white px-6 py-3 rounded-lg font-serif text-lg transition-all hover:scale-105 active:scale-95 shadow-lg animate-pulse" style={{background:'linear-gradient(to right,#059669,#0d9488)'}}
                     >
                       Next
                     </button>

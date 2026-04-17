@@ -43,9 +43,9 @@ export function ConveyorCrafterPage() {
   if (gameComplete) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 50%, #fce7f3 100%)' }}>
-        <div className="max-w-lg w-full bg-white/85 backdrop-blur-xl rounded-2xl shadow-2xl p-8 text-center border border-violet-200">
+        <div className="max-w-lg w-full bg-white rounded-2xl shadow-2xl p-8 text-center border border-violet-200">
           <div className="text-7xl mb-4">🎊</div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-2">All Crafted!</h1>
+          <h1 className="text-4xl font-bold text-violet-600 mb-2">All Crafted!</h1>
           <p className="text-slate-500 mb-6">Great work! You've completed all the stations.</p>
 
           <div className="grid grid-cols-2 gap-4 mb-6">
@@ -61,7 +61,7 @@ export function ConveyorCrafterPage() {
 
           <button
             onClick={handleBackToCourse}
-            className="w-full bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white font-bold py-4 rounded-xl transition-all text-lg shadow-lg"
+            className="w-full text-white font-bold py-4 rounded-xl transition-all text-lg shadow-lg" style={{background:'linear-gradient(to right,#7c3aed,#9333ea)'}}
           >
             RETURN TO COURSE
           </button>

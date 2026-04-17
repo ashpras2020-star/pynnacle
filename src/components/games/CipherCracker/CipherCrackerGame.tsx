@@ -257,7 +257,7 @@ export function CipherCrackerGame({ gameData, onComplete }: CipherCrackerGamePro
   /* ── INTRO SCREEN ──────────────────────────────────────────────── */
   if (phase === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-green-950 flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(to bottom, #030712, #111827, #052e16)' }}>
         <MatrixRain />
         <ScanLines />
         <div className="max-w-lg w-full relative z-10">
@@ -301,7 +301,7 @@ export function CipherCrackerGame({ gameData, onComplete }: CipherCrackerGamePro
   if (phase === 'victory') {
     const xpEarned = calcXP();
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-green-950 flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(to bottom, #030712, #111827, #052e16)' }}>
         <MatrixRain />
         <ScanLines />
         <div className="max-w-lg w-full relative z-10">
@@ -341,7 +341,7 @@ export function CipherCrackerGame({ gameData, onComplete }: CipherCrackerGamePro
   if (phase === 'gameover') {
     const xpEarned = Math.round(calcXP() * 0.5);
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-red-950/30 to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(to bottom, #030712, rgba(69,10,10,0.3), #111827)' }}>
         <ScanLines />
         <div className="max-w-lg w-full relative z-10">
           <div className="bg-gray-900/90 border border-red-800/60 rounded-xl shadow-2xl p-8 text-center backdrop-blur-sm">
@@ -393,7 +393,7 @@ export function CipherCrackerGame({ gameData, onComplete }: CipherCrackerGamePro
   /* ── NEXT MISSION TRANSITION ───────────────────────────────────── */
   if (phase === 'nextMission') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-green-950 flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(to bottom, #030712, #111827, #052e16)' }}>
         <MatrixRain />
         <ScanLines />
         <div className="max-w-lg w-full relative z-10">
@@ -419,7 +419,7 @@ export function CipherCrackerGame({ gameData, onComplete }: CipherCrackerGamePro
 
   /* ── PLAYING SCREEN ────────────────────────────────────────────── */
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-green-950 flex flex-col relative overflow-hidden">
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ background: 'linear-gradient(to bottom, #030712, #111827, #052e16)' }}>
       <MatrixRain />
       <ScanLines />
 

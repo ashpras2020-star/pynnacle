@@ -185,7 +185,7 @@ if file_path.exists():
         'Read all: content = file.read()',
         'Print the content'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -461,7 +461,7 @@ with open('data.csv', 'r') as file:
         'Clean: name = line.strip()',
         'Count with a counter variable'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 100,
     activityType: 'game',
@@ -771,7 +771,7 @@ save_progress('game_log.txt', 5, 1000)`,
         'Write: file.write(fruit + "\\n")',
         'Loop through all fruits'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -1140,7 +1140,7 @@ save_report("Sales data for January", "sales")
         'Join paths: Path("logs") / "app.log"',
         'Check: if file_path.exists():'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
     xpReward: 125,
     activityType: 'game',
@@ -1598,9 +1598,9 @@ print(logger.read_logs())`,
         'Transform: line.upper()',
         'Write to output file in "w" mode'
       ],
-      xpReward: 150,
+      xpReward: 500,
     },
-    xpReward: 150,
+    xpReward: 500,
     activityType: 'game',
     gameType: 'quiz'
   }

@@ -1,10 +1,15 @@
 // Home Page - Main dashboard with course portals and free IDE
 
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '@store/useProgressStore';
 import { useUserStore } from '@store/useUserStore';
 import { IDEContainer } from '@components/ide/IDEContainer';
 import { ChatbotButton } from '@components/chatbot/ChatbotButton';
+import { Users, Snowflake, Lightbulb, Zap, SkipForward, Moon, Sun } from 'lucide-react';
+import { useFriendsStore } from '@store/useFriendsStore';
+import { useThemeStore } from '@store/useThemeStore';
+import { PynnacleLogo } from '@components/ui/PynnacleLogo';
 
 export function Home() {
   const navigate = useNavigate();
@@ -15,34 +20,35 @@ export function Home() {
     completedLessons,
     getAvailableXP,
     purchaseItem,
-    getItemQuantity
+    getItemQuantity,
+    resetProgress
   } = useProgressStore();
   const { user, isAuthenticated, signInWithGoogle, signOut, isLoading } = useUserStore();
+  const incomingRequestCount = useFriendsStore((s) => s.incomingRequests.length);
+  const quizInviteCount = useFriendsStore((s) => s.quizInvites.length);
+  const friendsNotificationCount = incomingRequestCount + quizInviteCount;
+  const { darkMode, toggleDarkMode } = useThemeStore();
   const availableXP = getAvailableXP();
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const beginnerProgress = (completedLessons.length / 50) * 100;
 
   const handleSignIn = async () => {
     try {
       await signInWithGoogle();
-      console.log('✅ Signed in successfully');
-      // Redirect to profile setup page
-      navigate('/profile-setup');
+      navigate('/goal-setting');
     } catch (error: any) {
-      console.error('❌ Sign-in failed:', error);
-
-      // Handle specific Firebase errors
-      let errorMessage = 'An error occurred during sign-in';
-
-      if (error.code === 'auth/popup-closed-by-user') {
-        errorMessage = 'Sign-in cancelled';
-      } else if (error.code === 'auth/account-exists-with-different-credential') {
-        errorMessage = 'An account already exists with this email';
-      } else if (error.message) {
-        errorMessage = error.message;
+      // Silently ignore user-cancelled popups
+      if (error.code === 'auth/popup-closed-by-user' ||
+          error.code === 'auth/cancelled-popup-request' ||
+          error.code === 'auth/already-in-progress') {
+        return;
       }
 
-      // Don't crash - just show the error
+      console.error('Sign-in failed:', error);
+      const errorMessage = error.code === 'auth/account-exists-with-different-credential'
+        ? 'An account already exists with this email'
+        : error.message || 'An error occurred during sign-in';
       alert(`Sign-in failed: ${errorMessage}`);
     }
   };
@@ -60,19 +66,19 @@ export function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
               <Link to="/" className="flex items-center gap-2 mb-3 w-fit hover:opacity-80 transition-opacity">
-                <div className="text-2xl">🐍</div>
-                <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
-                  PyQuest
+                <PynnacleLogo className="w-8 h-8" />
+                <span className="text-xl font-bold gradient-text">
+                  Pynnacle
                 </span>
               </Link>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold gradient-text">
                 Python Learning Platform
               </h1>
               <p className="text-gray-600 mt-1">Master Python through interactive lessons</p>
@@ -81,8 +87,33 @@ export function Home() {
             {/* User Profile & Stats */}
             <div className="flex items-center gap-6">
               {/* User Profile or Sign In */}
-              {isAuthenticated && user ? (
-                <div className="flex items-center gap-3 border-r border-gray-200 pr-6">
+              {/* Always-visible icon buttons */}
+              <div className="flex items-center gap-1">
+                {isAuthenticated && user && (
+                  <button
+                    onClick={() => navigate('/friends')}
+                    className="relative p-2 text-gray-500 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                    title="Friends"
+                  >
+                    <Users className="w-5 h-5" />
+                    {friendsNotificationCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                        {friendsNotificationCount}
+                      </span>
+                    )}
+                  </button>
+                )}
+                <button
+                  onClick={toggleDarkMode}
+                  className="p-2 text-gray-500 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                  title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                >
+                  {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                </button>
+              </div>
+
+              {isAuthenticated && user && (
+                <div className="flex items-center gap-3 border-l border-gray-200 pl-4">
                   <button
                     onClick={() => navigate('/profile-setup')}
                     className="flex items-center gap-3 hover:opacity-80 transition-opacity"
@@ -94,7 +125,7 @@ export function Home() {
                         className="w-10 h-10 rounded-full border-2 border-purple-200"
                       />
                     ) : (
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style={{ background: 'linear-gradient(135deg, #a855f7, #9333ea)' }}>
                         {user.name?.charAt(0).toUpperCase() || 'U'}
                       </div>
                     )}
@@ -106,43 +137,10 @@ export function Home() {
                   <button
                     onClick={handleSignOut}
                     disabled={isLoading}
-                    className="ml-3 px-3 py-1.5 text-sm text-red-600 hover:text-white hover:bg-red-600 border border-red-600 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="ml-2 px-3 py-1.5 text-sm text-red-600 hover:text-white hover:bg-red-600 border border-red-600 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? 'Signing out...' : 'Sign Out'}
                   </button>
-                </div>
-              ) : (
-                <div className="border-r border-gray-200 pr-6">
-                  <button
-                    onClick={handleSignIn}
-                    disabled={isLoading}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
-                      <path
-                        fill="#4285F4"
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                      />
-                      <path
-                        fill="#34A853"
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                      />
-                      <path
-                        fill="#FBBC05"
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                      />
-                      <path
-                        fill="#EA4335"
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                      />
-                    </svg>
-                    <span className="font-medium text-gray-700">
-                      {isLoading ? 'Signing in...' : 'Sign in with Google'}
-                    </span>
-                  </button>
-                  <div className="text-xs text-gray-500 text-center mt-2">
-                    ☁️ Sign in to sync your progress
-                  </div>
                 </div>
               )}
 
@@ -177,7 +175,7 @@ export function Home() {
           <div className="grid md:grid-cols-3 gap-6">
             {/* Beginner Course - Unlocked */}
             <Link to="/course/beginner">
-              <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-purple-400">
+              <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer border-2 border-purple-200 hover:border-purple-400">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-gray-800">Beginner</h3>
                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
@@ -198,8 +196,8 @@ export function Home() {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-gradient-to-r from-purple-600 to-purple-400 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${beginnerProgress}%` }}
+                      className="h-2 rounded-full transition-all duration-300"
+                      style={{ background: 'linear-gradient(to right, #9333ea, #c084fc)', width: `${beginnerProgress}%` }}
                     ></div>
                   </div>
                 </div>
@@ -266,10 +264,10 @@ export function Home() {
 
           <div className="grid md:grid-cols-4 gap-6">
             {/* Streak Freeze */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-transparent hover:border-purple-400 transition-all">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200 hover:border-purple-400 transition-all">
               <div className="flex items-center justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-3xl">
-                  ❄️
+                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{background: 'linear-gradient(135deg, #60a5fa, #2563eb)'}}>
+                  <Snowflake className="w-8 h-8 text-white" />
                 </div>
               </div>
               <h3 className="text-lg font-bold text-gray-800 text-center mb-2">Streak Freeze</h3>
@@ -285,7 +283,7 @@ export function Home() {
                 disabled={availableXP < 2500}
                 className={`w-full py-2 rounded-lg font-semibold transition-all ${
                   availableXP >= 2500
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600'
+                    ? 'btn-purple'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
@@ -294,10 +292,10 @@ export function Home() {
             </div>
 
             {/* Hint Pack */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-transparent hover:border-purple-400 transition-all">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200 hover:border-purple-400 transition-all">
               <div className="flex items-center justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-3xl">
-                  💡
+                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{background: 'linear-gradient(135deg, #facc15, #ca8a04)'}}>
+                  <Lightbulb className="w-8 h-8 text-white" />
                 </div>
               </div>
               <h3 className="text-lg font-bold text-gray-800 text-center mb-2">Hint Pack</h3>
@@ -313,7 +311,7 @@ export function Home() {
                 disabled={availableXP < 1000}
                 className={`w-full py-2 rounded-lg font-semibold transition-all ${
                   availableXP >= 1000
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600'
+                    ? 'btn-purple'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
@@ -322,10 +320,10 @@ export function Home() {
             </div>
 
             {/* XP Boost */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-transparent hover:border-purple-400 transition-all">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200 hover:border-purple-400 transition-all">
               <div className="flex items-center justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-3xl">
-                  ⚡
+                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{background: 'linear-gradient(135deg, #4ade80, #16a34a)'}}>
+                  <Zap className="w-8 h-8 text-white" />
                 </div>
               </div>
               <h3 className="text-lg font-bold text-gray-800 text-center mb-2">XP Boost</h3>
@@ -341,7 +339,7 @@ export function Home() {
                 disabled={availableXP < 1500}
                 className={`w-full py-2 rounded-lg font-semibold transition-all ${
                   availableXP >= 1500
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600'
+                    ? 'btn-purple'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
@@ -350,10 +348,10 @@ export function Home() {
             </div>
 
             {/* Skip Token */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-transparent hover:border-purple-400 transition-all">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200 hover:border-purple-400 transition-all">
               <div className="flex items-center justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-3xl">
-                  ⏭️
+                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{background: 'linear-gradient(135deg, #fb923c, #ea580c)'}}>
+                  <SkipForward className="w-8 h-8 text-white" />
                 </div>
               </div>
               <h3 className="text-lg font-bold text-gray-800 text-center mb-2">Skip Token</h3>
@@ -369,7 +367,7 @@ export function Home() {
                 disabled={availableXP < 500}
                 className={`w-full py-2 rounded-lg font-semibold transition-all ${
                   availableXP >= 500
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600'
+                    ? 'btn-purple'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
@@ -381,7 +379,7 @@ export function Home() {
 
         {/* Free-form IDE */}
         <section>
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-purple-200">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-gray-800">Practice Playground</h2>
@@ -399,6 +397,56 @@ export function Home() {
               initialCode="# Try some Python code here!\nprint('Hello from the playground!')\n\n# Calculate something\nresult = 10 * 5\nprint(f'10 times 5 equals {result}')"
               showRunButton={true}
             />
+          </div>
+        </section>
+        {/* Reset Progress */}
+        <section className="mt-12 border-t border-gray-200 pt-8">
+          <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200">
+            <h2 className="text-lg font-bold text-gray-800 mb-2">Reset Progress</h2>
+            <p className="text-sm text-gray-500 mb-4">
+              This will erase all your completed lessons, XP, streak, and purchased items.
+            </p>
+            <div className="flex items-center gap-2 text-sm text-red-500 mb-4">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              <span className="font-medium">Warning: This cannot be undone. Your progress will be permanently deleted.</span>
+            </div>
+            {!showResetConfirm ? (
+              <button
+                onClick={() => setShowResetConfirm(true)}
+                className="px-4 py-2 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
+              >
+                Reset All Progress
+              </button>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-red-600 font-medium">Are you sure?</span>
+                <button
+                  onClick={async () => {
+                    resetProgress();
+                    if (user?.uid) {
+                      try {
+                        const { syncService } = await import('@services/syncService');
+                        await syncService.resetCloudProgress(user.uid);
+                      } catch (e) {
+                        console.error('Failed to reset cloud progress:', e);
+                      }
+                    }
+                    setShowResetConfirm(false);
+                  }}
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  Yes, Reset Everything
+                </button>
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </main>

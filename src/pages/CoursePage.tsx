@@ -172,7 +172,7 @@ export function CoursePage() {
 
   if (courseId !== 'beginner') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="text-center">
           <div className="text-6xl mb-4">🔒</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Course Locked</h1>
@@ -188,7 +188,7 @@ export function CoursePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -197,7 +197,7 @@ export function CoursePage() {
               <Link to="/dashboard" className="text-purple-600 hover:text-purple-700 font-semibold mb-4 inline-block">
                 ← Back to Home
               </Link>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold gradient-text">
                 Beginner Course
               </h1>
               <p className="text-gray-600 mt-2">
@@ -221,7 +221,7 @@ export function CoursePage() {
 
       <main className="max-w-7xl mx-auto px-4 py-12">
         {/* Course Progress Overview */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-purple-200">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-800">Your Progress</h2>
             <span className="text-sm text-gray-500">
@@ -230,8 +230,8 @@ export function CoursePage() {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
-              className="bg-gradient-to-r from-purple-600 to-purple-400 h-3 rounded-full transition-all duration-300"
-              style={{ width: `${(completedLessons.length / 50) * 100}%` }}
+              className="h-3 rounded-full transition-all duration-300"
+              style={{ background: 'linear-gradient(to right, #9333ea, #c084fc)', width: `${(completedLessons.length / 50) * 100}%` }}
             ></div>
           </div>
         </div>
@@ -239,13 +239,13 @@ export function CoursePage() {
         {/* Modules */}
         <div className="space-y-6">
           {BEGINNER_MODULES.map((module, index) => {
-            const moduleCompleted = true; // TODO: revert — was: module.lessons.every(lesson => completedLessons.some(cl => cl.lessonId === lesson.id));
+            const moduleCompleted = module.lessons.every(lesson => completedLessons.some(cl => cl.lessonId === lesson.id));
             const completedCount = module.lessons.filter(lesson =>
               completedLessons.some(cl => cl.lessonId === lesson.id)
             ).length;
 
             // Check if this module is locked (need to pass previous module's assessment)
-            const isModuleLocked = false; // TODO: revert — was: index > 0 && !isAssessmentPassed(BEGINNER_MODULES[index - 1].id);
+            const isModuleLocked = index > 0 && !isAssessmentPassed(BEGINNER_MODULES[index - 1].id);
             const previousModuleNumber = index;
 
             // If module is locked, render locked state
@@ -311,7 +311,7 @@ export function CoursePage() {
             }
 
             return (
-              <div key={module.id} className="bg-white rounded-xl shadow-lg p-6">
+              <div key={module.id} className="bg-white rounded-xl shadow-lg p-6 border border-purple-200">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
@@ -417,7 +417,7 @@ export function CoursePage() {
                               className={`
                                 w-full px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200
                                 ${canAfford
-                                  ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 shadow-md hover:shadow-lg'
+                                  ? 'btn-purple shadow-md hover:shadow-lg'
                                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 }
                               `}
@@ -452,9 +452,7 @@ export function CoursePage() {
                     <Link
                       to={`/assessment/${module.id}`}
                       className={`inline-flex items-center gap-2 font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl ${
-                        isAssessmentPassed(module.id)
-                          ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white'
-                          : 'bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white'
+                        isAssessmentPassed(module.id) ? 'btn-green' : 'btn-purple'
                       }`}
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -468,7 +466,7 @@ export function CoursePage() {
                     {module.id !== 'module-5' && module.id !== 'module-6' && module.id !== 'module-3' && module.id !== 'module-2' && module.id !== 'module-4' && module.id !== 'module-7' && module.id !== 'module-8' && module.id !== 'module-9' && module.id !== 'module-10' && (
                       <Link
                         to={`/debug/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-orange-700 hover:to-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-orange font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -479,7 +477,7 @@ export function CoursePage() {
                     {module.id === 'module-2' && (
                       <Link
                         to={`/mathquest/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold px-6 py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-indigo font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
@@ -490,7 +488,7 @@ export function CoursePage() {
                     {module.id === 'module-5' && (
                       <Link
                         to={`/guardgate/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-blue font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -501,7 +499,7 @@ export function CoursePage() {
                     {module.id === 'module-6' && (
                       <Link
                         to={`/listchef/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-green font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -512,7 +510,7 @@ export function CoursePage() {
                     {module.id === 'module-3' && (
                       <Link
                         to={`/ciphercracker/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-green-700 to-emerald-600 text-white font-semibold px-6 py-3 rounded-lg hover:from-green-800 hover:to-emerald-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-green font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -523,7 +521,7 @@ export function CoursePage() {
                     {module.id === 'module-4' && (
                       <Link
                         to={`/booleanbouncer/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-700 to-purple-600 text-white font-semibold px-6 py-3 rounded-lg hover:from-fuchsia-800 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-purple font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
@@ -534,7 +532,7 @@ export function CoursePage() {
                     {module.id === 'module-7' && (
                       <Link
                         to={`/robotcommander/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-blue font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -545,7 +543,7 @@ export function CoursePage() {
                     {module.id === 'module-8' && (
                       <Link
                         to={`/conveyorcrafter/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold px-6 py-3 rounded-lg hover:from-violet-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-purple text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
@@ -556,7 +554,7 @@ export function CoursePage() {
                     {module.id === 'module-9' && (
                       <Link
                         to={`/coderescue/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-semibold px-6 py-3 rounded-lg hover:from-cyan-500 hover:to-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-blue font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -567,7 +565,7 @@ export function CoursePage() {
                     {module.id === 'module-10' && (
                       <Link
                         to={`/filesorter/${module.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-700 to-emerald-600 text-white font-semibold px-6 py-3 rounded-lg hover:from-emerald-800 hover:to-emerald-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center gap-2 btn-green font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />

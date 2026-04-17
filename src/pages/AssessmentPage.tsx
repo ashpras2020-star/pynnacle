@@ -1,9 +1,10 @@
 // Assessment Page - Module assessment with questions and scoring
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getAssessmentByModule } from '@data/courses/beginner/assessments';
 import { useProgressStore } from '@store/useProgressStore';
+import { selectAssessmentQuestions } from '@utils/questionRandomizer';
 import type { AssessmentQuestion } from '@types';
 
 export function AssessmentPage() {
@@ -13,6 +14,12 @@ export function AssessmentPage() {
 
   // Get assessment data
   const assessment = getAssessmentByModule(moduleId!);
+
+  const pickQuestions = useCallback(
+    () => assessment ? selectAssessmentQuestions(assessment.questions, 20) : [],
+    [assessment],
+  );
+  const [questions, setQuestions] = useState(pickQuestions);
 
   // State
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -26,7 +33,7 @@ export function AssessmentPage() {
 
   if (!assessment) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Assessment Not Found</h1>
@@ -53,7 +60,7 @@ export function AssessmentPage() {
     let totalScore = 0;
     let earnedScore = 0;
 
-    assessment.questions.forEach((question: AssessmentQuestion) => {
+    questions.forEach((question: AssessmentQuestion) => {
       totalScore += question.points;
       const userAnswer = answers[question.id];
 
@@ -84,6 +91,7 @@ export function AssessmentPage() {
   }
 
   function handleRetry() {
+    setQuestions(pickQuestions()); // Re-randomize questions on retry
     setAnswers({});
     setSubmitted(false);
     setScore(0);
@@ -103,11 +111,11 @@ export function AssessmentPage() {
     return `${seconds}s`;
   }
 
-  const allQuestionsAnswered = assessment.questions.every(q => answers[q.id] !== undefined);
+  const allQuestionsAnswered = questions.every(q => answers[q.id] !== undefined);
   const passed = percentage >= assessment.passingScore;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-6">
@@ -121,7 +129,7 @@ export function AssessmentPage() {
             {assessment.description}
           </p>
           <div className="flex gap-4 mt-4 text-sm text-gray-500">
-            <span>📝 {assessment.questions.length} questions</span>
+            <span>📝 {questions.length} questions</span>
             <span>📊 {assessment.totalPoints} points</span>
             <span>✅ {assessment.passingScore}% to pass</span>
             {assessment.timeLimit && <span>⏱️ {assessment.timeLimit} minutes</span>}
@@ -161,7 +169,7 @@ export function AssessmentPage() {
                   {passed ? (
                     <button
                       onClick={() => navigate('/course/beginner')}
-                      className="bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold px-6 py-2 rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-200"
+                      className="btn-green font-semibold px-6 py-2 rounded-lg transition-all duration-200"
                     >
                       Continue to Next Module
                     </button>
@@ -169,7 +177,7 @@ export function AssessmentPage() {
                     <>
                       <button
                         onClick={handleRetry}
-                        className="bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold px-6 py-2 rounded-lg hover:from-purple-700 hover:to-purple-600 transition-all duration-200"
+                        className="btn-purple font-semibold px-6 py-2 rounded-lg transition-all duration-200"
                       >
                         Retry Assessment
                       </button>
@@ -189,7 +197,7 @@ export function AssessmentPage() {
 
         {/* Questions */}
         <div className="space-y-6">
-          {assessment.questions.map((question: AssessmentQuestion, index: number) => {
+          {questions.map((question: AssessmentQuestion, index: number) => {
             const userAnswer = answers[question.id];
             const isCorrect = userAnswer === question.correctAnswer;
             const showFeedback = submitted;
@@ -203,8 +211,8 @@ export function AssessmentPage() {
                       ? 'border-green-300'
                       : userAnswer !== undefined
                       ? 'border-red-300'
-                      : 'border-gray-200'
-                    : 'border-gray-200'
+                      : 'border-purple-200'
+                    : 'border-purple-200'
                 }`}
               >
                 {/* Question Header */}
@@ -318,13 +326,13 @@ export function AssessmentPage() {
               disabled={!allQuestionsAnswered}
               className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 ${
                 allQuestionsAnswered
-                  ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-xl'
+                  ? 'btn-purple shadow-lg hover:shadow-xl'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
             >
               {allQuestionsAnswered
                 ? 'Submit Assessment'
-                : `Answer all questions (${Object.keys(answers).length}/${assessment.questions.length})`
+                : `Answer all questions (${Object.keys(answers).length}/${questions.length})`
               }
             </button>
           </div>

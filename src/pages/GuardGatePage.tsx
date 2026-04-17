@@ -66,7 +66,7 @@ export function GuardGatePage() {
 
           <button
             onClick={handleBackToCourse}
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold py-4 rounded-xl hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg shadow-amber-500/20 text-lg"
+            className="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg text-lg" style={{background:'linear-gradient(to right,#f59e0b,#f97316)'}}
           >
             Back to Course
           </button>

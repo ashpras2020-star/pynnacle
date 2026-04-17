@@ -331,6 +331,166 @@ export const module9Assessment: Assessment = {
       explanation: 'Accessing data["missing"] raises KeyError, except sets key to 1',
       points: 5,
       concepts: ['KeyError', 'assignment', 'exception handling']
+    },
+
+    // Question 21 - Raising custom exceptions
+    {
+      id: 'q21',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\ndef validate_age(age):\n    if age < 0:\n        raise ValueError("Negative age")\n    return age\n\ntry:\n    result = validate_age(-5)\nexcept ValueError as e:\n    print(e)',
+      options: [
+        'Negative age',
+        'ValueError',
+        '-5',
+        'Error (uncaught)'
+      ],
+      correctAnswer: 0,
+      explanation: 'raise creates a ValueError with message "Negative age". The except block catches it and prints the message.',
+      points: 5,
+    },
+
+    // Question 22 - Exception hierarchy
+    {
+      id: 'q22',
+      type: 'multiple-choice' as const,
+      question: 'What happens?\n\ntry:\n    x = 1 / 0\nexcept ArithmeticError:\n    print("Caught")',
+      options: [
+        'Caught',
+        'Error (uncaught)',
+        'ZeroDivisionError',
+        'None'
+      ],
+      correctAnswer: 0,
+      explanation: 'ZeroDivisionError is a subclass of ArithmeticError, so the except block catches it.',
+      points: 5,
+    },
+
+    // Question 23 - Finally with return
+    {
+      id: 'q23',
+      type: 'multiple-choice' as const,
+      question: 'What does this print?\n\ndef test():\n    try:\n        return 1\n    finally:\n        return 2\n\nprint(test())',
+      options: [
+        '1',
+        '2',
+        'None',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'The finally block always executes, and its return overrides the try block\'s return. The function returns 2.',
+      points: 5,
+    },
+
+    // Question 24 - Multiple exception types in one handler
+    {
+      id: 'q24',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\ndef convert(val):\n    try:\n        return int(val)\n    except (ValueError, TypeError):\n        return -1\n\nprint(convert(None))',
+      options: [
+        '0',
+        '-1',
+        'None',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'int(None) raises TypeError, which is caught by the tuple of exception types, so -1 is returned.',
+      points: 5,
+    },
+
+    // Question 25 - Exception in else block
+    {
+      id: 'q25',
+      type: 'multiple-choice' as const,
+      question: 'What happens?\n\ntry:\n    x = 5\nexcept ValueError:\n    print("A")\nelse:\n    y = x / 0\nfinally:\n    print("B")',
+      options: [
+        'B then ZeroDivisionError',
+        'A\\nB',
+        'B only',
+        'ZeroDivisionError then B'
+      ],
+      correctAnswer: 0,
+      explanation: 'No error in try, so else runs. The else block raises ZeroDivisionError which is not caught. finally still runs, printing "B", then the exception propagates.',
+      points: 5,
+    },
+
+    // Question 26 - Re-raising exceptions
+    {
+      id: 'q26',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\ntry:\n    try:\n        raise ValueError("inner")\n    except ValueError:\n        print("Caught")\n        raise\nexcept ValueError as e:\n    print(f"Outer: {e}")',
+      options: [
+        'Caught',
+        'Caught\\nOuter: inner',
+        'Outer: inner',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'The inner except catches and prints "Caught", then raise re-raises the same exception. The outer except catches it and prints the message.',
+      points: 5,
+    },
+
+    // Question 27 - AttributeError
+    {
+      id: 'q27',
+      type: 'multiple-choice' as const,
+      question: 'What exception is raised?\n\nx = 42\nx.append(1)',
+      options: [
+        'TypeError',
+        'ValueError',
+        'AttributeError',
+        'NameError'
+      ],
+      correctAnswer: 2,
+      explanation: 'Integers do not have an append method. Accessing a nonexistent attribute raises AttributeError.',
+      points: 5,
+    },
+
+    // Question 28 - Exception handling order matters
+    {
+      id: 'q28',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\ntry:\n    x = int("abc")\nexcept Exception:\n    print("General")\nexcept ValueError:\n    print("Specific")',
+      options: [
+        'General',
+        'Specific',
+        'General\\nSpecific',
+        'Error'
+      ],
+      correctAnswer: 0,
+      explanation: 'Exception is checked first and matches (ValueError is a subclass of Exception). The more general handler catches it. Always put specific exceptions before general ones.',
+      points: 5,
+    },
+
+    // Question 29 - Debugging with traceback info
+    {
+      id: 'q29',
+      type: 'multiple-choice' as const,
+      question: 'What is the best practice for logging exceptions in production code?\n\nimport logging\n\ntry:\n    risky_operation()\nexcept Exception as e:\n    # What should go here?',
+      options: [
+        'pass',
+        'print(e)',
+        'logging.exception("Error occurred")',
+        'raise SystemExit()'
+      ],
+      correctAnswer: 2,
+      explanation: 'logging.exception() logs the error message along with the full traceback, which is essential for debugging in production.',
+      points: 5,
+    },
+
+    // Question 30 - EAFP vs LBYL
+    {
+      id: 'q30',
+      type: 'multiple-choice' as const,
+      question: 'Which code follows Python\'s EAFP (Easier to Ask Forgiveness than Permission) style?\n\n# Option A:\nif key in my_dict:\n    value = my_dict[key]\n\n# Option B:\ntry:\n    value = my_dict[key]\nexcept KeyError:\n    value = default',
+      options: [
+        'Option A only',
+        'Option B only',
+        'Both are EAFP',
+        'Neither is EAFP'
+      ],
+      correctAnswer: 1,
+      explanation: 'EAFP tries the operation first and handles the exception if it fails (Option B). Option A is LBYL (Look Before You Leap), checking before acting.',
+      points: 5,
     }
   ]
 };

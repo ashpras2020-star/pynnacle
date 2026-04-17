@@ -330,8 +330,8 @@ export const module3Assessment: Assessment = {
         'Pyn',
         'yhn'
       ],
-      correctAnswer: 2,
-      explanation: 'Every 2nd character: P(0) y(2) n(4) = "Pyn"',
+      correctAnswer: 0,
+      explanation: 'Every 2nd character: P(0) t(2) o(4) = "Pto"',
       points: 5,
       concepts: ['slicing', 'step', 'pattern']
     },
@@ -351,6 +351,176 @@ export const module3Assessment: Assessment = {
       explanation: 'Chains: strip()→"HELLO", lower()→"hello", replace()→"hewwo"',
       points: 5,
       concepts: ['method chaining', 'string methods', 'order of operations']
+    },
+
+    // Question 21 - String reversal with slicing
+    {
+      id: 'q21',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nword = "racecar"\nprint(word[::-1] == word)',
+      options: [
+        'True',
+        'False',
+        'racecar',
+        'Error'
+      ],
+      correctAnswer: 0,
+      explanation: 'word[::-1] reverses the string to "racecar", which equals the original. This is a palindrome check.',
+      points: 5,
+      concepts: ['slicing', 'reverse', 'palindrome']
+    },
+
+    // Question 22 - Multi-line string behavior
+    {
+      id: 'q22',
+      type: 'multiple-choice',
+      question: 'What is the value of len(text.splitlines())?\n\ntext = """Line 1\nLine 2\nLine 3"""',
+      options: [
+        '1',
+        '2',
+        '3',
+        '6'
+      ],
+      correctAnswer: 2,
+      explanation: 'The triple-quoted string contains 3 lines separated by newlines. splitlines() returns a list of those 3 lines.',
+      points: 5,
+      concepts: ['multi-line strings', 'splitlines', 'triple quotes']
+    },
+
+    // Question 23 - String formatting with padding
+    {
+      id: 'q23',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nname = "Hi"\nprint(f"{name:>10}")',
+      options: [
+        'Hi        ',
+        '        Hi',
+        'Hi10',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: ':>10 right-aligns the string within a 10-character wide field, padding with spaces on the left.',
+      points: 5,
+      concepts: ['f-strings', 'alignment', 'padding']
+    },
+
+    // Question 24 - Escape characters
+    {
+      id: 'q24',
+      type: 'multiple-choice',
+      question: 'What is len(text)?\n\ntext = "Hello\\tWorld\\n"',
+      options: [
+        '13',
+        '12',
+        '11',
+        '15'
+      ],
+      correctAnswer: 1,
+      explanation: '\\t is one character (tab) and \\n is one character (newline). So: H-e-l-l-o-\\t-W-o-r-l-d-\\n = 12 characters.',
+      points: 5,
+      concepts: ['escape characters', 'len', 'tab and newline']
+    },
+
+    // Question 25 - String zfill method
+    {
+      id: 'q25',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nnum = "42"\nprint(num.zfill(5))',
+      options: [
+        '42000',
+        '00042',
+        '42   ',
+        '   42'
+      ],
+      correctAnswer: 1,
+      explanation: 'zfill() pads the string on the left with zeros to reach the specified width of 5 characters.',
+      points: 5,
+      concepts: ['zfill', 'padding', 'string methods']
+    },
+
+    // Question 26 - String comparison
+    {
+      id: 'q26',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nprint("apple" < "banana")',
+      options: [
+        'True',
+        'False',
+        'Error',
+        'None'
+      ],
+      correctAnswer: 0,
+      explanation: 'Strings are compared lexicographically (alphabetical order). "apple" comes before "banana", so the comparison is True.',
+      points: 5,
+      concepts: ['string comparison', 'lexicographic order', 'operators']
+    },
+
+    // Question 27 - String ljust and rjust
+    {
+      id: 'q27',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nword = "cat"\nresult = word.center(7, "-")\nprint(result)',
+      options: [
+        '---cat-',
+        '--cat--',
+        '-cat---',
+        'cat----'
+      ],
+      correctAnswer: 1,
+      explanation: 'center(7, "-") centers "cat" in a 7-character string padded with dashes: "--cat--".',
+      points: 5,
+      concepts: ['center', 'padding', 'alignment']
+    },
+
+    // Question 28 - String partition method
+    {
+      id: 'q28',
+      type: 'multiple-choice',
+      question: 'What prints?\n\ntext = "hello=world"\na, sep, b = text.partition("=")\nprint(b)',
+      options: [
+        'hello',
+        '=',
+        'world',
+        'hello=world'
+      ],
+      correctAnswer: 2,
+      explanation: 'partition() splits at the first occurrence of the separator, returning (before, separator, after). b gets "world".',
+      points: 5,
+      concepts: ['partition', 'splitting', 'unpacking']
+    },
+
+    // Question 29 - String replace with count
+    {
+      id: 'q29',
+      type: 'multiple-choice',
+      question: 'What prints?\n\ntext = "aaa bbb aaa bbb aaa"\nresult = text.replace("aaa", "xxx", 2)\nprint(result)',
+      options: [
+        'xxx bbb xxx bbb xxx',
+        'xxx bbb xxx bbb aaa',
+        'aaa bbb aaa bbb xxx',
+        'xxx bbb aaa bbb aaa'
+      ],
+      correctAnswer: 1,
+      explanation: 'The third argument to replace() limits replacements to the first 2 occurrences. Only the first two "aaa" are replaced.',
+      points: 5,
+      concepts: ['replace', 'count parameter', 'partial replacement']
+    },
+
+    // Question 30 - F-string with method call
+    {
+      id: 'q30',
+      type: 'multiple-choice',
+      question: 'What prints?\n\nnames = ["alice", "bob", "charlie"]\nresult = ", ".join(name.capitalize() for name in names)\nprint(result)',
+      options: [
+        'alice, bob, charlie',
+        'ALICE, BOB, CHARLIE',
+        'Alice, Bob, Charlie',
+        'Error'
+      ],
+      correctAnswer: 2,
+      explanation: 'The generator expression capitalizes each name, and join() combines them with ", ". capitalize() uppercases the first letter only.',
+      points: 5,
+      concepts: ['join', 'capitalize', 'generator expressions']
     }
   ]
 };

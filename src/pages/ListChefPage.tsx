@@ -80,7 +80,7 @@ export function ListChefPage() {
 
           <button
             onClick={handleBackToCourse}
-            className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-4 rounded-xl hover:from-orange-400 hover:to-amber-400 transition-all shadow-lg shadow-orange-500/15 flex items-center justify-center gap-2"
+            className="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2" style={{background:'linear-gradient(to right,#f97316,#f59e0b)'}}
           >
             Back to Course
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

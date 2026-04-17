@@ -331,6 +331,166 @@ export const module10Assessment: Assessment = {
       explanation: 'Write mode creates file with 2 lines, append mode adds third line',
       points: 5,
       concepts: ['write mode', 'append mode', 'multiple operations']
+    },
+
+    // Question 21 - List comprehension with string method
+    {
+      id: 'q21',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\nwords = ["Hello", "WORLD", "Python"]\nresult = [w.lower() for w in words]\nprint(result)',
+      options: [
+        '["hello", "world", "python"]',
+        '["Hello", "WORLD", "Python"]',
+        '["HELLO", "WORLD", "PYTHON"]',
+        'Error'
+      ],
+      correctAnswer: 0,
+      explanation: 'The comprehension calls .lower() on each string, converting all to lowercase.',
+      points: 5,
+    },
+
+    // Question 22 - Nested list comprehension creating matrix
+    {
+      id: 'q22',
+      type: 'multiple-choice' as const,
+      question: 'What does this create?\n\nmatrix = [[j * i for j in range(1, 4)] for i in range(1, 4)]\nprint(matrix[2])',
+      options: [
+        '[1, 2, 3]',
+        '[2, 4, 6]',
+        '[3, 6, 9]',
+        '[0, 0, 0]'
+      ],
+      correctAnswer: 2,
+      explanation: 'When i=3 (index 2), the inner list is [3*1, 3*2, 3*3] = [3, 6, 9].',
+      points: 5,
+    },
+
+    // Question 23 - enumerate with start parameter
+    {
+      id: 'q23',
+      type: 'multiple-choice' as const,
+      question: 'What is printed?\n\nitems = ["a", "b", "c"]\nfor idx, val in enumerate(items, start=1):\n    if val == "b":\n        print(idx)',
+      options: [
+        '0',
+        '1',
+        '2',
+        '3'
+      ],
+      correctAnswer: 2,
+      explanation: 'enumerate with start=1 yields (1,"a"), (2,"b"), (3,"c"). When val is "b", idx is 2.',
+      points: 5,
+    },
+
+    // Question 24 - zip with unpacking
+    {
+      id: 'q24',
+      type: 'multiple-choice' as const,
+      question: 'What does this print?\n\npairs = [(1, "a"), (2, "b"), (3, "c")]\nnums, letters = zip(*pairs)\nprint(list(letters))',
+      options: [
+        '[1, 2, 3]',
+        '["a", "b", "c"]',
+        '[(1, "a"), (2, "b"), (3, "c")]',
+        'Error'
+      ],
+      correctAnswer: 1,
+      explanation: 'zip(*pairs) unzips the pairs. The second element from each tuple goes into letters: ("a", "b", "c").',
+      points: 5,
+    },
+
+    // Question 25 - sort with key function
+    {
+      id: 'q25',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\ndata = [(3, "c"), (1, "a"), (2, "b")]\ndata.sort(key=lambda x: x[0])\nprint(data[-1])',
+      options: [
+        '(1, "a")',
+        '(2, "b")',
+        '(3, "c")',
+        'Error'
+      ],
+      correctAnswer: 2,
+      explanation: 'Sorting by the first element of each tuple gives [(1,"a"), (2,"b"), (3,"c")]. The last element is (3,"c").',
+      points: 5,
+    },
+
+    // Question 26 - List comprehension vs filter
+    {
+      id: 'q26',
+      type: 'multiple-choice' as const,
+      question: 'What does this print?\n\nnums = range(1, 11)\nevens = [x for x in nums if x % 2 == 0]\nprint(evens[-1] - evens[0])',
+      options: [
+        '6',
+        '8',
+        '10',
+        '4'
+      ],
+      correctAnswer: 1,
+      explanation: 'evens = [2, 4, 6, 8, 10]. Last minus first: 10 - 2 = 8.',
+      points: 5,
+    },
+
+    // Question 27 - List slicing with comprehension
+    {
+      id: 'q27',
+      type: 'multiple-choice' as const,
+      question: 'What is printed?\n\nnums = [10, 20, 30, 40, 50]\nresult = [nums[i] for i in range(len(nums)) if i % 2 == 0]\nprint(result)',
+      options: [
+        '[10, 30, 50]',
+        '[20, 40]',
+        '[10, 20, 30]',
+        '[30, 40, 50]'
+      ],
+      correctAnswer: 0,
+      explanation: 'Indices 0, 2, 4 pass the filter (even indices), giving elements [10, 30, 50].',
+      points: 5,
+    },
+
+    // Question 28 - List extend vs append
+    {
+      id: 'q28',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\na = [1, 2]\nb = [3, 4]\na.extend(b)\na.append([5, 6])\nprint(len(a))',
+      options: [
+        '4',
+        '5',
+        '6',
+        '8'
+      ],
+      correctAnswer: 1,
+      explanation: 'extend adds elements individually: [1,2,3,4]. append adds [5,6] as single element: [1,2,3,4,[5,6]]. Length is 5.',
+      points: 5,
+    },
+
+    // Question 29 - Dictionary comprehension from zip
+    {
+      id: 'q29',
+      type: 'multiple-choice' as const,
+      question: 'What does this print?\n\nnames = ["Alice", "Bob", "Charlie"]\nscores = [85, 92, 78]\ntop = {n: s for n, s in zip(names, scores) if s > 80}\nprint(len(top))',
+      options: [
+        '1',
+        '2',
+        '3',
+        '0'
+      ],
+      correctAnswer: 1,
+      explanation: 'Only Alice (85) and Bob (92) have scores above 80. Charlie (78) is filtered out. Length is 2.',
+      points: 5,
+    },
+
+    // Question 30 - Comprehension with nested function calls
+    {
+      id: 'q30',
+      type: 'multiple-choice' as const,
+      question: 'What is the output?\n\nsentence = "the quick brown fox"\nresult = [word.capitalize() for word in sentence.split()]\nprint(" ".join(result))',
+      options: [
+        'the quick brown fox',
+        'THE QUICK BROWN FOX',
+        'The Quick Brown Fox',
+        'The quick brown fox'
+      ],
+      correctAnswer: 2,
+      explanation: 'split() breaks into words, capitalize() uppercases the first letter of each word, join() reassembles with spaces.',
+      points: 5,
     }
   ]
 };
