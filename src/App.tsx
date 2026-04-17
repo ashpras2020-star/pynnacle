@@ -38,7 +38,7 @@ import { StreakAnimation } from '@components/ui/StreakAnimation';
 
 // Game/quiz routes that already have their own dark styling — skip dark-mode filter on these.
 // Assessment pages use a light bg, so dark mode CAN apply there.
-const GAME_ROUTE_RE = /^\/(game|debug|listchef|guardgate|mathquest|ciphercracker|booleanbouncer|robotcommander|conveyorcrafter|coderescue|filesorter|quiz\/lobby|quiz\/play|quiz\/results)(\/|$)/;
+const GAME_ROUTE_RE = /^\/(debug|listchef|guardgate|mathquest|ciphercracker|booleanbouncer|robotcommander|conveyorcrafter|coderescue|filesorter|quiz\/lobby|quiz\/play|quiz\/results)(\/|$)/;
 
 // Applies / removes body.dark-mode, skipping game routes
 function DarkModeApplier() {
