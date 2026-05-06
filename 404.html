@@ -6,7 +6,7 @@
     <script>
       // GitHub Pages SPA redirect hack
       // Redirects 404s back to index.html with the path preserved in a query param
-      var pathSegmentsToKeep = 1; // keep /pynnacle/
+      var pathSegmentsToKeep = 0; // custom domain — no subpath to preserve
       var l = window.location;
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
